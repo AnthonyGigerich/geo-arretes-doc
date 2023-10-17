@@ -1,0 +1,2278 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Preprocess - Geo Arrêtés</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Preprocess";
+        var mkdocs_page_input_path = "Code Source\\preprocess.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Geo Arrêtés
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Index</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Code Source</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../domain_knowledge/">Domain Knowledge</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Preprocess</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.convert_native_pdf_to_pdfa">convert_native_pdf_to_pdfa</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.convert_native_pdf_to_pdfa--convertir-les-fichiers-pdf-natifs-en-pdfa">Convertir les fichiers PDF natifs en PDF/A.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.convert_native_pdf_to_pdfa.process_files">process_files()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.convert_native_pdf_to_pdfa.process_files--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.convert_native_pdf_to_pdfa.process_files--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.convert_to_pdfa">convert_to_pdfa</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.convert_to_pdfa--convertir-un-fichier-pdf-en-pdfa-archivable">Convertir un fichier PDF en PDF/A (archivable).</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.convert_to_pdfa.convert_pdf_to_pdfa">convert_pdf_to_pdfa()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.convert_to_pdfa.convert_pdf_to_pdfa--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.convert_to_pdfa.convert_pdf_to_pdfa--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.data_sources">data_sources</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.data_sources--sources-de-donnees">Sources de données.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.determine_pdf_type">determine_pdf_type</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.determine_pdf_type--determiner-le-type-des-fichiers-pdf">Déterminer le type des fichiers PDF.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.determine_pdf_type.guess_pdf_type">guess_pdf_type()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.determine_pdf_type.guess_pdf_type--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.determine_pdf_type.guess_pdf_type--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.determine_pdf_type.process_files">process_files()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.determine_pdf_type.process_files--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.determine_pdf_type.process_files--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.extract_native_text_pdfminer">extract_native_text_pdfminer</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.extract_native_text_pdfminer--extrait-le-texte-natif-des-fichiers-pdf-avec-pdfminersix">Extrait le texte natif des fichiers PDF avec pdfminer.six</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.extract_native_text_pdfminer.extract_native_text_pdfminer">extract_native_text_pdfminer()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.extract_native_text_pdfminer.extract_native_text_pdfminer--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.extract_native_text_pdfminer.extract_native_text_pdfminer--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.extract_native_text_pdftotext">extract_native_text_pdftotext</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.extract_native_text_pdftotext--extrait-le-texte-natif-des-fichiers-pdf-avec-pdftotext">Extrait le texte natif des fichiers PDF avec pdftotext</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.extract_native_text_pdftotext.extract_native_text_pdftotext">extract_native_text_pdftotext()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.extract_native_text_pdftotext.extract_native_text_pdftotext--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.extract_native_text_pdftotext.extract_native_text_pdftotext--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.extract_text_ocr_ocrmypdf">extract_text_ocr_ocrmypdf</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.extract_text_ocr_ocrmypdf--extraire-le-texte-de-fichiers-pdf-par-ocr">Extraire le texte de fichiers PDF par OCR.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.extract_text_ocr_ocrmypdf.extract_text_from_pdf_image">extract_text_from_pdf_image()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.extract_text_ocr_ocrmypdf.extract_text_from_pdf_image--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.extract_text_ocr_ocrmypdf.extract_text_from_pdf_image--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.extract_text_ocr">extract_text_ocr</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.extract_text_ocr--extraire-le-texte-des-fichiers-pdf-par-ocr">Extraire le texte des fichiers PDF par OCR.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.extract_text_ocr.preprocess_pdf_file">preprocess_pdf_file()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.extract_text_ocr.preprocess_pdf_file--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.extract_text_ocr.preprocess_pdf_file--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.extract_text_ocr.process_files">process_files()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.extract_text_ocr.process_files--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.extract_text_ocr.process_files--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.filter_docs">filter_docs</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.filter_docs--filtrer-les-fichiers-pdf-hors-du-champ-de-la-base-de-donnees">Filtrer les fichiers PDF hors du champ de la base de données.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.filter_docs.process_files">process_files()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.filter_docs.process_files--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.filter_docs.process_files--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.pdf_info">pdf_info</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.pdf_info--extraire-les-metadonnees-des-fichiers-pdf">Extraire les métadonnées des fichiers PDF.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.pdf_info.get_pdf_info">get_pdf_info()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.pdf_info.get_pdf_info--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.pdf_info.get_pdf_info--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.pdf_info.get_pdf_info_pikepdf">get_pdf_info_pikepdf()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.pdf_info.get_pdf_info_pikepdf--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.pdf_info.get_pdf_info_pikepdf--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.process_metadata">process_metadata</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.process_metadata--traiter-les-metadonnees-des-fichiers-pdf">Traiter les métadonnées des fichiers PDF.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.process_metadata.guess_badocr">guess_badocr()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.process_metadata.guess_badocr--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.process_metadata.guess_badocr--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.process_metadata.guess_dernpage_transmission">guess_dernpage_transmission()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.process_metadata.guess_dernpage_transmission--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.process_metadata.guess_dernpage_transmission--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.process_metadata.guess_duplicates_meta">guess_duplicates_meta()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.process_metadata.guess_duplicates_meta--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.process_metadata.guess_duplicates_meta--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.process_metadata.guess_pdftext">guess_pdftext()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.process_metadata.guess_pdftext--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.process_metadata.guess_pdftext--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.process_metadata.guess_tampon_transmission">guess_tampon_transmission()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.process_metadata.guess_tampon_transmission--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.process_metadata.guess_tampon_transmission--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.separate_pages">separate_pages</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.separate_pages--charge-le-texte-des-documents-dans-un-dataframe">Charge le texte des documents dans un DataFrame.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.preprocess.separate_pages.create_pages_dataframe">create_pages_dataframe()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.separate_pages.create_pages_dataframe--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.preprocess.separate_pages.create_pages_dataframe--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../process/">Process</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../quality/">Quality</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/">Utils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Notebooks</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Notebooks/notebooks/">Notebooks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Scripts</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Scripts/scripts/">Scripts</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Geo Arrêtés</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Code Source</li>
+      <li class="breadcrumb-item active">Preprocess</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="preprocess">Preprocess</h1>
+<p>Fonctions de prétraitements des fichiers PDFs.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.preprocess.convert_native_pdf_to_pdfa"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.preprocess.convert_native_pdf_to_pdfa--convertir-les-fichiers-pdf-natifs-en-pdfa">Convertir les fichiers PDF natifs en PDF/A.</h2>
+<p>Utilise ocrmypdf sans appeler le moteur d'OCR.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.convert_native_pdf_to_pdfa.process_files" class="doc doc-heading">
+          <code class="highlight language-python">process_files(df_meta, out_pdf_dir, redo=False, keep_pdfa=False, verbose=0)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Convertir les fichiers PDF natifs en PDF/A.</p>
+<h4 id="src.preprocess.convert_native_pdf_to_pdfa.process_files--parameters">Parameters</h4>
+<p>df_meta: pd.DataFrame
+    Liste de fichiers PDF à traiter, avec leurs métadonnées.
+out_pdf_dir: Path
+    Dossier de sortie pour les PDF/A.
+redo: bool, defaults to False
+    Si True, réanalyse les fichiers déjà traités.
+keep_pdfa: bool, defaults to False
+    Si True, n'efface pas les fichiers PDF générés par l'OCR.
+verbose: int, defaults to 0
+    Niveau de verbosité d'ocrmypdf (-1, 0, 1, 2):
+    <a href="https://ocrmypdf.readthedocs.io/en/latest/api.html#ocrmypdf.Verbosity">https://ocrmypdf.readthedocs.io/en/latest/api.html#ocrmypdf.Verbosity</a></p>
+<h4 id="src.preprocess.convert_native_pdf_to_pdfa.process_files--returns">Returns</h4>
+<p>df_mmod: pd.DataFrame
+    Métadonnées des fichiers d'entrée et chemins vers les fichiers PDF/A.</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\convert_native_pdf_to_pdfa.py</code></summary>
+            <pre class="highlight"><code class="language-python">def process_files(
+    df_meta: pd.DataFrame,
+    out_pdf_dir: Path,
+    redo: bool = False,
+    keep_pdfa: bool = False,
+    verbose: int = 0,
+) -&gt; pd.DataFrame:
+    """Convertir les fichiers PDF natifs en PDF/A.
+
+    Parameters
+    ----------
+    df_meta: pd.DataFrame
+        Liste de fichiers PDF à traiter, avec leurs métadonnées.
+    out_pdf_dir: Path
+        Dossier de sortie pour les PDF/A.
+    redo: bool, defaults to False
+        Si True, réanalyse les fichiers déjà traités.
+    keep_pdfa: bool, defaults to False
+        Si True, n'efface pas les fichiers PDF générés par l'OCR.
+    verbose: int, defaults to 0
+        Niveau de verbosité d'ocrmypdf (-1, 0, 1, 2):
+        &lt;https://ocrmypdf.readthedocs.io/en/latest/api.html#ocrmypdf.Verbosity&gt;
+
+    Returns
+    -------
+    df_mmod: pd.DataFrame
+        Métadonnées des fichiers d'entrée et chemins vers les fichiers PDF/A.
+    """
+    if not keep_pdfa:
+        # FIXME pas très joli
+        fullpath_pdfa = [None for x in df_meta.itertuples()]
+    else:
+        fullpath_pdfa = []
+        #
+        for df_row in df_meta.itertuples():
+            # fichier d'origine
+            fp_pdf_in = Path(df_row.fullpath)
+            # fichier à produire
+            fp_pdf_out = out_pdf_dir / f"{fp_pdf_in.name}"
+
+            # si le fichier à produire existe déjà
+            if fp_pdf_out.is_file():
+                if redo:
+                    # ré-exécution explicitement demandée: émettre une info et traiter le fichier
+                    # TODO comparer les versions d'ocrmypdf/tesseract/pikepdf dans les métadonnées du PDF de sortie et les versions actuelles des dépendances,
+                    # et si pertinent émettre un message proposant de ré-analyser le PDF ?
+                    logging.info(
+                        f"Re-traitement de {fp_pdf_in}, le fichier de sortie {fp_pdf_out} existant sera écrasé."
+                    )
+                else:
+                    # pas de ré-exécution demandée: émettre un warning et passer au fichier suivant
+                    logging.info(
+                        f"{fp_pdf_in} est ignoré car le fichier {fp_pdf_out} existe déjà."
+                    )
+                    fullpath_pdfa.append(fp_pdf_out)
+                    continue
+
+            if df_row.processed_as == "text" and not df_row.exclude:
+                # convertir le PDF natif ("texte") en PDF/A-2b
+                logging.info(f"Conversion en PDF/A d'un PDF texte: {fp_pdf_in}")
+                convert_pdf_to_pdfa(fp_pdf_in, fp_pdf_out, verbose=verbose)
+                # TODO stocker la valeur de retour d'ocrmypdf dans une nouvelle colonne "retcode_pdfa" ?
+                # stocker le chemin vers le fichier PDF/A produit
+                fullpath_pdfa.append(fp_pdf_out)
+            else:
+                # ignorer le PDF non-natif ("image") ;
+                # le fichier PDF/A sera produit lors de l'OCRisation
+                fullpath_pdfa.append(None)
+
+    # remplir le fichier CSV de sortie
+    df_mmod = df_meta.assign(
+        fullpath_pdfa=fullpath_pdfa,
+    )
+    # forcer les types des nouvelles colonnes
+    df_mmod = df_mmod.astype(dtype=DTYPE_META_NTXT_PDFA)
+    return df_mmod</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.preprocess.convert_to_pdfa"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.preprocess.convert_to_pdfa--convertir-un-fichier-pdf-en-pdfa-archivable">Convertir un fichier PDF en PDF/A (archivable).</h2>
+<p>Utilise ocrmypdf.</p>
+<p>NB: Certaines métadonnées du PDF sont perdues
+<a href="https://github.com/ocrmypdf/OCRmyPDF/issues/327">https://github.com/ocrmypdf/OCRmyPDF/issues/327</a> .</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.convert_to_pdfa.convert_pdf_to_pdfa" class="doc doc-heading">
+          <code class="highlight language-python">convert_pdf_to_pdfa(fp_pdf_in, fp_pdf_out, verbose=0)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Convertir un PDF en PDF/A.</p>
+<p>Utilise ocrmypdf sans appliquer d'OCR.</p>
+<h4 id="src.preprocess.convert_to_pdfa.convert_pdf_to_pdfa--parameters">Parameters</h4>
+<p>verbose: int, defaults to 0
+    Niveau de verbosité d'ocrmypdf (-1, 0, 1, 2):
+    <a href="https://ocrmypdf.readthedocs.io/en/latest/api.html#ocrmypdf.Verbosity">https://ocrmypdf.readthedocs.io/en/latest/api.html#ocrmypdf.Verbosity</a></p>
+<h4 id="src.preprocess.convert_to_pdfa.convert_pdf_to_pdfa--returns">Returns</h4>
+<p>returncode: int
+    0 si un fichier PDF/A a été produit, 1 sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\convert_to_pdfa.py</code></summary>
+            <pre class="highlight"><code class="language-python">def convert_pdf_to_pdfa(fp_pdf_in: Path, fp_pdf_out: Path, verbose: int = 0) -&gt; int:
+    """Convertir un PDF en PDF/A.
+
+    Utilise ocrmypdf sans appliquer d'OCR.
+
+    Parameters
+    ----------
+    verbose: int, defaults to 0
+        Niveau de verbosité d'ocrmypdf (-1, 0, 1, 2):
+        &lt;https://ocrmypdf.readthedocs.io/en/latest/api.html#ocrmypdf.Verbosity&gt;
+
+    Returns
+    -------
+    returncode: int
+        0 si un fichier PDF/A a été produit, 1 sinon.
+    """
+    try:
+        compl_proc = subprocess.run(
+            [
+                "ocrmypdf",
+                "-l",
+                "fra",
+                "--skip-text",
+                fp_pdf_in,
+                fp_pdf_out,
+                "--verbose",
+                str(verbose),
+            ],
+            capture_output=True,
+            check=False,
+            text=True,
+        )
+    finally:
+        logging.info(compl_proc.stdout)
+        logging.info(compl_proc.stderr)
+    if compl_proc.returncode == ExitCode.pdfa_conversion_failed:
+        # &lt;https://ocrmypdf.readthedocs.io/en/latest/advanced.html#return-code-policy&gt;
+        logging.warning(
+            f"Un PDF a été généré mais la conversion en PDF/A a échoué: {fp_pdf_out}"
+        )
+        # cela arrive quand les métadonnées du PDF contiennent des caractères que ghostscript considère incorrects
+        # "DEBUG ocrmypdf.subprocess.gs - GPL Ghostscript 9.54.0: Text string detected in DOCINFO cannot be represented in XMP for PDF/A1, discarding DOCINFO"
+        # ex: les métadonnées PDF contiennent "Microsoft® Word 2010"
+        # &lt;https://stackoverflow.com/questions/57167784/ghostscript-wont-generate-pdf-a-with-utf16be-text-string-detected-in-docinfo&gt;
+    return compl_proc.returncode</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.preprocess.data_sources"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.preprocess.data_sources--sources-de-donnees">Sources de données.</h2>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.preprocess.determine_pdf_type"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.preprocess.determine_pdf_type--determiner-le-type-des-fichiers-pdf">Déterminer le type des fichiers PDF.</h2>
+<p>Un fichier peut être considéré PDF natif ("texte")
+ou non ("image").</p>
+<p>Le type est déterminé pour le fichier entier, sans
+rentrer dans les cas particuliers commme un PDF texte
+dans lequel une page numérisée a été insérée en tant
+qu'image.
+Actuellement, de tels fichiers sont probablement
+considérés comme des fichiers PDF non natifs ("image"),
+en se basant sur les métadonnées du fichier PDF.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.determine_pdf_type.guess_pdf_type" class="doc doc-heading">
+          <code class="highlight language-python">guess_pdf_type(df_row)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Devine le type de PDF: natif ("texte") ou non ("image")</p>
+<h4 id="src.preprocess.determine_pdf_type.guess_pdf_type--parameters">Parameters</h4>
+<p>df_row: NamedTuple
+    Métadonnées et propriétés du fichier PDF.</p>
+<h4 id="src.preprocess.determine_pdf_type.guess_pdf_type--returns">Returns</h4>
+<p>pdf_type: string, one of {"text", "image"}
+    Type de PDF: "text" pour les PDF natifs, "image" pour les autres
+    qui devront être OCRisés.</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\determine_pdf_type.py</code></summary>
+            <pre class="highlight"><code class="language-python">def guess_pdf_type(df_row: NamedTuple) -&gt; str:
+    """Devine le type de PDF: natif ("texte") ou non ("image")
+
+    Parameters
+    ----------
+    df_row: NamedTuple
+        Métadonnées et propriétés du fichier PDF.
+
+    Returns
+    -------
+    pdf_type: string, one of {"text", "image"}
+        Type de PDF: "text" pour les PDF natifs, "image" pour les autres
+        qui devront être OCRisés.
+    """
+    if pd.notna(df_row.guess_pdftext) and df_row.guess_pdftext:
+        # forte présomption que c'est un PDF texte, d'après les métadonnées
+        pdf_type = "text"
+    elif pd.notna(df_row.guess_dernpage) and df_row.guess_dernpage:
+        # (pour les PDF du stock) la dernière page est un accusé de réception de transmission à @ctes,
+        # donc les métadonnées ont été écrasées et:
+        # 1. il faut exclure la dernière page (accusé de réception de la transmission) puis
+        # 2. si pdftotext parvient à extraire du texte, alors c'est un PDF texte, sinon c'est un PDF image
+        if df_row.retcode_txt == 0:
+            pdf_type = "text"
+        else:
+            pdf_type = "image"
+    elif pd.notna(df_row.guess_badocr) and df_row.guess_badocr:
+        # le PDF contient une couche d'OCR produite par un logiciel moins performant: refaire l'OCR
+        #
+        # PDF image
+        pdf_type = "image"
+    else:
+        # PDF image
+        pdf_type = "image"
+    return pdf_type</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.determine_pdf_type.process_files" class="doc doc-heading">
+          <code class="highlight language-python">process_files(df_meta)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Déterminer le type des fichiers PDF.</p>
+<p>Un fichier PDF peut être natif ("texte") ou non ("image").</p>
+<h4 id="src.preprocess.determine_pdf_type.process_files--parameters">Parameters</h4>
+<p>df_meta: pd.DataFrame
+    Liste de fichiers PDF à traiter, avec leurs métadonnées.</p>
+<h4 id="src.preprocess.determine_pdf_type.process_files--returns">Returns</h4>
+<p>df_mmod: pd.DataFrame
+    Métadonnées des fichiers d'entrée et chemins vers les fichiers PDF/A et TXT.</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\determine_pdf_type.py</code></summary>
+            <pre class="highlight"><code class="language-python">def process_files(
+    df_meta: pd.DataFrame,
+) -&gt; pd.DataFrame:
+    """Déterminer le type des fichiers PDF.
+
+    Un fichier PDF peut être natif ("texte") ou non ("image").
+
+    Parameters
+    ----------
+    df_meta: pd.DataFrame
+        Liste de fichiers PDF à traiter, avec leurs métadonnées.
+
+    Returns
+    -------
+    df_mmod: pd.DataFrame
+        Métadonnées des fichiers d'entrée et chemins vers les fichiers PDF/A et TXT.
+    """
+    processed_as = []
+    for df_row in df_meta.itertuples():
+        # fichier d'origine
+        fp_pdf_in = Path(df_row.fullpath)
+
+        # déterminer le type de fichier: PDF natif ("text") ou non ("image")
+        pdf_type = guess_pdf_type(df_row)
+        processed_as.append(pdf_type)
+
+    # remplir le fichier CSV de sortie
+    df_mmod = df_meta.assign(
+        processed_as=processed_as,
+    )
+    # forcer les types des nouvelles colonnes
+    df_mmod = df_mmod.astype(dtype=DTYPE_META_NTXT_PDFTYPE)
+    return df_mmod</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.preprocess.extract_native_text_pdfminer"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.preprocess.extract_native_text_pdfminer--extrait-le-texte-natif-des-fichiers-pdf-avec-pdfminersix">Extrait le texte natif des fichiers PDF avec pdfminer.six</h2>
+<p>Nécessite d'installer pdfminer.six.</p>
+<p>Non utilisé pour le moment, faute d'avoir identifié les bonnes valeurs des paramètres
+utilisés pour l'analyse du layout, mais pourrait être utile pour ré-analyser les
+arrêtés de certaines communes avec une mise en page compliquée.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.extract_native_text_pdfminer.extract_native_text_pdfminer" class="doc doc-heading">
+          <code class="highlight language-python">extract_native_text_pdfminer(fp_pdf_in, fp_txt_out, page_beg, page_end)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extrait le texte natif d'un PDF avec pdfminer.six.</p>
+<p>Si le texte extrait par pdfminer.six n'est pas vide alors un fichier TXT est produit,
+sinon aucun fichier TXT n'est produit et un code d'erreur est renvoyé.</p>
+<p>Les pages sont séparées par un "form feed" ("", "" en python).</p>
+<p>Le texte est normalisé en forme NFC (NEW 2023-03-10, NFC plutôt que NFKC car ce dernier transforme "º" en "o").</p>
+<h4 id="src.preprocess.extract_native_text_pdfminer.extract_native_text_pdfminer--parameters">Parameters</h4>
+<p>fp_pdf_in: Path
+    Fichier PDF d'entrée.
+fp_txt_out: Path
+    Fichier TXT produit par extraction directe du texte.
+page_beg: int
+    Numéro de la première page à traiter, la première page d'un PDF est supposée numérotée 1.
+page_end: int, defaults to None
+    Numéro de la dernière page à traiter (cette page étant incluse).</p>
+<h4 id="src.preprocess.extract_native_text_pdfminer.extract_native_text_pdfminer--returns">Returns</h4>
+<p>returncode: int
+    0 si un fichier TXT a été produit, 1 sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\extract_native_text_pdfminer.py</code></summary>
+            <pre class="highlight"><code class="language-python">def extract_native_text_pdfminer(
+    fp_pdf_in: Path, fp_txt_out: Path, page_beg: int, page_end: int
+) -&gt; int:
+    """Extrait le texte natif d'un PDF avec pdfminer.six.
+
+    Si le texte extrait par pdfminer.six n'est pas vide alors un fichier TXT est produit,
+    sinon aucun fichier TXT n'est produit et un code d'erreur est renvoyé.
+
+    Les pages sont séparées par un "form feed" ("\x0c", "\f" en python).
+
+    Le texte est normalisé en forme NFC (NEW 2023-03-10, NFC plutôt que NFKC car ce dernier transforme "º" en "o").
+
+    Parameters
+    ----------
+    fp_pdf_in: Path
+        Fichier PDF d'entrée.
+    fp_txt_out: Path
+        Fichier TXT produit par extraction directe du texte.
+    page_beg: int
+        Numéro de la première page à traiter, la première page d'un PDF est supposée numérotée 1.
+    page_end: int, defaults to None
+        Numéro de la dernière page à traiter (cette page étant incluse).
+
+    Returns
+    -------
+    returncode: int
+        0 si un fichier TXT a été produit, 1 sinon.
+    """
+    # pages à extraire
+    # les numéros de page commencent à 1, mais pdftotext crée une liste de pages
+    # qui commence à l'index 0
+    page_beg_ix = page_beg - 1
+    # le numéro de la dernière page ne doit pas être décalé car la borne sup d'un slice est exclue
+    # page_end_ix = page_end
+    page_numbers = list(range(page_beg_ix, page_end))
+
+    # TODO vérifier que le texte contient bien "\f" en fin de page
+    txt = extract_text(fp_pdf_in, page_numbers=page_numbers, laparams=LAPARAMS)
+    # codec="utf-8" ? "latin-1"?
+    # with open(fp_pdf_in, "rb") as f, open(fp_txt_out, "w") as f_txt:
+    #     extract_text_to_fp(f, f_txt, page_numbers=page_numbers, output_type="text")
+
+    # normaliser le texte extrait en forme NFC
+    norm_txt = unicodedata.normalize("NFC", txt)
+    #
+    if norm_txt:
+        # stocker le texte dans un fichier .txt
+        with open(fp_txt_out, "w") as f_txt:
+            f_txt.write(norm_txt)
+        # code ok
+        return 0
+    else:
+        # code d'erreur
+        return 1</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.preprocess.extract_native_text_pdftotext"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.preprocess.extract_native_text_pdftotext--extrait-le-texte-natif-des-fichiers-pdf-avec-pdftotext">Extrait le texte natif des fichiers PDF avec pdftotext</h2>
+<p><a href="https://github.com/jalan/pdftotext">https://github.com/jalan/pdftotext</a></p>
+<p>Dépendances Windows (<a href="https://github.com/jalan/pdftotext#os-dependencies">https://github.com/jalan/pdftotext#os-dependencies</a>):
+* Microsoft Visual C++ Build Tools: <a href="https://visualstudio.microsoft.com/fr/visual-cpp-build-tools/">https://visualstudio.microsoft.com/fr/visual-cpp-build-tools/</a>
+* poppler ( <code>conda install -c conda-forge poppler</code> )</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.extract_native_text_pdftotext.extract_native_text_pdftotext" class="doc doc-heading">
+          <code class="highlight language-python">extract_native_text_pdftotext(fp_pdf_in, fp_txt_out, page_beg, page_end)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extrait le texte natif d'un PDF avec pdftotext.</p>
+<p>Si le texte extrait par pdftotext n'est pas vide alors un fichier TXT est produit,
+sinon aucun fichier TXT n'est produit et un code d'erreur est renvoyé.</p>
+<p>Les pages sont séparées par un "form feed" ("", "" en python).</p>
+<p>Le texte est normalisé en forme NFC (NEW 2023-03-10, NFC plutôt que NFKC car ce dernier transforme "º" en "o").</p>
+<h4 id="src.preprocess.extract_native_text_pdftotext.extract_native_text_pdftotext--parameters">Parameters</h4>
+<p>fp_pdf_in: Path
+    Fichier PDF d'entrée.
+fp_txt_out: Path
+    Fichier TXT produit par extraction directe du texte.
+page_beg: int
+    Numéro de la première page à traiter, la première page d'un PDF est supposée numérotée 1.
+page_end: int, defaults to None
+    Numéro de la dernière page à traiter (cette page étant incluse).</p>
+<h4 id="src.preprocess.extract_native_text_pdftotext.extract_native_text_pdftotext--returns">Returns</h4>
+<p>returncode: int
+    0 si un fichier TXT a été produit, 1 sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\extract_native_text_pdftotext.py</code></summary>
+            <pre class="highlight"><code class="language-python">def extract_native_text_pdftotext(
+    fp_pdf_in: Path, fp_txt_out: Path, page_beg: int, page_end: int
+) -&gt; int:
+    """Extrait le texte natif d'un PDF avec pdftotext.
+
+    Si le texte extrait par pdftotext n'est pas vide alors un fichier TXT est produit,
+    sinon aucun fichier TXT n'est produit et un code d'erreur est renvoyé.
+
+    Les pages sont séparées par un "form feed" ("\x0c", "\f" en python).
+
+    Le texte est normalisé en forme NFC (NEW 2023-03-10, NFC plutôt que NFKC car ce dernier transforme "º" en "o").
+
+    Parameters
+    ----------
+    fp_pdf_in: Path
+        Fichier PDF d'entrée.
+    fp_txt_out: Path
+        Fichier TXT produit par extraction directe du texte.
+    page_beg: int
+        Numéro de la première page à traiter, la première page d'un PDF est supposée numérotée 1.
+    page_end: int, defaults to None
+        Numéro de la dernière page à traiter (cette page étant incluse).
+
+    Returns
+    -------
+    returncode: int
+        0 si un fichier TXT a été produit, 1 sinon.
+    """
+    # les numéros de page commencent à 1, mais pdftotext crée une liste de pages
+    # qui commence à l'index 0
+    page_beg_ix = page_beg - 1
+    # le numéro de la dernière page ne doit pas être décalé car la borne sup d'un slice est exclue
+    # page_end_ix = page_end
+
+    with open(fp_pdf_in, "rb") as f:
+        try:
+            pdf = pdftotext.PDF(f)
+        except pdftotext.Error as e:
+            logging.error(f"erreur pdftotext: {e}")
+            return 1  # code d'erreur
+
+    # pdftotext.PDF a getitem(), mais ne permet pas de récupérer un slice
+    # donc il faut créer un range et itérer manuellement
+    doc_txt = [pdf[i] for i in range(page_beg_ix, page_end)]
+    # chaque page produite par pdftotext se termine par "\f",
+    # il faut enlever le dernier "\f" pour avoir la même
+    # structure qu'en sortie d'ocrmypdf
+    assert doc_txt[-1][-1] == "\f"
+    doc_txt[-1] = doc_txt[-1][:-1]
+    # concaténer le texte des pages
+    txt = "".join(doc_txt)  # .strip() ?
+    # normaliser le texte extrait en forme NFC
+    norm_txt = unicodedata.normalize("NFC", txt)
+    # stocker le texte dans un fichier .txt
+    with open(fp_txt_out, "w") as f_txt:
+        f_txt.write(norm_txt)
+    return 0  # code ok</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.preprocess.extract_text_ocr_ocrmypdf"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.preprocess.extract_text_ocr_ocrmypdf--extraire-le-texte-de-fichiers-pdf-par-ocr">Extraire le texte de fichiers PDF par OCR.</h2>
+<p>Utilise ocrmypdf.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.extract_text_ocr_ocrmypdf.extract_text_from_pdf_image" class="doc doc-heading">
+          <code class="highlight language-python">extract_text_from_pdf_image(fp_pdf_in, fp_txt_out, fp_pdf_out, page_beg, page_end, redo_ocr=False, verbose=0)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extraire le texte d'un PDF image et convertir le fichier en PDF/A.</p>
+<p>Utilise ocrmypdf.
+On utilise "-l fra" pour améliorer la reconnaissance de: "à", "è",
+"ê", apostrophe, "l'", "œ", "ô" etc.</p>
+<h4 id="src.preprocess.extract_text_ocr_ocrmypdf.extract_text_from_pdf_image--parameters">Parameters</h4>
+<p>fp_pdf_in: Path
+    Fichier PDF image à traiter.
+fp_txt_out: Path
+    Fichier TXT produit, contenant le texte extrait par OCR.
+fp_pdf_out: Path
+    Fichier PDF/A produit, incluant le texte océrisé.
+page_beg: int
+    Numéro de la première page à traiter, la première page d'un PDF est supposée numérotée 1.
+page_end: int
+    Numéro de la dernière page à traiter (cette page étant incluse).
+redo_ocr: boolean, defaults to False
+    Si True, refait l'OCR même si une couche d'OCR est détectée sur certaines pages.
+verbose: int, defaults to 0
+    Niveau de verbosité d'ocrmypdf (-1, 0, 1, 2):
+    <a href="https://ocrmypdf.readthedocs.io/en/latest/api.html#ocrmypdf.Verbosity">https://ocrmypdf.readthedocs.io/en/latest/api.html#ocrmypdf.Verbosity</a></p>
+<h4 id="src.preprocess.extract_text_ocr_ocrmypdf.extract_text_from_pdf_image--returns">Returns</h4>
+<p>returncode: int
+    0 si deux fichiers PDF/A et TXT ont été produits, une autre valeur sinon
+    <a href="https://ocrmypdf.readthedocs.io/en/latest/advanced.html#return-code-policy">https://ocrmypdf.readthedocs.io/en/latest/advanced.html#return-code-policy</a> .</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\extract_text_ocr_ocrmypdf.py</code></summary>
+            <pre class="highlight"><code class="language-python">def extract_text_from_pdf_image(
+    fp_pdf_in: Path,
+    fp_txt_out: Path,
+    fp_pdf_out: Path,
+    page_beg: int,
+    page_end: int,
+    redo_ocr: bool = False,
+    verbose: int = 0,
+) -&gt; int:
+    """Extraire le texte d'un PDF image et convertir le fichier en PDF/A.
+
+    Utilise ocrmypdf.
+    On utilise "-l fra" pour améliorer la reconnaissance de: "à", "è",
+    "ê", apostrophe, "l'", "œ", "ô" etc.
+
+    Parameters
+    ----------
+    fp_pdf_in: Path
+        Fichier PDF image à traiter.
+    fp_txt_out: Path
+        Fichier TXT produit, contenant le texte extrait par OCR.
+    fp_pdf_out: Path
+        Fichier PDF/A produit, incluant le texte océrisé.
+    page_beg: int
+        Numéro de la première page à traiter, la première page d'un PDF est supposée numérotée 1.
+    page_end: int
+        Numéro de la dernière page à traiter (cette page étant incluse).
+    redo_ocr: boolean, defaults to False
+        Si True, refait l'OCR même si une couche d'OCR est détectée sur certaines pages.
+    verbose: int, defaults to 0
+        Niveau de verbosité d'ocrmypdf (-1, 0, 1, 2):
+        &lt;https://ocrmypdf.readthedocs.io/en/latest/api.html#ocrmypdf.Verbosity&gt;
+
+    Returns
+    -------
+    returncode: int
+        0 si deux fichiers PDF/A et TXT ont été produits, une autre valeur sinon
+        &lt;https://ocrmypdf.readthedocs.io/en/latest/advanced.html#return-code-policy&gt; .
+    """
+    # appeler ocrmypdf pour produire 2 fichiers: PDF/A-2b (inc. OCR) + sidecar (txt)
+    cmd = (
+        ["ocrmypdf"]
+        + [
+            # langue française
+            "-l",
+            "fra",
+            # sélection de pages
+            "--page",
+            f"{page_beg}-{page_end}",
+            # TXT en sortie
+            "--sidecar",
+            fp_txt_out,
+            # verbosité
+            "--verbose",
+            str(verbose),
+        ]
+        + (["--redo-ocr"] if redo_ocr else [])
+        + [
+            # PDF en entrée
+            fp_pdf_in,
+            # PDF/A en sortie
+            fp_pdf_out,
+        ]
+    )
+    try:
+        compl_proc = subprocess.run(
+            cmd,
+            capture_output=True,
+            check=False,
+            text=True,
+        )
+    finally:
+        logging.info(compl_proc.stdout)
+        logging.info(compl_proc.stderr)
+    if compl_proc.returncode == ExitCode.pdfa_conversion_failed:
+        # &lt;https://ocrmypdf.readthedocs.io/en/latest/advanced.html#return-code-policy&gt;
+        # &lt;https://ocrmypdf.readthedocs.io/en/v14.0.4/apiref.html#ocrmypdf.exceptions.ExitCode&gt;
+        logging.warning(
+            f"Un PDF a été généré mais la conversion en PDF/A a échoué: {fp_pdf_out}"
+        )
+        # cela arrive quand les métadonnées du PDF contiennent des caractères que ghostscript considère incorrects
+        # "DEBUG ocrmypdf.subprocess.gs - GPL Ghostscript 9.54.0: Text string detected in DOCINFO cannot be represented in XMP for PDF/A1, discarding DOCINFO"
+        # ex: les métadonnées PDF contiennent "Microsoft® Word 2010"
+        # &lt;https://stackoverflow.com/questions/57167784/ghostscript-wont-generate-pdf-a-with-utf16be-text-string-detected-in-docinfo&gt;
+    return compl_proc.returncode</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.preprocess.extract_text_ocr"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.preprocess.extract_text_ocr--extraire-le-texte-des-fichiers-pdf-par-ocr">Extraire le texte des fichiers PDF par OCR.</h2>
+<p>Le texte des PDF non-natifs ("PDF image") est extrait avec ocrmypdf.</p>
+<p>ocrmypdf produit un fichier PDF/A incluant une couche de texte extrait par OCR,
+et un fichier "sidecar" contenant le texte extrait par l'OCR uniquement.</p>
+<p>Le fichier PDF/A est effacé, sauf mention contraire explicite par l'option
+"keep_pdfa".</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.extract_text_ocr.preprocess_pdf_file" class="doc doc-heading">
+          <code class="highlight language-python">preprocess_pdf_file(df_row, fp_pdf_in, fp_pdf_out, fp_txt_out, verbose=0)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extraire le texte par OCR et générer des fichiers PDF/A et txt.</p>
+<p>Le fichier PDF est OCRisé avec ocrmypdf, qui crée un PDF/A et un
+fichier texte "sidecar".</p>
+<p>La version actuelle est: ocrmypdf 14.0.3 / Tesseract OCR-PDF 5.2.0
+(+ pikepdf 5.6.1).</p>
+<h4 id="src.preprocess.extract_text_ocr.preprocess_pdf_file--parameters">Parameters</h4>
+<p>df_row: NamedTuple
+    Métadonnées et informations sur le fichier PDF à traiter.
+fp_pdf_in: Path
+    Chemin du fichier PDF à traiter.
+fp_pdf_out: Path
+    Chemin du fichier PDF converti en PDF/A (avec OCR le cas échéant).
+fp_txt_out: Path
+    Chemin du fichier txt contenant le texte extrait.
+verbose: int, defaults to 0
+    Niveau de verbosité d'ocrmypdf (-1, 0, 1, 2):
+    <a href="https://ocrmypdf.readthedocs.io/en/latest/api.html#ocrmypdf.Verbosity">https://ocrmypdf.readthedocs.io/en/latest/api.html#ocrmypdf.Verbosity</a></p>
+<h4 id="src.preprocess.extract_text_ocr.preprocess_pdf_file--returns">Returns</h4>
+<p>retcode: int
+    Code de retour d'ocrmypdf
+    <a href="https://ocrmypdf.readthedocs.io/en/latest/advanced.html#return-code-policy">https://ocrmypdf.readthedocs.io/en/latest/advanced.html#return-code-policy</a> .</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\extract_text_ocr.py</code></summary>
+            <pre class="highlight"><code class="language-python">def preprocess_pdf_file(
+    df_row: NamedTuple,
+    fp_pdf_in: Path,
+    fp_pdf_out: Path,
+    fp_txt_out: Path,
+    verbose: int = 0,
+) -&gt; int:
+    """Extraire le texte par OCR et générer des fichiers PDF/A et txt.
+
+    Le fichier PDF est OCRisé avec ocrmypdf, qui crée un PDF/A et un
+    fichier texte "sidecar".
+
+    La version actuelle est: ocrmypdf 14.0.3 / Tesseract OCR-PDF 5.2.0
+    (+ pikepdf 5.6.1).
+
+    Parameters
+    ----------
+    df_row: NamedTuple
+        Métadonnées et informations sur le fichier PDF à traiter.
+    fp_pdf_in: Path
+        Chemin du fichier PDF à traiter.
+    fp_pdf_out: Path
+        Chemin du fichier PDF converti en PDF/A (avec OCR le cas échéant).
+    fp_txt_out: Path
+        Chemin du fichier txt contenant le texte extrait.
+    verbose: int, defaults to 0
+        Niveau de verbosité d'ocrmypdf (-1, 0, 1, 2):
+        &lt;https://ocrmypdf.readthedocs.io/en/latest/api.html#ocrmypdf.Verbosity&gt;
+
+    Returns
+    -------
+    retcode: int
+        Code de retour d'ocrmypdf
+        &lt;https://ocrmypdf.readthedocs.io/en/latest/advanced.html#return-code-policy&gt; .
+    """
+    logging.info(f"Ouverture du fichier {fp_pdf_in}")
+
+    # définir les pages à traiter
+    page_beg = 1
+    # exclure la dernière page de l'OCRisation, si c'est un accusé de réception de transmission à @ctes
+    # TODO gérer les cas où l'AR de transmission n'est pas en dernière page car suivi d'annexes
+    page_end = (
+        df_row.nb_pages - 1
+        if (pd.notna(df_row.guess_dernpage) and df_row.guess_dernpage)
+        else df_row.nb_pages
+    )
+
+    # Si un PDF est susceptible de contenir des couches d'OCR de mauvaise qualité, indiquer à
+    # ocrmypdf de les ignorer et de refaire l'OCR, avec "--redo-ocr" (CLI) / "redo_ocr" (ici)
+    # (si cela ne fonctionne pas ou pas toujours, modifier le code pour remplacer "--redo-ocr"
+    # par "--force-ocr" qui forcera la rasterization des pages avant de leur appliquer l'OCR)
+    # FIXME ? force ocr pour les PDF avec une mauvaise OCR, eg. "Image Capture Plus" ?
+    redo_ocr = True
+    # redo_ocr = df_row.processed_as == "image"  # toujours vrai?
+    assert df_row.processed_as == "image"
+
+    logging.info(f"PDF image: {fp_pdf_in}")
+    retcode = extract_text_from_pdf_image(
+        fp_pdf_in,
+        fp_txt_out,
+        fp_pdf_out,
+        page_beg=page_beg,
+        page_end=page_end,
+        redo_ocr=redo_ocr,
+        verbose=verbose,
+    )
+    return retcode</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.extract_text_ocr.process_files" class="doc doc-heading">
+          <code class="highlight language-python">process_files(df_meta, out_pdf_dir, out_txt_dir, redo=False, keep_pdfa=False, verbose=0)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Traiter un ensemble de fichiers PDF: convertir les PDF en PDF/A et extraire le texte.</p>
+<h4 id="src.preprocess.extract_text_ocr.process_files--parameters">Parameters</h4>
+<p>df_meta: pd.DataFrame
+    Liste de fichiers PDF à traiter, avec leurs métadonnées.
+out_pdf_dir: Path
+    Dossier de sortie pour les PDF/A.
+out_txt_dir: Path
+    Dossier de sortie pour les fichiers texte.
+redo: bool, defaults to False
+    Si True, réanalyse les fichiers déjà traités.
+keep_pdfa: bool, defaults to False
+    Si True, n'efface pas les fichiers PDF générés par l'OCR.
+verbose: int, defaults to 0
+    Niveau de verbosité d'ocrmypdf (-1, 0, 1, 2):
+    <a href="https://ocrmypdf.readthedocs.io/en/latest/api.html#ocrmypdf.Verbosity">https://ocrmypdf.readthedocs.io/en/latest/api.html#ocrmypdf.Verbosity</a></p>
+<h4 id="src.preprocess.extract_text_ocr.process_files--returns">Returns</h4>
+<p>df_mmod: pd.DataFrame
+    Métadonnées des fichiers d'entrée et chemins vers les fichiers PDF/A et TXT.</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\extract_text_ocr.py</code></summary>
+            <pre class="highlight"><code class="language-python">def process_files(
+    df_meta: pd.DataFrame,
+    out_pdf_dir: Path,
+    out_txt_dir: Path,
+    redo: bool = False,
+    keep_pdfa: bool = False,
+    verbose: int = 0,
+) -&gt; pd.DataFrame:
+    """Traiter un ensemble de fichiers PDF: convertir les PDF en PDF/A et extraire le texte.
+
+    Parameters
+    ----------
+    df_meta: pd.DataFrame
+        Liste de fichiers PDF à traiter, avec leurs métadonnées.
+    out_pdf_dir: Path
+        Dossier de sortie pour les PDF/A.
+    out_txt_dir: Path
+        Dossier de sortie pour les fichiers texte.
+    redo: bool, defaults to False
+        Si True, réanalyse les fichiers déjà traités.
+    keep_pdfa: bool, defaults to False
+        Si True, n'efface pas les fichiers PDF générés par l'OCR.
+    verbose: int, defaults to 0
+        Niveau de verbosité d'ocrmypdf (-1, 0, 1, 2):
+        &lt;https://ocrmypdf.readthedocs.io/en/latest/api.html#ocrmypdf.Verbosity&gt;
+
+    Returns
+    -------
+    df_mmod: pd.DataFrame
+        Métadonnées des fichiers d'entrée et chemins vers les fichiers PDF/A et TXT.
+    """
+    retcode_ocr = []
+    fullpath_pdfa = []
+    fullpath_txt = []
+    for i, df_row in enumerate(df_meta.itertuples()):
+        if i != 0 and i % 10 == 0:
+            print(f"{i}/{len(df_meta)} pdf traités")
+        # fichier d'origine
+        fp_pdf_in = Path(df_row.fullpath)
+        # fichiers à produire
+        fp_pdf_out = out_pdf_dir / f"{fp_pdf_in.name}"
+        fp_txt = out_txt_dir / (f"{fp_pdf_in.stem}" + ".txt")
+        # sauter les fichiers identifiés comme PDF texte, et les fichiers exclus
+        # et simplement reporter les chemins vers les fichiers txt et éventuellement PDF/A
+        if df_row.processed_as == "text" or df_row.exclude:
+            retcode_ocr.append(None)  # valeur de retour ocrmypdf
+            fullpath_pdfa.append(df_row.fullpath_pdfa)
+            fullpath_txt.append(df_row.fullpath_txt)
+            continue
+
+        # sinon processed_as est "image" (et pas &lt;NA&gt;)
+        assert df_row.processed_as == "image"
+        # et le fichier n'est pas exclus (et pas &lt;NA&gt;)
+        assert not df_row.exclude
+
+        # si le fichier txt à produire existe déjà
+        if fp_txt.is_file():
+            if redo:
+                # ré-exécution explicitement demandée: émettre une info et traiter le fichier
+                # TODO comparer les versions d'ocrmypdf/tesseract/pikepdf dans les métadonnées du PDF de sortie et les versions actuelles des dépendances,
+                # et si pertinent émettre un message proposant de ré-analyser le PDF ?
+                logging.info(
+                    f"Re-traitement de {fp_pdf_in}, le fichier de sortie {fp_txt} existant sera écrasé."
+                )
+            else:
+                # pas de ré-exécution demandée: émettre un warning et passer au fichier suivant
+                logging.info(
+                    f"{fp_pdf_in} est ignoré car le fichier {fp_txt} existe déjà."
+                )
+                retcode_ocr.append(
+                    None
+                )  # valeur de retour ocrmypdf, impossible à récupérer sans refaire tourner la conversion
+                if fp_pdf_out.is_file():
+                    fullpath_pdfa.append(fp_pdf_out)
+                else:
+                    fullpath_pdfa.append(None)
+                fullpath_txt.append(fp_txt)
+                continue
+
+        # traiter le fichier: extraire le texte par OCR si nécessaire, corriger et convertir le PDF d'origine en PDF/A-2b
+        retcode = preprocess_pdf_file(
+            df_row, fp_pdf_in, fp_pdf_out, fp_txt, verbose=verbose
+        )
+        # stocker les chemins: fichier TXT (OCR), éventuellement PDF/A
+        retcode_ocr.append(retcode)  # valeur de retour ocrmypdf
+        fullpath_txt.append(fp_txt)
+        if not keep_pdfa:
+            os.remove(fp_pdf_out)
+            fullpath_pdfa.append(None)
+        else:
+            fullpath_pdfa.append(fp_pdf_out)
+    df_mmod = df_meta.assign(
+        retcode_ocr=retcode_ocr,
+        fullpath_pdfa=fullpath_pdfa,
+        fullpath_txt=fullpath_txt,
+    )
+    # forcer les types des nouvelles colonnes
+    df_mmod = df_mmod.astype(dtype=DTYPE_META_NTXT_OCR)
+    return df_mmod</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.preprocess.filter_docs"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.preprocess.filter_docs--filtrer-les-fichiers-pdf-hors-du-champ-de-la-base-de-donnees">Filtrer les fichiers PDF hors du champ de la base de données.</h2>
+<p>Annexes des arrêtés: plan de périmètre de sécurité, rapports d'expertise etc.</p>
+<p>TODO filtrer automatiquement à partir du texte</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.filter_docs.process_files" class="doc doc-heading">
+          <code class="highlight language-python">process_files(df_meta, df_txts)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Traiter un ensemble d'arrêtés: repérer des éléments de structure des textes.</p>
+<h4 id="src.preprocess.filter_docs.process_files--parameters">Parameters</h4>
+<p>df_meta: pd.DataFrame
+    Liste de métadonnées des fichiers à traiter.
+df_txts: pd.DataFrame
+    Liste de pages de documents à traiter.</p>
+<h4 id="src.preprocess.filter_docs.process_files--returns">Returns</h4>
+<p>df_mmod: pd.DataFrame
+    Liste de métadonnées des fichiers, filtrés.
+df_tmod: pd.DataFrame
+    Liste de métadonnées des pages traitées, avec indications des éléments de
+    structure détectés.</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\filter_docs.py</code></summary>
+            <pre class="highlight"><code class="language-python">def process_files(
+    df_meta: pd.DataFrame,
+    df_txts: pd.DataFrame,
+) -&gt; pd.DataFrame:
+    """Traiter un ensemble d'arrêtés: repérer des éléments de structure des textes.
+
+    Parameters
+    ----------
+    df_meta: pd.DataFrame
+        Liste de métadonnées des fichiers à traiter.
+    df_txts: pd.DataFrame
+        Liste de pages de documents à traiter.
+
+    Returns
+    -------
+    df_mmod: pd.DataFrame
+        Liste de métadonnées des fichiers, filtrés.
+    df_tmod: pd.DataFrame
+        Liste de métadonnées des pages traitées, avec indications des éléments de
+        structure détectés.
+    """
+    df_mmod = df_meta.assign(exclude=(lambda x: x.pdf.isin(SET_EXCLUDE)))
+    df_mmod = df_mmod.astype(dtype=DTYPE_META_NTXT_FILT)
+
+    df_tmod = df_txts.assign(exclude=(lambda x: x.pdf.isin(SET_EXCLUDE)))
+    df_tmod = df_tmod.astype(dtype=DTYPE_NTXT_PAGES_FILT)
+
+    return df_mmod, df_tmod</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.preprocess.pdf_info"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.preprocess.pdf_info--extraire-les-metadonnees-des-fichiers-pdf">Extraire les métadonnées des fichiers PDF.</h2>
+<p>Ce module utilise pikepdf.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.pdf_info.get_pdf_info" class="doc doc-heading">
+          <code class="highlight language-python">get_pdf_info(fp_pdf, digest='blake2b', verbose=False)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extraire les informations (dont métadonnées) d'un fichier PDF.</p>
+<p>Utilise actuellement pikepdf.</p>
+<h4 id="src.preprocess.pdf_info.get_pdf_info--parameters">Parameters</h4>
+<p>fp_pdf : Path
+    Chemin du fichier PDF à traiter.
+digest : str
+    Algorithme de hachage à utiliser
+    <a href="https://docs.python.org/3/library/hashlib.html#hash-algorithms">https://docs.python.org/3/library/hashlib.html#hash-algorithms</a> .
+verbose: boolean, defaults to False
+    Si True, des warnings sont émis à chaque anomalie constatée dans les
+    métadonnées du PDF.</p>
+<h4 id="src.preprocess.pdf_info.get_pdf_info--returns">Returns</h4>
+<p>pdf_info : dict
+    Informations (dont métadonnées) du fichier PDF d'entrée</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\pdf_info.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_pdf_info(
+    fp_pdf: Path, digest: str = "blake2b", verbose: bool = False
+) -&gt; Dict[str, str | int]:
+    """Extraire les informations (dont métadonnées) d'un fichier PDF.
+
+    Utilise actuellement pikepdf.
+
+    Parameters
+    ----------
+    fp_pdf : Path
+        Chemin du fichier PDF à traiter.
+    digest : str
+        Algorithme de hachage à utiliser
+        &lt;https://docs.python.org/3/library/hashlib.html#hash-algorithms&gt; .
+    verbose: boolean, defaults to False
+        Si True, des warnings sont émis à chaque anomalie constatée dans les
+        métadonnées du PDF.
+
+    Returns
+    -------
+    pdf_info : dict
+        Informations (dont métadonnées) du fichier PDF d'entrée
+    """
+    logging.info(f"Ouverture du fichier {fp_pdf}")
+    pdf_info = {
+        # métadonnées du fichier lui-même
+        "pdf": fp_pdf.name,  # nom du fichier
+        "fullpath": fp_pdf.resolve(),  # chemin complet
+        "filesize": fp_pdf.stat().st_size,  # taille du fichier
+        digest: get_file_digest(fp_pdf, digest=digest),  # hash du fichier
+    }
+    # lire les métadonnées du PDF avec pikepdf
+    meta_pike = get_pdf_info_pikepdf(fp_pdf, verbose=verbose)
+    # ajouter les métadonnées PDF à celles du fichier
+    pdf_info.update(meta_pike)
+    return pdf_info</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.pdf_info.get_pdf_info_pikepdf" class="doc doc-heading">
+          <code class="highlight language-python">get_pdf_info_pikepdf(fp_pdf_in, verbose=False)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Renvoie les infos du PDF en utilisant pikepdf.</p>
+<p>Les infos incluent un sous-ensemble des métadonnées du PDF.</p>
+<h4 id="src.preprocess.pdf_info.get_pdf_info_pikepdf--parameters">Parameters</h4>
+<p>fp_pdf_in: Path
+    Chemin du fichier PDF à traiter.
+verbose: boolean, defaults to False
+    Si True, des warnings sont émis à chaque anomalie constatée dans les
+    métadonnées du PDF.</p>
+<h4 id="src.preprocess.pdf_info.get_pdf_info_pikepdf--returns">Returns</h4>
+<p>infos: dict
+    Dictionnaire contenant les infos du PDF.</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\pdf_info.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_pdf_info_pikepdf(fp_pdf_in: Path, verbose: bool = False) -&gt; dict:
+    """Renvoie les infos du PDF en utilisant pikepdf.
+
+    Les infos incluent un sous-ensemble des métadonnées du PDF.
+
+    Parameters
+    ----------
+    fp_pdf_in: Path
+        Chemin du fichier PDF à traiter.
+    verbose: boolean, defaults to False
+        Si True, des warnings sont émis à chaque anomalie constatée dans les
+        métadonnées du PDF.
+
+    Returns
+    -------
+    infos: dict
+        Dictionnaire contenant les infos du PDF.
+    """
+    with pikepdf.open(fp_pdf_in) as f_pdf:
+        with f_pdf.open_metadata(set_pikepdf_as_editor=False) as meta:
+            # lire les métadonnées stockées en XMP ("nouveau" format)
+            meta_base = {k: v for k, v in meta.items()}
+            if verbose:
+                try:
+                    logging.info(
+                        f"{fp_pdf_in.name}: métadonnées XMP brutes: {f_pdf.Root.Metadata.read_bytes().decode()}"
+                    )
+                except AttributeError:
+                    logging.warning(
+                        f"{fp_pdf_in.name}: absence de métadonnées XMP brutes"
+                    )
+                logging.info(f"{fp_pdf_in.name}: métadonnées XMP: {meta_base}")
+            # lire les métadonnées stockées dans docinfo (ancien format)
+            meta.load_from_docinfo(f_pdf.docinfo)
+            # NB: load_from_docinfo() peut lever un UserWarning, qui est alors inclus dans le log de ce script
+            # &lt;https://github.com/pikepdf/pikepdf/blob/94c50cd408b214f7569a717c3409e36b7a996769/src/pikepdf/models/metadata.py#L438&gt;
+            # ex: "UserWarning: The metadata field /MetadataDate with value 'pikepdf.String("D:20230117110535+01'00'")' has no XMP equivalent, so it was discarded"
+            meta_doci = {k: v for k, v in meta.items()}
+            if verbose:
+                logging.info(f"{fp_pdf_in.name}: docinfo: {repr(f_pdf.docinfo)}")
+                logging.info(f"{fp_pdf_in.name}: métadonnées XMP+docinfo: {meta_doci}")
+            # comparaison des métadonnées: XMP seul vs XMP mis à jour avec docinfo
+            base_keys = set(meta_base.keys())
+            doci_keys = set(meta_doci.keys())
+            # vérifier que la lecture de docinfo n'a pas supprimé de champ aux métadonnées XMP
+            assert (base_keys - doci_keys) == set()
+            # vérifier que les champs chargés depuis docinfo n'ont modifié aucune valeur de champ XMP
+            # (pas de modification / écrasement, condition plus forte que supra)
+            for key, value in meta_base.items():
+                if key.endswith("Date"):
+                    # traitement spécifique pour les dates: gestion de différents formats + tolérance de 2h pour les timezones
+                    base_v = datetime.fromisoformat(
+                        value.replace("Z", "+00:00")
+                    ).astimezone(tz=TZ_FRA)
+                    doci_v = datetime.fromisoformat(
+                        meta_doci[key].replace("Z", "+00:00")
+                    ).astimezone(tz=TZ_FRA)
+                    # base_eq_doci = abs(base_v - doci_v) &lt;= timedelta(hours=1)  # si besoin de permissivité
+                    base_eq_doci = doci_v == base_v
+                else:
+                    # comparaison par défaut: égalité stricte
+                    base_v = value
+                    doci_v = meta_doci[key]
+                    base_eq_doci = doci_v == base_v
+                if not base_eq_doci:
+                    logging.warning(
+                        f"{fp_pdf_in}: metadata: {key}={base_v} (xmp) vs {doci_v} (docinfo)"
+                    )
+    if verbose:
+        logging.info(f"{fp_pdf_in}: pike:finalmetadata: {meta}")
+    # sélection des champs et fixation de leur ordre
+    infos = {
+        "nb_pages": len(f_pdf.pages),  # nombre de pages
+        # métadonnées PDF
+        "creatortool": meta.get("xmp:CreatorTool", ""),  # string
+        "producer": meta.get("pdf:Producer", ""),  # string
+        "createdate": meta.get("xmp:CreateDate", None),  # date
+        "modifydate": meta.get("xmp:ModifyDate", None),  # date
+    }
+    # analyse des dates
+    if infos["createdate"] is not None:
+        infos["createdate"] = datetime.fromisoformat(infos["createdate"]).astimezone(
+            tz=TZ_FRA
+        )
+    if infos["modifydate"] is not None:
+        infos["modifydate"] = datetime.fromisoformat(infos["modifydate"]).astimezone(
+            tz=TZ_FRA
+        )
+    # WIP regarder si des champs sont toujours/souvent/jamais renseignés
+    if meta.get("dc:format", None) is not None:
+        assert meta.get("dc:format", None) == "application/pdf"
+    #
+    return infos</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.preprocess.process_metadata"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.preprocess.process_metadata--traiter-les-metadonnees-des-fichiers-pdf">Traiter les métadonnées des fichiers PDF.</h2>
+<p>Les traitements permettent de:
+* détecter les fichiers doublons,
+* déterminer si le PDF est du texte ou image,
+* déterminer si le PDF contient des tampons de télétransmission en haut des pages,
+* déterminer si le PDF contient une dernière page qui est l'accusé de réception de la télétransmission.</p>
+<p>La liste des tiers de transmission agréés pour @ctes est sur
+<a href="https://www.collectivites-locales.gouv.fr/sites/default/files/migration/2019_09_13_liste_operateurs_transmission_0.pdf">https://www.collectivites-locales.gouv.fr/sites/default/files/migration/2019_09_13_liste_operateurs_transmission_0.pdf</a> .</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.process_metadata.guess_badocr" class="doc doc-heading">
+          <code class="highlight language-python">guess_badocr(df_meta)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détermine si le fichier contient une couche OCR de piètre qualité.</p>
+<p>Arrive quand le champ "creatortool" vaut "Image Capture Plus".</p>
+<h4 id="src.preprocess.process_metadata.guess_badocr--parameters">Parameters</h4>
+<p>df_meta: pd.DataFrame
+    Métadonnées des fichiers PDF</p>
+<h4 id="src.preprocess.process_metadata.guess_badocr--returns">Returns</h4>
+<p>df_mmod: pd.DataFrame
+    Métadonnées enrichies d'une nouvelle colonne "guess_badocr"</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\process_metadata.py</code></summary>
+            <pre class="highlight"><code class="language-python">def guess_badocr(df_meta: pd.DataFrame) -&gt; pd.DataFrame:
+    """Détermine si le fichier contient une couche OCR de piètre qualité.
+
+    Arrive quand le champ "creatortool" vaut "Image Capture Plus".
+
+    Parameters
+    ----------
+    df_meta: pd.DataFrame
+        Métadonnées des fichiers PDF
+
+    Returns
+    -------
+    df_mmod: pd.DataFrame
+        Métadonnées enrichies d'une nouvelle colonne "guess_badocr"
+    """
+    has_badocr = (
+        (
+            # "Image Capture Plus"
+            df_meta["creatortool"].str.strip()
+            == "Image Capture Plus"
+        )
+        | (
+            # "Adobe PSL 1.2e for Canon" (ou 1.1e, 1.3e)
+            df_meta["producer"]
+            .str.strip()
+            .str.startswith("Adobe PSL")
+        )
+        | (
+            # "Canon"
+            (df_meta["producer"].str.strip() == "")
+            &amp; (df_meta["creatortool"].str.strip() == "Canon")
+        )
+    )
+    df_mmod = df_meta.assign(guess_badocr=has_badocr)
+    return df_mmod</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.process_metadata.guess_dernpage_transmission" class="doc doc-heading">
+          <code class="highlight language-python">guess_dernpage_transmission(df_meta)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détermine si la dernière page est un accusé de réception de télétransmission.</p>
+<p>Permet de traiter certains arrêtés recueillis après leur télétransmission.</p>
+<h4 id="src.preprocess.process_metadata.guess_dernpage_transmission--parameters">Parameters</h4>
+<p>df_meta: pd.DataFrame
+    Métadonnées des fichiers PDF</p>
+<h4 id="src.preprocess.process_metadata.guess_dernpage_transmission--returns">Returns</h4>
+<p>df_mmod: pd.DataFrame
+    Métadonnées enrichies d'une nouvelle colonne "guess_dernpage"</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\process_metadata.py</code></summary>
+            <pre class="highlight"><code class="language-python">def guess_dernpage_transmission(df_meta: pd.DataFrame) -&gt; pd.DataFrame:
+    """Détermine si la dernière page est un accusé de réception de télétransmission.
+
+    Permet de traiter certains arrêtés recueillis après leur télétransmission.
+
+    Parameters
+    ----------
+    df_meta: pd.DataFrame
+        Métadonnées des fichiers PDF
+
+    Returns
+    -------
+    df_mmod: pd.DataFrame
+        Métadonnées enrichies d'une nouvelle colonne "guess_dernpage"
+    """
+    has_dernpage = (
+        # @ctes (toute la période?)
+        df_meta["producer"]
+        == "iText 2.1.7 by 1T3XT"
+    )
+    df_mmod = df_meta.assign(guess_dernpage=has_dernpage)
+    return df_mmod</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.process_metadata.guess_duplicates_meta" class="doc doc-heading">
+          <code class="highlight language-python">guess_duplicates_meta(df_meta, hash_fn='blake2b')</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détermine si les fichiers PDF sont des doublons à partir de leurs métadonnées.</p>
+<h4 id="src.preprocess.process_metadata.guess_duplicates_meta--parameters">Parameters</h4>
+<p>df_meta : pd.DataFrame
+    Métadonnées des fichiers PDF
+hash_fn : str
+    Nom de la fonction de hachage, doit être un nom de colonne du DataFrame
+    de métadonnées.</p>
+<h4 id="src.preprocess.process_metadata.guess_duplicates_meta--returns">Returns</h4>
+<p>df_mmod: pd.DataFrame
+    Métadonnées des fichiers PDF, avec des colonnes booléennes "dup_*" indiquant
+    les fichiers doublons.</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\process_metadata.py</code></summary>
+            <pre class="highlight"><code class="language-python">def guess_duplicates_meta(df_meta: pd.DataFrame, hash_fn: str = "blake2b"):
+    """Détermine si les fichiers PDF sont des doublons à partir de leurs métadonnées.
+
+    Parameters
+    ----------
+    df_meta : pd.DataFrame
+        Métadonnées des fichiers PDF
+    hash_fn : str
+        Nom de la fonction de hachage, doit être un nom de colonne du DataFrame
+        de métadonnées.
+
+    Returns
+    -------
+    df_mmod: pd.DataFrame
+        Métadonnées des fichiers PDF, avec des colonnes booléennes "dup_*" indiquant
+        les fichiers doublons.
+    """
+    # détection stricte: doublons sur toutes les infos (sauf "pdf" et "fullpath")
+    # (trop de faux négatifs?)
+    cols_dups_allinfo = [
+        # infos fichier
+        "filesize",
+        "nb_pages",
+        # métadonnées pdf
+        "creatortool",
+        "producer",
+        "createdate",
+        "modifydate",
+    ]
+    s_dups_allinfo = _guess_duplicates(df_meta, cols_dups_allinfo)
+    df_mmod = df_meta.assign(dup_allinfo=s_dups_allinfo)
+
+    # détection lâche: doublons sur la date de création
+    # (trop de faux positifs)
+    cols_dups_createdate = ["createdate"]
+    s_dups_createdate = _guess_duplicates(df_mmod, cols_dups_createdate)
+    df_mmod = df_mmod.assign(dup_createdate=s_dups_createdate)
+
+    # détection basée sur le hachage des fichiers
+    cols_dups_hash = [hash_fn]
+    s_dups_hash = _guess_duplicates(df_mmod, cols_dups_hash)
+    df_mmod = df_mmod.assign(dup_hash=s_dups_hash)
+
+    #
+    return df_mmod</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.process_metadata.guess_pdftext" class="doc doc-heading">
+          <code class="highlight language-python">guess_pdftext(df_meta)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détermine si le fichier est un PDF texte (ou "numérique natif").</p>
+<h4 id="src.preprocess.process_metadata.guess_pdftext--parameters">Parameters</h4>
+<p>df_meta: pd.DataFrame
+    Métadonnées des fichiers PDF</p>
+<h4 id="src.preprocess.process_metadata.guess_pdftext--returns">Returns</h4>
+<p>df_mmod: pd.DataFrame
+    Métadonnées enrichies d'une nouvelle colonne "guess_pdftext"</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\process_metadata.py</code></summary>
+            <pre class="highlight"><code class="language-python">def guess_pdftext(df_meta: pd.DataFrame) -&gt; pd.DataFrame:
+    """Détermine si le fichier est un PDF texte (ou "numérique natif").
+
+    Parameters
+    ----------
+    df_meta: pd.DataFrame
+        Métadonnées des fichiers PDF
+
+    Returns
+    -------
+    df_mmod: pd.DataFrame
+        Métadonnées enrichies d'une nouvelle colonne "guess_pdftext"
+    """
+    is_pdftext = (
+        # "Microsoft® Word 2010", "Microsoft® Word 2013", "Microsoft® Word pour Microsoft 365"
+        df_meta["creatortool"].str.startswith("Microsoft® Word")
+        # "Writer" (OpenOffice, LibreOffice)
+        | (df_meta["creatortool"] == "Writer")
+    )
+    df_mmod = df_meta.assign(guess_pdftext=is_pdftext)
+    return df_mmod</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.process_metadata.guess_tampon_transmission" class="doc doc-heading">
+          <code class="highlight language-python">guess_tampon_transmission(df_meta)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détermine si le haut des pages contient des tampons de transmission électronique.</p>
+<p>Permet de traiter certains arrêtés recueillis après leur télétransmission.</p>
+<h4 id="src.preprocess.process_metadata.guess_tampon_transmission--parameters">Parameters</h4>
+<p>df_meta: pd.DataFrame
+    Métadonnées des fichiers PDF</p>
+<h4 id="src.preprocess.process_metadata.guess_tampon_transmission--returns">Returns</h4>
+<p>df_mmod: pd.DataFrame
+    Métadonnées enrichies d'une nouvelle colonne "guess_tampon"</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\process_metadata.py</code></summary>
+            <pre class="highlight"><code class="language-python">def guess_tampon_transmission(df_meta: pd.DataFrame) -&gt; pd.DataFrame:
+    """Détermine si le haut des pages contient des tampons de transmission électronique.
+
+    Permet de traiter certains arrêtés recueillis après leur télétransmission.
+
+    Parameters
+    ----------
+    df_meta: pd.DataFrame
+        Métadonnées des fichiers PDF
+
+    Returns
+    -------
+    df_mmod: pd.DataFrame
+        Métadonnées enrichies d'une nouvelle colonne "guess_tampon"
+    """
+    has_stamp = ~(
+        # faux positif: MS 365 + iText utilisé pour ajouter la signature
+        df_meta["producer"]
+        == "Microsoft® Word pour Microsoft 365; modified using iText® 5.5.9 ©2000-2015 iText Group NV (AGPL-version)"
+    ) &amp; (
+        df_meta["producer"].str.endswith(
+            # tampon en haut à droite: tiers de télétransmission S2LOW (2019-06-14 - ..) et Berger Levrault (2021-02-08)
+            "; modified using iText® 7.1.5 ©2000-2019 iText Group NV (AGPL-version)"
+        )
+        | df_meta["producer"].str.endswith(
+            # tampon en haut à droite: tiers de télétransmission S2LOW (.. - 2019-02-11)
+            "; modified using iText® 5.5.12 ©2000-2017 iText Group NV (AGPL-version)"
+        )
+        | df_meta["producer"].str.endswith(
+            # tampon en bas à gauche (quel tiers?): "; modified using iText® 5.5.9 ©2000-2015 iText Group NV (AGPL-version)" (sans MS 365)
+            "; modified using iText® 5.5.9 ©2000-2015 iText Group NV (AGPL-version)"
+        )
+    )
+    #
+    df_mmod = df_meta.assign(guess_tampon=has_stamp)
+    return df_mmod</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.preprocess.separate_pages"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.preprocess.separate_pages--charge-le-texte-des-documents-dans-un-dataframe">Charge le texte des documents dans un DataFrame.</h2>
+<p>Chaque ligne correspond à une page d'un document.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.preprocess.separate_pages.create_pages_dataframe" class="doc doc-heading">
+          <code class="highlight language-python">create_pages_dataframe(df_meta)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Charger le texte des documents dans un DataFrame.</p>
+<p>Une entrée par page de document.</p>
+<h4 id="src.preprocess.separate_pages.create_pages_dataframe--parameters">Parameters</h4>
+<p>df_meta: pd.DataFrame
+    Métadonnées des documents.</p>
+<h4 id="src.preprocess.separate_pages.create_pages_dataframe--returns">Returns</h4>
+<p>df_txts: pd.DataFrame
+    Tableau contenant le texte des documents, séparé par page.</p>
+
+          <details class="quote">
+            <summary> <code>src\preprocess\separate_pages.py</code></summary>
+            <pre class="highlight"><code class="language-python">def create_pages_dataframe(
+    df_meta: pd.DataFrame,
+) -&gt; pd.DataFrame:
+    """Charger le texte des documents dans un DataFrame.
+
+    Une entrée par page de document.
+
+    Parameters
+    ----------
+    df_meta: pd.DataFrame
+        Métadonnées des documents.
+
+    Returns
+    -------
+    df_txts: pd.DataFrame
+        Tableau contenant le texte des documents, séparé par page.
+    """
+    page_txts = []
+    for df_row in df_meta.itertuples():
+        if pd.isna(df_row.fullpath_txt):
+            # créer une entrée vide par page du PDF
+            pages = [
+                {
+                    # métadonnées de la page
+                    "pagenum": i,
+                    # texte de la page
+                    "pagetxt": None,
+                }
+                for i in range(1, df_row.nb_pages + 1)
+            ]
+        else:
+            # créer une entrée par page de texte
+            doc_txt = load_pages_text(df_row.fullpath_txt)
+            # vérifier que le fichier TXT contient autant de pages que le PDF
+            try:
+                assert len(doc_txt) == df_row.nb_pages
+            except AssertionError:
+                print(repr(df_row))
+                print(
+                    f"{len(doc_txt)} pages de texte != {df_row.nb_pages} pages dans le fichier PDF"
+                )
+                raise
+            # pour chaque page, charger le texte
+            pages = [
+                {
+                    # métadonnées de la page
+                    "pagenum": i,
+                    # texte de la page
+                    "pagetxt": page_txt,
+                }
+                for i, page_txt in enumerate(doc_txt, start=1)
+            ]
+        # dupliquer les métadonnées du fichier PDF et du TXT, dans chaque entrée de page
+        doc_rows = [
+            {x: getattr(df_row, x) for x in COLS_DOC}
+            | page  # python &gt;= 3.9 (dict union)
+            for page in pages
+        ]
+        # vérifier que le nombre de pages de texte extrait est inférieur ou égal au nombre de pages du PDF
+        # (certaines pages peuvent être blanches, ne contenir que des images ou photos...)
+        # TODO vérifier redondance avec l'assertion ci-dessus?
+        assert len(doc_rows) &lt;= df_row.nb_pages
+        page_txts.extend(doc_rows)
+    df_txts = pd.DataFrame.from_records(page_txts)
+    df_txts = df_txts.astype(dtype=DTYPE_NTXT_PAGES)
+    return df_txts</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../domain_knowledge/" class="btn btn-neutral float-left" title="Domain Knowledge"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../process/" class="btn btn-neutral float-right" title="Process">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../domain_knowledge/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../process/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

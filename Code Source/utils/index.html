@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Utils - Geo Arrêtés</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Utils";
+        var mkdocs_page_input_path = "Code Source\\utils.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Geo Arrêtés
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Index</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Code Source</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../domain_knowledge/">Domain Knowledge</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../preprocess/">Preprocess</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../process/">Process</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../quality/">Quality</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Utils</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#src.utils.file_utils">file_utils</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.utils.file_utils--fonctions-utiles-pour-la-gestion-des-fichiers">Fonctions utiles pour la gestion des fichiers.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.utils.file_utils.get_file_digest">get_file_digest()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.utils.file_utils.get_file_digest--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.utils.file_utils.get_file_digest--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.utils.str_date">str_date</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.utils.str_date--reconnaissance-et-mise-en-forme-des-dates">Reconnaissance et mise en forme des dates.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.utils.str_date.process_date_brute">process_date_brute()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.utils.str_date.process_date_brute--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.utils.str_date.process_date_brute--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.utils.text_utils">text_utils</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.utils.text_utils--fonctions-utilitaires-generiques-pour-le-texte">Fonctions utilitaires génériques pour le texte.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.utils.text_utils.normalize_string">normalize_string()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.utils.text_utils.normalize_string--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.utils.text_utils.normalize_string--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.utils.text_utils.remove_accents">remove_accents()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.utils.text_utils.remove_accents--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.utils.text_utils.remove_accents--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.utils.txt_format">txt_format</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.utils.txt_format--charger-les-fichiers-de-texte-extraits-des-pdf-natifs-ou-non">Charger les fichiers de texte extraits des PDF, natifs ou non.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.utils.txt_format.load_pages_text">load_pages_text()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.utils.txt_format.load_pages_text--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.utils.txt_format.load_pages_text--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Notebooks</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Notebooks/notebooks/">Notebooks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Scripts</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Scripts/scripts/">Scripts</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Geo Arrêtés</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Code Source</li>
+      <li class="breadcrumb-item active">Utils</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="utils">Utils</h1>
+<p>Diverses fonctions utilitaires.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.utils.file_utils"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.utils.file_utils--fonctions-utiles-pour-la-gestion-des-fichiers">Fonctions utiles pour la gestion des fichiers.</h2>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.utils.file_utils.get_file_digest" class="doc doc-heading">
+          <code class="highlight language-python">get_file_digest(fp_pdf, digest='blake2b', digest_size=10)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extraire le hachage d'un fichier avec la fonction <code>digest</code>.</p>
+<p>Fonctionne pour Python &gt;= 3.8, mais le code pourra être simplifié
+pour Python &gt;= 3.11 quand ce sera la version minimale requise par
+les principaux projets.</p>
+<h4 id="src.utils.file_utils.get_file_digest--parameters">Parameters</h4>
+<p>fp_pdf : Path
+    Chemin du fichier PDF à traiter.
+digest : str
+    Nom de la fonction de hachage à utiliser, "sha1" par défaut.
+digest_size : int
+    Taille du digest (blake2b, sinon ignoré).</p>
+<h4 id="src.utils.file_utils.get_file_digest--returns">Returns</h4>
+<p>fd_hexdigest : str
+    Hachage du fichier.</p>
+
+          <details class="quote">
+            <summary> <code>src\utils\file_utils.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_file_digest(
+    fp_pdf: Path, digest: str = "blake2b", digest_size: int = 10
+) -&gt; str:
+    """Extraire le hachage d'un fichier avec la fonction `digest`.
+
+    Fonctionne pour Python &gt;= 3.8, mais le code pourra être simplifié
+    pour Python &gt;= 3.11 quand ce sera la version minimale requise par
+    les principaux projets.
+
+    Parameters
+    ----------
+    fp_pdf : Path
+        Chemin du fichier PDF à traiter.
+    digest : str
+        Nom de la fonction de hachage à utiliser, "sha1" par défaut.
+    digest_size : int
+        Taille du digest (blake2b, sinon ignoré).
+
+    Returns
+    -------
+    fd_hexdigest : str
+        Hachage du fichier.
+    """
+    with open(fp_pdf, mode="rb") as f:
+        # python &gt;= 3.8
+        if digest == "blake2b":
+            # constructeur direct privilégié car plus rapide (doc module hashlib)
+            # et digest_size configurable pour les algos blake2
+            f_digest = hashlib.blake2b(digest_size=digest_size)
+        else:
+            f_digest = hashlib.new(digest)
+        while chunk := f.read(8192):
+            f_digest.update(chunk)
+        # alternative en 1 ligne (remplace les 3 lignes précédentes) pour python &gt;= 3.11:
+        # f_digest = hashlib.file_digest(f, digest)
+    fd_hexdigest = f_digest.hexdigest()
+    return fd_hexdigest</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.utils.str_date"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.utils.str_date--reconnaissance-et-mise-en-forme-des-dates">Reconnaissance et mise en forme des dates.</h2>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.utils.str_date.process_date_brute" class="doc doc-heading">
+          <code class="highlight language-python">process_date_brute(arr_date)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extraire les différents champs d'une date brute et la normaliser.</p>
+<h4 id="src.utils.str_date.process_date_brute--parameters">Parameters</h4>
+<p>arr_date: str
+    Date brute</p>
+<h4 id="src.utils.str_date.process_date_brute--returns">Returns</h4>
+<p>arr_date_norm: str
+    Date normalisée dd/mm/yyyy</p>
+
+          <details class="quote">
+            <summary> <code>src\utils\str_date.py</code></summary>
+            <pre class="highlight"><code class="language-python">def process_date_brute(arr_date: str) -&gt; Dict:
+    """Extraire les différents champs d'une date brute et la normaliser.
+
+    Parameters
+    ----------
+    arr_date: str
+        Date brute
+
+    Returns
+    -------
+    arr_date_norm: str
+        Date normalisée dd/mm/yyyy
+    """
+    if m_date_p := P_DATE_PREC.search(arr_date):
+        m_dict = m_date_p.groupdict()
+        # traitement spécifique pour le mois, qui peut être écrit en lettres
+        mm_norm = MAP_MOIS.get(
+            m_dict["mm"].lower().replace("é", "e").replace("û", "u"), m_dict["mm"]
+        )
+        # TODO ajouter au log une erreur si la date est incorrecte
+        return f"{m_dict['dd']:&gt;02}/{mm_norm:&gt;02}/{m_dict['yyyy']}"
+    else:
+        return None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.utils.text_utils"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.utils.text_utils--fonctions-utilitaires-generiques-pour-le-texte">Fonctions utilitaires génériques pour le texte.</h2>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.utils.text_utils.normalize_string" class="doc doc-heading">
+          <code class="highlight language-python">normalize_string(raw_str, num=False, apos=False, hyph=False, spaces=False)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Normaliser une chaîne de caractères.</p>
+<p>Remplacer les séquences d'espaces par une unique espace.</p>
+<h4 id="src.utils.text_utils.normalize_string--parameters">Parameters</h4>
+<p>raw_str: str
+    Chaîne de caractères à normaliser</p>
+<h4 id="src.utils.text_utils.normalize_string--returns">Returns</h4>
+<p>nor_str: str
+    Chaîne de caractères normalisée</p>
+
+          <details class="quote">
+            <summary> <code>src\utils\text_utils.py</code></summary>
+            <pre class="highlight"><code class="language-python">def normalize_string(
+    raw_str: str,
+    num: bool = False,
+    apos: bool = False,
+    hyph: bool = False,
+    spaces: bool = False,
+) -&gt; str:
+    """Normaliser une chaîne de caractères.
+
+    Remplacer les séquences d'espaces par une unique espace.
+
+    Parameters
+    ----------
+    raw_str: str
+        Chaîne de caractères à normaliser
+
+    Returns
+    -------
+    nor_str: str
+        Chaîne de caractères normalisée
+    """
+    nor_str = raw_str
+    if num:
+        # graphies de "numéro"
+        nor_str = re.sub(RE_NO, "n°", nor_str, flags=re.MULTILINE | re.IGNORECASE)
+    if hyph:
+        # remplace les tirets (hyphens) par un "en dash" et les moins (minus) par un simple "-"
+        # observation sur le stock: les PDF texte contiennent généralement des "en dash" (\u2013),
+        # les PDF OCRisés contiennent "em dash" (\u2014)
+        for hyphen in HYPHENS:
+            nor_str = nor_str.replace(hyphen, "-")  # was: "–")  # \u2013 en dash
+        for minus in MINUSES:
+            nor_str = nor_str.replace(minus, "-")
+        # supprimer les "soft hyphen" (qui sont invisibles au rendu)
+        nor_str = nor_str.replace("\u00ad", "")
+    if apos:
+        # apostrophes
+        for single_quote in APOSTROPHES:
+            nor_str = nor_str.replace(single_quote, "'")  # \u0027
+        # et supprimer les éventuels espaces inutiles après une apostrophe
+        nor_str = re.sub(r"[']\s*", "'", nor_str, flags=re.MULTILINE)
+    # end TODO
+    if spaces:
+        # remplacer toutes les suites d'espaces (de tous types) par une espace simple
+        nor_str = re.sub(r"\s+", " ", nor_str, flags=re.MULTILINE).strip()
+    return nor_str</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.utils.text_utils.remove_accents" class="doc doc-heading">
+          <code class="highlight language-python">remove_accents(str_in)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Enlève les accents d'une chaîne de caractères.</p>
+<p>cf. <a href="https://stackoverflow.com/a/517974">https://stackoverflow.com/a/517974</a></p>
+<h4 id="src.utils.text_utils.remove_accents--parameters">Parameters</h4>
+<p>str_in: string
+    Chaîne de caractères pouvant contenir des caractères combinants
+    (accents, cédille etc.).</p>
+<h4 id="src.utils.text_utils.remove_accents--returns">Returns</h4>
+<p>str_out: string
+    Chaîne de caractères sans caractère combinant.</p>
+
+          <details class="quote">
+            <summary> <code>src\utils\text_utils.py</code></summary>
+            <pre class="highlight"><code class="language-python">def remove_accents(str_in: str) -&gt; str:
+    """Enlève les accents d'une chaîne de caractères.
+
+    cf. &lt;https://stackoverflow.com/a/517974&gt;
+
+    Parameters
+    ----------
+    str_in: string
+        Chaîne de caractères pouvant contenir des caractères combinants
+        (accents, cédille etc.).
+
+    Returns
+    -------
+    str_out: string
+        Chaîne de caractères sans caractère combinant.
+    """
+    nfkd_form = unicodedata.normalize("NFKD", str_in)
+    return "".join([c for c in nfkd_form if not unicodedata.combining(c)])</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.utils.txt_format"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.utils.txt_format--charger-les-fichiers-de-texte-extraits-des-pdf-natifs-ou-non">Charger les fichiers de texte extraits des PDF, natifs ou non.</h2>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.utils.txt_format.load_pages_text" class="doc doc-heading">
+          <code class="highlight language-python">load_pages_text(fp_txt, page_break='\x0c')</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Charge le texte d'un document, découpé en pages.</p>
+<h4 id="src.utils.txt_format.load_pages_text--parameters">Parameters</h4>
+<p>fp_txt: Path
+    Chemin du fichier contenant le texte d'un document.
+page_break: string, defaults to ""
+    Séparateur de pages. Les fichiers PDF texte produits par l'export
+    direct depuis les logiciels de traitement de texte contiennent
+    déjà un "form feed" (""), comme les fichiers "sidecar" produits
+    par ocrmypdf (pour les fichiers PDF image).</p>
+<h4 id="src.utils.txt_format.load_pages_text--returns">Returns</h4>
+<p>doc_txt: List[str]
+    Texte du document, par page.</p>
+
+          <details class="quote">
+            <summary> <code>src\utils\txt_format.py</code></summary>
+            <pre class="highlight"><code class="language-python">def load_pages_text(fp_txt: Path, page_break: str = "\f") -&gt; List[str]:
+    """Charge le texte d'un document, découpé en pages.
+
+    Parameters
+    ----------
+    fp_txt: Path
+        Chemin du fichier contenant le texte d'un document.
+    page_break: string, defaults to "\f"
+        Séparateur de pages. Les fichiers PDF texte produits par l'export
+        direct depuis les logiciels de traitement de texte contiennent
+        déjà un "form feed" ("\f"), comme les fichiers "sidecar" produits
+        par ocrmypdf (pour les fichiers PDF image).
+
+    Returns
+    -------
+    doc_txt: List[str]
+        Texte du document, par page.
+    """
+    with open(fp_txt) as f_txt:
+        doc_txt = f_txt.read().split(page_break)
+    return doc_txt</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../quality/" class="btn btn-neutral float-left" title="Quality"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../Notebooks/notebooks/" class="btn btn-neutral float-right" title="Notebooks">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../quality/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../Notebooks/notebooks/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

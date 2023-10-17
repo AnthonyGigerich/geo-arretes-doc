@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Geo Arrêtés</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Index";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> Geo Arrêtés
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href=".">Index</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#installation-commune-ubuntu-natif-ou-windows-subsystem-for-linux">Installation commune: Ubuntu (natif ou Windows Subsystem for Linux)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#resolution-de-problemes">Résolution de problèmes</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#utilisation">Utilisation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#project-layout">Project layout</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Code Source</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="Code%20Source/domain_knowledge/">Domain Knowledge</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="Code%20Source/preprocess/">Preprocess</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="Code%20Source/process/">Process</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="Code%20Source/quality/">Quality</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="Code%20Source/utils/">Utils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Notebooks</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="Notebooks/notebooks/">Notebooks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Scripts</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="Scripts/scripts/">Scripts</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">Geo Arrêtés</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Index</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="index">Index</h1>
+<p>Analyse et géolocalisation des arrêtés de périls sur le territoire de la métropole Aix-Marseille Provence.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="installation-commune-ubuntu-natif-ou-windows-subsystem-for-linux">Installation commune: Ubuntu (natif ou Windows Subsystem for Linux)</h3>
+<p>Dans le terminal WSL (ou l'invite de commande Ubuntu):</p>
+<ol>
+<li>
+<p>Installer le modèle de Tesseract pour le français</p>
+<ul>
+<li><code>sudo apt update</code></li>
+<li><code>sudo apt install tesseract-ocr-fra</code></li>
+</ul>
+</li>
+<li>
+<p><a href="https://github.com/conda-forge/miniforge#mambaforge">Installer Mambaforge</a>:</p>
+<ul>
+<li><code>curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"</code></li>
+<li><code>bash Mambaforge-$(uname)-$(uname -m).sh</code></li>
+</ul>
+</li>
+<li>
+<p>Créer un environnement virtuel conda à partir du fichier de spécifications <code>environment-prod.yml</code></p>
+<p><code>sh
+mamba env create --file environment-prod.yml</code></p>
+</li>
+<li>
+<p>Installer ocrmypdf (maintenant que ses dépendances ont été installées à la
+création de l'environnement).</p>
+</li>
+</ol>
+<pre><code class="language-sh">conda activate geo-arretes
+# installer ocrmypdf qui ne pouvait pas être installé en même temps que ses dépendances...
+mamba install ocrmypdf
+# depuis le dossier où se trouve le code source du projet
+pip install -e .
+# désactiver et réactiver l'environnement virtuel car tesseract, installé par ocrmypdf,
+# a déposé ses fichiers de langage dans un sous-dossier
+# `$HOME/mambaforge/envs/geo-arretes/share/tessdata`
+# (sinon ils ne seront visibles...)
+conda deactivate
+</code></pre>
+<h3 id="resolution-de-problemes">Résolution de problèmes</h3>
+<p>A la création de l'environnement conda, si l'installation d'un paquet échoue avec une erreur étrange, eg. le paquet <code>vs2015_runtime</code>, suivre la procédure dans <a href="https://stackoverflow.com/a/65728405">https://stackoverflow.com/a/65728405</a></p>
+<p>Sur des serveurs Windows 2019 ou plus anciens, il peut être nécessaire d'installer le WSL via une procédure manuelle décrite <a href="https://learn.microsoft.com/en-us/windows/wsl/install-manual">ici</a>.</p>
+<p>En résumé il faut :</p>
+<ul>
+<li>Activer la fonctionnalité Windows "Windows Subsystem for Linux" via la commande <code>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux</code>. Un redémarrage du système est nécessaire.</li>
+<li>Télécharger la distribution <a href="https://learn.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions">Ubuntu 20.04</a></li>
+<li>Renommer le fichier <code>.AppxBundle</code> téléchargé en <code>.zip</code> : <code>Rename-Item .\CanonicalGroupLimited.UbunutuonWindows_2004.2021.825.0.AppxBundle .\ubuntu.zip</code></li>
+<li>Extraire le fichier zip dans un dossier <code>ubuntu</code> : <code>Expand-Archive .\ubuntu.zip .\ubuntu</code></li>
+<li>Se déplacer dans le dossier <code>ubuntu</code> : <code>cd .\ubuntu</code></li>
+<li>Lancer l'archive correspondant à votre architecture (par exemple, x64) : <code>Expand-Archive .\Ubuntu_2004.2021.825.0_x64.zip .\ubuntu</code></li>
+<li>Ajouter le dossier <code>Ubuntu</code> à la variable d'environnement <code>PATH</code> : <code>$userenv = [System.Environment]::GetEnvironmentVariable("Path", "User")</code> puis <code>[System.Environment]::SetEnvironmentVariable("PATH", $userenv + ";D:\Logiciels\Ubuntu\Ubuntu", "User")</code></li>
+<li>Redémarrer le terminal PowerShell, l'ouvrir en tant qu'administrateur</li>
+<li>Lancer le fichier <code>ubuntu.exe</code> contenu dans le dossier <code>Ubuntu</code> : <code>.\ubuntu\ubuntu\ubuntu.exe</code></li>
+</ul>
+<h2 id="utilisation">Utilisation</h2>
+<p>Dans le terminal WSL (ou l'invite de commande Ubuntu):</p>
+<p>Les dossier d'entrées et de sorties sont configurables dans le fichier <code>scripts/process.sh</code>.</p>
+<pre><code class="language-sh">conda activate geo-arretes
+scripts/process.sh
+</code></pre>
+<h2 id="project-layout">Project layout</h2>
+<pre><code class="language-sh">data/                   # Datasets
+    raw/                    # The original, immutable data dump.
+    processed/              # The final, canonical data sets for modeling.
+    interim/                # Intermediate data that has been transformed.
+    external/               # Data from third party sources.
+docs/                   # Documentation
+    index.md                # The documentation homepage.
+    ...                     # Other markdown pages, images and other files .
+    ...                     # that follow the same structure as the project.
+notebooks/              # Jupyter notebooks
+    explore_actes.ipynb     # TODO
+    test_pds_image.ipynb    # TODO
+src/                    # Source code of this project.
+    domain_knowledge/       # Regex pattern and dictionaries used for data extraction.
+    preprocess/             # Functions for preprocessing PDF files.
+    process/                # Functions for processing PDF files.
+    quality/                # Functions for quality control.
+    utils/                  # Utility functions.
+.gitignore              # Specifies intentionally untracked files to ignore.
+environment-prod.yml    # Conda environment file for production.
+environment.yml         # Conda environment file for development.
+LICENSE                 # MIT Licence.
+README.md               # The top level README for developers using this project.
+setup.py                # Make this project pip installable with `pip install -e`
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="Code%20Source/domain_knowledge/" class="btn btn-neutral float-right" title="Domain Knowledge">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+      <span><a href="Code%20Source/domain_knowledge/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.5.3
+Build Date UTC : 2023-10-17 13:54:14.535596+00:00
+-->

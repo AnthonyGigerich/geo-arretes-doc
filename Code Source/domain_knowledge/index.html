@@ -1,0 +1,3404 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Domain Knowledge - Geo Arrêtés</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Domain Knowledge";
+        var mkdocs_page_input_path = "Code Source\\domain_knowledge.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Geo Arrêtés
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Index</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Code Source</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Domain Knowledge</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.actes">actes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.actes--actes">Actes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.actes.is_accusedereception_page">is_accusedereception_page()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.actes.is_accusedereception_page--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.actes.is_stamped_page">is_stamped_page()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.actes.is_stamped_page--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.adresse">adresse</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.adresse--adresse">Adresse</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.adresse.create_adresse_normalisee">create_adresse_normalisee()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.adresse.create_adresse_normalisee--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.adresse.create_adresse_normalisee--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.adresse.normalize_adresse">normalize_adresse()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.adresse.normalize_adresse--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.adresse.normalize_adresse--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.adresse.process_adresse_brute">process_adresse_brute()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.adresse.process_adresse_brute--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.adresse.process_adresse_brute--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.agences_immo">agences_immo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.agences_immo--agence-immobiliere">Agence immobilière</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.agences_immo.normalize_nom_cabinet">normalize_nom_cabinet()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.agences_immo.normalize_nom_cabinet--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.agences_immo.normalize_nom_cabinet--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.arrete">arrete</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.arrete--arretes-de-collectivite-territoriale">Arrétés de collectivité territoriale</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.arrete.contains_arrete">contains_arrete()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.contains_arrete--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.contains_arrete--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.arrete.contains_article">contains_article()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.contains_article--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.contains_article--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.arrete.contains_considerant">contains_considerant()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.contains_considerant--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.contains_considerant--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.arrete.contains_vu">contains_vu()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.contains_vu--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.contains_vu--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.arrete.get_commune_maire">get_commune_maire()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.get_commune_maire--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.get_commune_maire--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.arrete.get_date">get_date()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.get_date--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.get_date--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.arrete.get_nom">get_nom()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.get_nom--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.get_nom--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.arrete.get_num">get_num()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.get_num--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.arrete.get_num--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadastre">cadastre</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadastre--references-cadastrales">Références cadastrales</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadastre.generate_refcadastrale_norm">generate_refcadastrale_norm()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadastre.generate_refcadastrale_norm--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadastre.generate_refcadastrale_norm--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadastre.get_parcelles">get_parcelles()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadastre.get_parcelles--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadastre.get_parcelles--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire">cadre_reglementaire</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire--cadre-reglementaire">Cadre réglementaire</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cc">contains_cc()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cc--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cc_art">contains_cc_art()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cc_art--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cch">contains_cch()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cch--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cch_L111">contains_cch_L111()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cch_L111--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cch_L511">contains_cch_L511()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cch_L511--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cch_L521">contains_cch_L521()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cch_L521--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cch_L541">contains_cch_L541()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cch_L541--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cch_R511">contains_cch_R511()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cch_R511--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cgct">contains_cgct()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cgct--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cgct_art">contains_cgct_art()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.contains_cgct_art--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.parse_refs_reglement">parse_refs_reglement()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.parse_refs_reglement--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.cadre_reglementaire.parse_refs_reglement--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.codes_geo">codes_geo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.codes_geo--code-geographiques">Code géographiques</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.codes_geo.get_codeinsee">get_codeinsee()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.codes_geo.get_codeinsee--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.codes_geo.get_codeinsee--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.codes_geo.get_codepostal">get_codepostal()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.codes_geo.get_codepostal--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.codes_geo.get_codepostal--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.codes_geo.load_codes_insee_amp">load_codes_insee_amp()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.codes_geo.load_codes_insee_amp--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.codes_geo.load_codes_postaux_amp">load_codes_postaux_amp()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.codes_geo.load_codes_postaux_amp--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.codes_geo.normalize_ville">normalize_ville()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.codes_geo.normalize_ville--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.codes_geo.normalize_ville--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.codes_geo.simplify_commune">simplify_commune()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.codes_geo.simplify_commune--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.codes_geo.simplify_commune--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.doc_relations">doc_relations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.doc_relations--relations-entre-documents">Relations entre documents.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.doc_template">doc_template</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.doc_template--modeles-de-documents-des-arretes">Modèles de documents des arrêtés.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.logement">logement</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.logement--logement">Logement</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.logement.get_adr_doc">get_adr_doc()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.logement.get_adr_doc--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.logement.get_adr_doc--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.logement.get_gest">get_gest()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.logement.get_gest--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.logement.get_proprio">get_proprio()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.logement.get_proprio--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.logement.get_syndic">get_syndic()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.logement.get_syndic--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.typologie_securite">typologie_securite</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.typologie_securite--typologie">Typologie</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.typologie_securite.get_classe">get_classe()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.typologie_securite.get_classe--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.typologie_securite.get_classe--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.typologie_securite.get_demo">get_demo()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.typologie_securite.get_demo--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.typologie_securite.get_equ_com">get_equ_com()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.typologie_securite.get_equ_com--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.typologie_securite.get_int_hab">get_int_hab()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.typologie_securite.get_int_hab--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.domain_knowledge.typologie_securite.get_urgence">get_urgence()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.typologie_securite.get_urgence--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.domain_knowledge.typologie_securite.get_urgence--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../preprocess/">Preprocess</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../process/">Process</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../quality/">Quality</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/">Utils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Notebooks</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Notebooks/notebooks/">Notebooks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Scripts</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Scripts/scripts/">Scripts</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Geo Arrêtés</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Code Source</li>
+      <li class="breadcrumb-item active">Domain Knowledge</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="domain-knowledge">Domain Knowledge</h1>
+<p>Definit les expressions régulières et les dictionnaires utilisés pour l'extraction des données.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.domain_knowledge.actes"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.domain_knowledge.actes--actes">Actes</h2>
+<p>Traces de télétransmission de documents par @ctes.</p>
+<p>Tampon et page d'accusé de réception.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.actes.is_accusedereception_page" class="doc doc-heading">
+          <code class="highlight language-python">is_accusedereception_page(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient un accusé de réception.</p>
+<h4 id="src.domain_knowledge.actes.is_accusedereception_page--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>has_stamp: bool
+    True si le texte contient un tampon de transmission</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\actes.py</code></summary>
+            <pre class="highlight"><code class="language-python">def is_accusedereception_page(page_txt: str) -&gt; bool:
+    """Détecte si une page contient un accusé de réception.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient un tampon de transmission
+    """
+    return P_ACCUSE.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.actes.is_stamped_page" class="doc doc-heading">
+          <code class="highlight language-python">is_stamped_page(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient un tampon (encadré) de transmission @actes.</p>
+<h4 id="src.domain_knowledge.actes.is_stamped_page--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>has_stamp: bool
+    True si le texte contient un tampon de transmission</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\actes.py</code></summary>
+            <pre class="highlight"><code class="language-python">def is_stamped_page(page_txt: str) -&gt; bool:
+    """Détecte si une page contient un tampon (encadré) de transmission @actes.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient un tampon de transmission
+    """
+    return P_STAMP.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.domain_knowledge.adresse"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.domain_knowledge.adresse--adresse">Adresse</h2>
+<p>Reconnaissance et traitement des adresses.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.adresse.create_adresse_normalisee" class="doc doc-heading">
+          <code class="highlight language-python">create_adresse_normalisee(adr_num, adr_ind, adr_voie, adr_compl, adr_cpostal, adr_ville)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Créer une adresse normalisée.</p>
+<p>L'adresse normalisée rassemble les champs extraits de l'adresse brute, et ailleurs
+dans le document si nécessaire (eg. autorité prenant l'arrêté, template).</p>
+<p>Le complément d'adresse est ignoré.</p>
+<h4 id="src.domain_knowledge.adresse.create_adresse_normalisee--parameters">Parameters</h4>
+<p>adr_num: str
+    Numéro de l'adresse
+adr_ind: str
+    Indice de l'adresse
+adr_voie: str
+    Nom de la voie (incluant le type)
+adr_compl: str
+    Complément d'adresse
+adr_cpostal: str
+    Code postal
+adr_ville: str
+    Commune</p>
+<h4 id="src.domain_knowledge.adresse.create_adresse_normalisee--returns">Returns</h4>
+<p>adr_norm: str
+    Adresse normalisée</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\adresse.py</code></summary>
+            <pre class="highlight"><code class="language-python">def create_adresse_normalisee(
+    adr_num: str,
+    adr_ind: str,
+    adr_voie: str,
+    adr_compl: str,
+    adr_cpostal: str,
+    adr_ville: str,
+) -&gt; str:
+    """Créer une adresse normalisée.
+
+    L'adresse normalisée rassemble les champs extraits de l'adresse brute, et ailleurs
+    dans le document si nécessaire (eg. autorité prenant l'arrêté, template).
+
+    Le complément d'adresse est ignoré.
+
+    Parameters
+    ----------
+    adr_num: str
+        Numéro de l'adresse
+    adr_ind: str
+        Indice de l'adresse
+    adr_voie: str
+        Nom de la voie (incluant le type)
+    adr_compl: str
+        Complément d'adresse
+    adr_cpostal: str
+        Code postal
+    adr_ville: str
+        Commune
+
+    Returns
+    -------
+    adr_norm: str
+        Adresse normalisée
+    """
+    # logique BAN: tous les champs sont séparés par une espace, sauf le numéro de voie et l'indice de répétition:
+    # (ex: 6a rue Victor Hugo 13001 Marseille) (rmq_iteration)
+    adr_num_ind = "".join(
+        x
+        for x in [
+            adr_num,
+            adr_ind,
+        ]
+        if pd.notna(x)
+    )
+    # tout concaténer, sauf le complément d'adresse
+    adr_norm = " ".join(
+        x
+        for x in [
+            adr_num_ind,
+            adr_voie,
+            # adr_compl,  # TODO normaliser: accents etc?
+            adr_cpostal,
+            adr_ville,
+        ]
+        if pd.notna(x)
+    )
+    return adr_norm</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.adresse.normalize_adresse" class="doc doc-heading">
+          <code class="highlight language-python">normalize_adresse(adresse)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Normalise les champs d'adresse.</p>
+<p>Les formes normales de chaque champ sont:
+- indice de répétition en minuscules,
+- voie en minuscules,
+- ville en forme canonique tirée du fichier des codes communes INSEE.</p>
+<p>Les espaces superflues ont normalement été supprimées en amont.</p>
+<h4 id="src.domain_knowledge.adresse.normalize_adresse--parameters">Parameters</h4>
+<p>adresse: Dict[str, str]
+    Adresse dont les champs sont bruts.</p>
+<h4 id="src.domain_knowledge.adresse.normalize_adresse--returns">Returns</h4>
+<p>adresse_norm: Dict[str, str]
+    Adresse dont les champs sont normalisés.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\adresse.py</code></summary>
+            <pre class="highlight"><code class="language-python">def normalize_adresse(adresse: Dict[str, str]) -&gt; Dict[str, str]:
+    """Normalise les champs d'adresse.
+
+    Les formes normales de chaque champ sont:
+    - indice de répétition en minuscules,
+    - voie en minuscules,
+    - ville en forme canonique tirée du fichier des codes communes INSEE.
+
+    Les espaces superflues ont normalement été supprimées en amont.
+
+    Parameters
+    ----------
+    adresse: Dict[str, str]
+        Adresse dont les champs sont bruts.
+
+    Returns
+    -------
+    adresse_norm: Dict[str, str]
+        Adresse dont les champs sont normalisés.
+    """
+    # normalisation simple des champs (redondant et inutile ?)
+    adresse_norm = {
+        k: (
+            normalize_string(v, num=True, apos=True, hyph=True, spaces=True)
+            if pd.notna(v)
+            else v
+        )
+        for k, v in adresse.items()
+    }
+    # indice de répétition: mettre en minuscules
+    if pd.notna(adresse_norm["ind"]):
+        adresse_norm["ind"] = adresse_norm["ind"].lower()
+    # voie: mettre en minuscules
+    if pd.notna(adresse_norm["voie"]):
+        adresse_norm["voie"] = adresse_norm["voie"].lower()
+    # complément: mettre en minuscules (2023-06-26 FL)
+    if pd.notna(adresse_norm["compl"]):
+        adresse_norm["compl"] = adresse_norm["compl"].lower()
+    # code postal: tel quel (déjà normalisé en amont: espace entre code département et le reste)
+    # ville: enlever le numéro d'arrondissement (Marseille), ex: "Marseille 1er" ;
+    # la forme a déjà été normalisée (ou après? TODO si après, remettre la normalisation ici?)
+    if pd.notna(adresse_norm["ville"]):
+        adresse_norm["ville"] = re.sub(
+            P_ARRONDISSEMENTS, "", adresse_norm["ville"]
+        ).strip()
+    #
+    return adresse_norm</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.adresse.process_adresse_brute" class="doc doc-heading">
+          <code class="highlight language-python">process_adresse_brute(adr_ad_brute)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extraire une ou plusieurs adresses d'une adresse brute.</p>
+<p>Chaque adresse comporte différents champs: numéro, indicateur,
+voie, (éventuellement complement d'adresse,) code postal,
+commune.</p>
+<h4 id="src.domain_knowledge.adresse.process_adresse_brute--parameters">Parameters</h4>
+<p>adr_ad_brute: str
+    Adresse brute</p>
+<h4 id="src.domain_knowledge.adresse.process_adresse_brute--returns">Returns</h4>
+<p>adresses: list(dict)
+    Liste d'adresses</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\adresse.py</code></summary>
+            <pre class="highlight"><code class="language-python">def process_adresse_brute(adr_ad_brute: str) -&gt; List[Dict]:
+    """Extraire une ou plusieurs adresses d'une adresse brute.
+
+    Chaque adresse comporte différents champs: numéro, indicateur,
+    voie, (éventuellement complement d'adresse,) code postal,
+    commune.
+
+    Parameters
+    ----------
+    adr_ad_brute: str
+        Adresse brute
+
+    Returns
+    -------
+    adresses: list(dict)
+        Liste d'adresses
+    """
+    if adr_ad_brute is None:
+        adr_fields = {
+            "adr_num": None,
+            "adr_ind": None,
+            "adr_voie": None,
+            "adr_compl": None,
+            "adr_cpostal": None,
+            "adr_ville": None,
+        }
+        # TODO liste contenant un seul dict aux champs tous None, ou liste vide (à gérer) ?
+        return [adr_fields]
+
+    adresses = []
+    # ajouter une butée droite pour le lookahead
+    # FIXME contournement sale
+    adr_ad_brute = adr_ad_brute + " - "
+    m_adresse = P_ADRESSE_NG.match(adr_ad_brute)  # was: ".search()"
+    if m_adresse:
+        logging.warning(f"process_adresse_brute: match: {m_adresse.groupdict()}")
+    # si aucune adresse extraite, on renvoie aussi une liste contenant une unique adresse vide
+    if not m_adresse:
+        logging.error(f"aucune adresse extraite de {adr_ad_brute} par P_ADRESSE_NG")
+        # TODO factoriser avec le cas adr_ad_brute is None
+        adr_fields = {
+            "adr_num": None,
+            "adr_ind": None,
+            "adr_voie": None,
+            "adr_compl": None,
+            "adr_cpostal": None,
+            "adr_ville": None,
+        }
+        # TODO liste contenant un seul dict aux champs tous None, ou liste vide (à gérer) ?
+        return [adr_fields]
+
+    logging.warning(
+        f"process_adresse_brute: {m_adresse.group(0)}\n{m_adresse.groups()}\n{m_adresse.groupdict()}"
+    )
+    # récupérer les champs communs à toutes les adresses groupées: complément,
+    # code postal et commune
+    adr_compl = " / ".join(
+        m_adresse[x].strip() for x in ["compl_ini", "compl_fin"] if m_adresse[x]
+    )  # FIXME concat?
+    if adr_compl:
+        logging.warning(
+            f"complément d'adresse trouvé, pré: {m_adresse['compl_ini']} ; post: {m_adresse['compl_fin']} dans adr_ad_brute: {adr_ad_brute}"
+        )
+    cpostal = m_adresse["code_postal"]
+    if cpostal:
+        # code postal: supprimer une éventuelle espace après le département (ex: 13 001)
+        cpostal = cpostal.replace(" ", "")
+    commune = m_adresse["commune"]
+    if commune:
+        # commune: remplacer par la forme canonique (pour les communes AMP)
+        commune = normalize_ville(commune)
+
+    # traitement spécifique pour la voie: type + nom (legacy?)
+    # adr_voie = m_adresse["voie"].strip()
+    # if adr_voie == "":
+    #     adr_voie = None
+
+    # extraire la ou les adresses courtes, et les séparer s'il y en a plusieurs
+    # on est obligé de réextraire depuis l'adresse brute, car le RE_VOIE est défini
+    # avec un contexte droit (positive lookahead)
+    # (pénible, mais pour le moment ça fonctionne comme ça)
+    adr_lists = list(P_NUM_IND_VOIE_LIST.finditer(adr_ad_brute))
+    # obligatoire: une liste d'adresses courtes (ou une adresse courte)
+    try:
+        assert len(adr_lists) &gt;= 1
+    except AssertionError:
+        raise ValueError(f"Aucune adresse courte détectée dans {adr_ad_brute}")
+    # on vérifie qu'on travaille exactement au même endroit, pour se positionner au bon endroit
+    try:
+        assert adr_lists[0].group(0) == m_adresse["num_ind_voie_list"]
+    except AssertionError:
+        logging.warning(
+            f"Problème sur {m_adresse.groupdict()}\nadr_list.group(0): {adr_lists[0].group(0)} ; {m_adresse['num_ind_voie_list']}"
+        )
+        """raise ValueError(
+            f"Problème sur {m_adresse.groupdict()}\nadr_list.group(0): {adr_lists[0].group(0)} ; {m_adresse['num_ind_voie_list']}"
+        )"""
+    for adr_list in adr_lists:
+        # on ne peut pas complètement verrouiller avec adr_list.end(), car il manquerait à nouveau le contexte droit (grmpf)
+        adrs = list(P_NUM_IND_VOIE_NG.finditer(adr_ad_brute, adr_list.start()))
+        if not adrs:
+            raise ValueError(f"Aucune adresse NUM_IND_VOIE trouvée dans {adr_list}")
+        for adr in adrs:
+            # pour chaque adresse courte,
+            # - récupérer la voie
+            voie = adr["voie"]
+            # - récupérer la liste (optionnelle) de numéros et d'indicateurs (optionnels)
+            num_ind_list = adr["num_ind_list"]
+            if not num_ind_list:
+                # pas de liste de numéros et indicateurs:
+                logging.warning(f"adresse courte en voie seule: {adr.group(0)}")
+                # ajouter une adresse sans numéro (ni indicateur)
+                adr_fields = {
+                    "adr_num": None,
+                    "adr_ind": None,
+                    "adr_voie": voie,
+                    "adr_compl": adr_compl,
+                    "adr_cpostal": cpostal,
+                    "adr_ville": commune,
+                }
+                adresses.append(adr_fields)
+            else:
+                # on a une liste de numéros (et éventuellement indicateurs)
+                num_inds = list(P_NUM_IND.finditer(num_ind_list))
+                if len(num_inds) &gt; 1:
+                    logging.warning(f"plusieurs numéros et indicateurs: {num_inds}")
+                for num_ind in num_inds:
+                    # pour chaque numéro et éventuel indicateur
+                    num_ind_str = num_ind.group(0)
+                    # extraire le numéro
+                    m_nums = list(P_NUM_VOIE.finditer(num_ind_str))
+                    assert len(m_nums) == 1
+                    num = m_nums[0].group(0)
+                    # extraire le ou les éventuels indicateurs
+                    m_inds = list(P_IND_VOIE.finditer(num_ind_str))
+                    if not m_inds:
+                        # pas d'indicateur: adresse avec juste un numéro
+                        adr_fields = {
+                            "adr_num": num,
+                            "adr_ind": None,
+                            "adr_voie": voie,
+                            "adr_compl": adr_compl,
+                            "adr_cpostal": cpostal,
+                            "adr_ville": commune,
+                        }
+                        adresses.append(adr_fields)
+                    else:
+                        # au moins un indicateur
+                        if len(m_inds) &gt; 1:
+                            logging.warning(f"plusieurs indicateurs: {m_inds}")
+                        for m_ind in m_inds:
+                            # pour chaque indicateur, adresse avec numéro et indicateur
+                            ind = m_ind.group(0)
+                            adr_fields = {
+                                "adr_num": num,
+                                "adr_ind": ind,
+                                "adr_voie": voie,
+                                "adr_compl": adr_compl,
+                                "adr_cpostal": cpostal,
+                                "adr_ville": commune,
+                            }
+                            adresses.append(adr_fields)
+        # WIP code postal disparait
+        if (cpostal is None) and P_CP.search(adr_ad_brute):
+            # WIP survient pour les adresses doubles: la fin de la 2e adresse est envoyée en commune
+            # TODO détecter et analyser spécifiquement les adresses doubles
+            logging.warning(
+                f"aucun code postal extrait de {adr_ad_brute}: {m_adresse.groupdict()}"
+            )
+        # end WIP code postal
+    return adresses</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.domain_knowledge.agences_immo"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.domain_knowledge.agences_immo--agence-immobiliere">Agence immobilière</h2>
+<p>Reconnaissance des noms d'agences immobilières.</p>
+<ul>
+<li>Certains noms de syndics incluent "syndic", les capturer explicitement avant le motif général permet d'éviter les conflits.</li>
+<li>Lister les syndics connus peut accélérer et mieux focaliser la capture.</li>
+</ul>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.agences_immo.normalize_nom_cabinet" class="doc doc-heading">
+          <code class="highlight language-python">normalize_nom_cabinet(nom_cab)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Normalise un nom de cabinet.</p>
+<p>La version actuelle requiert une déclaration explicite dans
+LISTE_NOMS_CABINETS, mais des traitements de normalisation
+standard pourraient être définis en complément.</p>
+<h4 id="src.domain_knowledge.agences_immo.normalize_nom_cabinet--parameters">Parameters</h4>
+<p>nom_cab: str
+    Nom du cabinet ou de l'agence.</p>
+<h4 id="src.domain_knowledge.agences_immo.normalize_nom_cabinet--returns">Returns</h4>
+<p>nom_nor: str
+    Nom normalisé.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\agences_immo.py</code></summary>
+            <pre class="highlight"><code class="language-python">def normalize_nom_cabinet(nom_cab: str) -&gt; str:
+    """Normalise un nom de cabinet.
+
+    La version actuelle requiert une déclaration explicite dans
+    LISTE_NOMS_CABINETS, mais des traitements de normalisation
+    standard pourraient être définis en complément.
+
+    Parameters
+    ----------
+    nom_cab: str
+        Nom du cabinet ou de l'agence.
+
+    Returns
+    -------
+    nom_nor: str
+        Nom normalisé.
+    """
+    if nom_cab is None:
+        return None
+    #
+    for re_nom, norm in LISTE_NOMS_CABINETS.items():
+        # dès qu'on a un match sur un nom de cabinet, on renvoie la forme normalisée
+        if re.search(re_nom, nom_cab, flags=(re.IGNORECASE | re.MULTILINE)):
+            return norm
+    else:
+        # si aucun match, on renvoie le nom en entrée tel quel
+        return nom_cab</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.domain_knowledge.arrete"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.domain_knowledge.arrete--arretes-de-collectivite-territoriale">Arrétés de collectivité territoriale</h2>
+<p>Structure d'un arrêté de collectivité territoriale.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.arrete.contains_arrete" class="doc doc-heading">
+          <code class="highlight language-python">contains_arrete(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient ARRET(E|ONS).</p>
+<h4 id="src.domain_knowledge.arrete.contains_arrete--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document</p>
+<h4 id="src.domain_knowledge.arrete.contains_arrete--returns">Returns</h4>
+<p>has_stamp: bool
+    True si le texte contient ARRET(E|ONS)</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\arrete.py</code></summary>
+            <pre class="highlight"><code class="language-python">def contains_arrete(page_txt: str) -&gt; bool:
+    """Détecte si une page contient ARRET(E|ONS).
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient ARRET(E|ONS)
+    """
+    return P_ARRETONS.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.arrete.contains_article" class="doc doc-heading">
+          <code class="highlight language-python">contains_article(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient un Article.</p>
+<h4 id="src.domain_knowledge.arrete.contains_article--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document</p>
+<h4 id="src.domain_knowledge.arrete.contains_article--returns">Returns</h4>
+<p>has_stamp: bool
+    True si le texte contient un Article</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\arrete.py</code></summary>
+            <pre class="highlight"><code class="language-python">def contains_article(page_txt: str) -&gt; bool:
+    """Détecte si une page contient un Article.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient un Article
+    """
+    return P_ARTICLE.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.arrete.contains_considerant" class="doc doc-heading">
+          <code class="highlight language-python">contains_considerant(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient un CONSIDERANT.</p>
+<h4 id="src.domain_knowledge.arrete.contains_considerant--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document</p>
+<h4 id="src.domain_knowledge.arrete.contains_considerant--returns">Returns</h4>
+<p>has_stamp: bool
+    True si le texte contient un CONSIDERANT</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\arrete.py</code></summary>
+            <pre class="highlight"><code class="language-python">def contains_considerant(page_txt: str) -&gt; bool:
+    """Détecte si une page contient un CONSIDERANT.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient un CONSIDERANT
+    """
+    return P_CONSIDERANT.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.arrete.contains_vu" class="doc doc-heading">
+          <code class="highlight language-python">contains_vu(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient un VU.</p>
+<h4 id="src.domain_knowledge.arrete.contains_vu--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document</p>
+<h4 id="src.domain_knowledge.arrete.contains_vu--returns">Returns</h4>
+<p>has_stamp: bool
+    True si le texte contient un VU</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\arrete.py</code></summary>
+            <pre class="highlight"><code class="language-python">def contains_vu(page_txt: str) -&gt; bool:
+    """Détecte si une page contient un VU.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient un VU
+    """
+    return P_VU.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.arrete.get_commune_maire" class="doc doc-heading">
+          <code class="highlight language-python">get_commune_maire(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extrait le nom de la commune précédé de la mention du maire.</p>
+<h4 id="src.domain_knowledge.arrete.get_commune_maire--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document</p>
+<h4 id="src.domain_knowledge.arrete.get_commune_maire--returns">Returns</h4>
+<p>nom_commune: str | None
+    Nom de la commune si le texte contient une mention du maire, None sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\arrete.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_commune_maire(page_txt: str) -&gt; bool:
+    """Extrait le nom de la commune précédé de la mention du maire.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+
+    Returns
+    -------
+    nom_commune: str | None
+        Nom de la commune si le texte contient une mention du maire, None sinon.
+    """
+    if match_mc := P_MAIRE_COMMUNE.search(page_txt):
+        com_maire = match_mc.group("commune")
+        # nettoyage de la valeur récupérée
+        if m_com_cln := M_MAIRE_COMMUNE_CLEANUP.search(com_maire):
+            com_maire = m_com_cln.group("maire_commune")
+        return com_maire
+    else:
+        return None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.arrete.get_date" class="doc doc-heading">
+          <code class="highlight language-python">get_date(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Récupère la date de l'arrêté.</p>
+<p>Actuellement, correspond à la date de signature, en fin d'arrêté.</p>
+<h4 id="src.domain_knowledge.arrete.get_date--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document</p>
+<h4 id="src.domain_knowledge.arrete.get_date--returns">Returns</h4>
+<p>doc_date: str
+    Date du document si trouvée, None sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\arrete.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_date(page_txt: str) -&gt; bool:
+    """Récupère la date de l'arrêté.
+
+    Actuellement, correspond à la date de signature, en fin d'arrêté.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+
+    Returns
+    -------
+    doc_date: str
+        Date du document si trouvée, None sinon.
+    """
+    if m_date_d := P_DATE_SIGNAT.search(page_txt):
+        return m_date_d.group("arr_date")
+    else:
+        return None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.arrete.get_nom" class="doc doc-heading">
+          <code class="highlight language-python">get_nom(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Récupère le nom de l'arrêté.</p>
+<h4 id="src.domain_knowledge.arrete.get_nom--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document</p>
+<h4 id="src.domain_knowledge.arrete.get_nom--returns">Returns</h4>
+<p>doc_nom: str
+    Nom de l'arrêté si trouvé, None sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\arrete.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_nom(page_txt: str) -&gt; bool:
+    """Récupère le nom de l'arrêté.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+
+    Returns
+    -------
+    doc_nom: str
+        Nom de l'arrêté si trouvé, None sinon.
+    """
+    # TODO nettoyer à gauche ("Dossier suivi par") et à droite: "\nNous,"
+    if m_nom := P_NOM_ARR.search(page_txt):
+        return m_nom.group("nom_arr")
+    else:
+        return None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.arrete.get_num" class="doc doc-heading">
+          <code class="highlight language-python">get_num(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Récupère le numéro de l'arrêté.</p>
+<h4 id="src.domain_knowledge.arrete.get_num--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document</p>
+<h4 id="src.domain_knowledge.arrete.get_num--returns">Returns</h4>
+<p>doc_num: str
+    Numéro de l'arrêté si trouvé, None sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\arrete.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_num(page_txt: str) -&gt; bool:
+    """Récupère le numéro de l'arrêté.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+
+    Returns
+    -------
+    doc_num: str
+        Numéro de l'arrêté si trouvé, None sinon.
+    """
+    if m_num := P_NUM_ARR.search(page_txt):
+        return m_num.group("num_arr")
+    elif m_num_fb := P_NUM_ARR_FALLBACK.search(page_txt):
+        return m_num_fb.group("num_arr")
+    else:
+        return None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.domain_knowledge.cadastre"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.domain_knowledge.cadastre--references-cadastrales">Références cadastrales</h2>
+<p>Reconnaissance et analyse de références cadastrales.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.cadastre.generate_refcadastrale_norm" class="doc doc-heading">
+          <code class="highlight language-python">generate_refcadastrale_norm(codeinsee, refcad, arr_pdf, adr_cpostal)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Génère une référence cadastrale normalisée à une entrée.</p>
+<h4 id="src.domain_knowledge.cadastre.generate_refcadastrale_norm--parameters">Parameters</h4>
+<p>codeinsee: string
+    Code INSEE de la commune.
+refcad: string
+    Référence cadastrale brute.
+arr_pdf: string
+    Nom du fichier PDF (pour exception)
+adr_cpostal: string
+    Code postal de la commune</p>
+<h4 id="src.domain_knowledge.cadastre.generate_refcadastrale_norm--returns">Returns</h4>
+<p>refcad: string
+    Référence cadastrale normalisée.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\cadastre.py</code></summary>
+            <pre class="highlight"><code class="language-python">def generate_refcadastrale_norm(
+    codeinsee: str, refcad: str, arr_pdf: str, adr_cpostal: str
+) -&gt; str:
+    """Génère une référence cadastrale normalisée à une entrée.
+
+    Parameters
+    ----------
+    codeinsee: string
+        Code INSEE de la commune.
+    refcad: string
+        Référence cadastrale brute.
+    arr_pdf: string
+        Nom du fichier PDF (pour exception)
+    adr_cpostal: string
+        Code postal de la commune
+
+    Returns
+    -------
+    refcad: string
+        Référence cadastrale normalisée.
+    """
+    # ajouter le préfixe du code insee
+    # TODO cas particulier pour Marseille: code commune par ardt + code quartier
+    if pd.isna(codeinsee):
+        codeinsee = ""  # TODO vérifier si le comportement qui en découle est ok (identifiant court, à compléter manuellement par le code insee)
+
+    # prendre la référence locale (commune)
+    if pd.isna(refcad):
+        refcad = None
+    elif m_mars := P_CAD_MARSEILLE_NG.search(refcad):
+        # on ne garde que le 1er match
+        # TODO gérer 2 ou plusieurs références cadastrales
+        # Marseille: code insee arrondissement + code quartier (3 chiffres) + section + parcelle
+        arrt = m_mars["arrt"]
+        if not arrt and not (codeinsee and codeinsee != "13055"):
+            # ni arrondissement ni code INSEE (différent de celui de tout Marseille)=&gt; générer une référence cadastrale courte
+            refcad = f"{m_mars['quar']}{m_mars['sec']:&gt;02}{m_mars['num']:&gt;04}"
+            logging.error(
+                f"{arr_pdf}: référence cadastrale incomplète (numéro d'arrondissement manquant à Marseille): {refcad}"
+            )
+        else:
+            # arrondissement ou code INSEE
+            if codeinsee and codeinsee != "13055":
+                # on a bien un code INSEE (différent du code INSEE pour tout Marseille), on peut donc l'utiliser
+                if arrt:
+                    # si on a aussi un numéro d'arrondissement, on vérifie que les deux sont cohérents
+                    try:
+                        assert codeinsee[-3:] == arrt
+                    except AssertionError:
+                        # FIXME améliorer le warning ; écrire une expectation sur le dataset final
+                        # 2023-03-06: 16 conflits
+                        logging.warning(
+                            f"{arr_pdf}: conflit entre code INSEE ({codeinsee}, via code postal {adr_cpostal}) et référence cadastrale {arrt}"
+                        )
+            else:
+                # on n'a un code d'arrondissement: reconstruire un code INSEE
+                codeinsee = f"13{arrt}"
+            # générer une référence cadastrale complète
+            refcad = (
+                f"{codeinsee}{m_mars['quar']}{m_mars['sec']:&gt;02}{m_mars['num']:&gt;04}"
+            )
+        # le code de section devrait être en majuscules ; émettre un warning sinon
+        # TODO ajouter au rapport d'erreur (réf normalisée produite + str en entrée)
+        if not m_mars["sec"].isupper():
+            logging.warning(
+                f"{arr_pdf}: référence cadastrale suspecte (code de section): {refcad}"
+            )
+    elif m_autr := P_CAD_AUTRES_NG.search(refcad):
+        # hors Marseille: code insee commune + 000 + section + parcelle
+        codequartier = "000"
+        refcad = f"{codeinsee}{codequartier}{m_autr['sec']:&gt;02}{m_autr['num']:&gt;04}"
+        # 2 vérifications:
+        # - le code de section devrait être en majuscules ; émettre un warning sinon
+        # TODO ajouter au rapport d'erreur (réf normalisée produite + str en entrée)
+        if not m_autr["sec"].isupper():
+            logging.warning(
+                f"{arr_pdf}: référence cadastrale suspecte (code de section): {refcad}"
+            )
+        # - si le code INSEE est en fait un code INSEE d'un arrondissement de Marseille,
+        # mais aucun code quartier n'a été repéré donc la référence cadastrale lue est
+        # une référence courte, comme dans d'autres communes
+        # TODO ajouter au rapport d'erreur (réf normalisée produite + str en entrée)
+        if codeinsee and (int(codeinsee) in range(13201, 13216)):
+            logging.warning(
+                f"{arr_pdf}: référence cadastrale suspecte (Marseille sans code quartier): {refcad}"
+            )
+    else:
+        refcad = None
+    return refcad</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.cadastre.get_parcelles" class="doc doc-heading">
+          <code class="highlight language-python">get_parcelles(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Récupère la ou les références de parcelles cadastrales.</p>
+<h4 id="src.domain_knowledge.cadastre.get_parcelles--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document</p>
+<h4 id="src.domain_knowledge.cadastre.get_parcelles--returns">Returns</h4>
+<p>id_parcelles: List[str]
+    Références d'une ou plusieurs parcelles cadastrales si détectées dans le texte,
+    liste vide sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\cadastre.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_parcelles(page_txt: str) -&gt; List[str]:
+    """Récupère la ou les références de parcelles cadastrales.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+
+    Returns
+    -------
+    id_parcelles: List[str]
+        Références d'une ou plusieurs parcelles cadastrales si détectées dans le texte,
+        liste vide sinon.
+    """
+    # NEW normalisation du texte
+    page_txt = normalize_string(page_txt, num=True, apos=True, hyph=True, spaces=True)
+    # end NEW
+    id_parcelles = []  # résultat
+
+    # WIP chercher le ou les empans distincts contenant au moins une référence à une parcelle
+    if matches := list(P_PARCELLE.finditer(page_txt)):
+        logging.warning(
+            f"{len(matches)} empans PARCELLE: {[x.group(0) for x in matches]}"
+        )
+        # WIP extraire plusieurs références
+        for m_parc in matches:
+            # liste des identifiants de parcelles
+            m_cad_str = m_parc.group("cadastre_id")
+            # WIP
+            if m_parcs_mrs := list(
+                P_CAD_MARSEILLE_NG.finditer(
+                    page_txt, m_parc.start("cadastre_id"), m_parc.end("cadastre_id")
+                )
+            ):
+                # essayer d'abord de repérer des références Marseille, plus longues et qui peuvent générer de faux positifs si analysées
+                # comme des références hors Marseille (ex: "208837 D0607 ET 208837 D0290" =&gt; "ET 2088" serait repéré comme une parcelle...)
+                m_parcs = m_parcs_mrs
+                if len(m_parcs) &gt; 1:
+                    logging.warning(
+                        f"{len(m_parcs)} parcelles (Marseille 1) dans {m_cad_str}: {[x.group(0) for x in m_parcs]}"
+                    )
+            elif m_parcs_aut := list(
+                P_CAD_SECNUM.finditer(
+                    page_txt, m_parc.start("cadastre_id"), m_parc.end("cadastre_id")
+                )
+            ):
+                # sinon essayer de repérer des références d'autres communes
+                m_parcs = m_parcs_aut
+                if len(m_parcs) &gt; 1:
+                    logging.warning(
+                        f"{len(m_parcs)} parcelles (toutes communes) dans {m_cad_str}: {[x.group(0) for x in m_parcs]}"
+                    )
+            else:
+                raise ValueError(
+                    f"Pas de référence retrouvée dans la zone? {m_cad_str}"
+                )
+            # end WIP
+            # RESUME HERE ! 2023-04-28
+            id_parcelles.append(m_cad_str)
+    elif (
+        False
+    ):  # matches := list(P_PARCELLE_MARSEILLE_NOCONTEXT.finditer(page_txt)):  # WIP
+        logging.warning(
+            f"{len(matches)} empans PARC_MRS: {[x.group(0) for x in matches]}"
+        )
+        for m_parc_mrs in matches:
+            # liste des identifiants de parcelles
+            m_cad_str = m_parc_mrs.group("cadastre_id")
+            # WIP
+            m_parcs = list(
+                P_CAD_MARSEILLE_NG.finditer(
+                    page_txt,
+                    m_parc_mrs.start("cadastre_id"),
+                    m_parc_mrs.end("cadastre_id"),
+                )
+            )
+            if len(m_parcs) &gt; 1:
+                logging.warning(
+                    f"{len(m_parcs)} parcelles (Marseille 2) dans {m_cad_str}: {[x.group(0) for x in m_parcs]}"
+                )
+            # end WIP
+            id_parcelles.append(m_cad_str)
+
+    return id_parcelles</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.domain_knowledge.cadre_reglementaire"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.domain_knowledge.cadre_reglementaire--cadre-reglementaire">Cadre réglementaire</h2>
+<p>Références au cadre réglementaire.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.cadre_reglementaire.contains_cc" class="doc doc-heading">
+          <code class="highlight language-python">contains_cc(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient une référence au Code Civil.</p>
+<h4 id="src.domain_knowledge.cadre_reglementaire.contains_cc--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>has_stamp: bool
+    True si le texte contient une référence au Code Civil.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\cadre_reglementaire.py</code></summary>
+            <pre class="highlight"><code class="language-python">def contains_cc(page_txt: str) -&gt; bool:
+    """Détecte si une page contient une référence au Code Civil.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient une référence au Code Civil.
+    """
+    return P_CC.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.cadre_reglementaire.contains_cc_art" class="doc doc-heading">
+          <code class="highlight language-python">contains_cc_art(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient une référence à des articles du Code Civil.</p>
+<h4 id="src.domain_knowledge.cadre_reglementaire.contains_cc_art--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>has_stamp: bool
+    True si le texte contient une référence à des articles du Code Civil.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\cadre_reglementaire.py</code></summary>
+            <pre class="highlight"><code class="language-python">def contains_cc_art(page_txt: str) -&gt; bool:
+    """Détecte si une page contient une référence à des articles du Code Civil.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient une référence à des articles du Code Civil.
+    """
+    return P_CC_ART.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.cadre_reglementaire.contains_cch" class="doc doc-heading">
+          <code class="highlight language-python">contains_cch(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient une référence au Code de la Construction et de l'Habitation.</p>
+<h4 id="src.domain_knowledge.cadre_reglementaire.contains_cch--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>has_stamp: bool
+    True si le texte contient une référence au Code de la Construction et de l'Habitation.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\cadre_reglementaire.py</code></summary>
+            <pre class="highlight"><code class="language-python">def contains_cch(page_txt: str) -&gt; bool:
+    """Détecte si une page contient une référence au Code de la Construction et de l'Habitation.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient une référence au Code de la Construction et de l'Habitation.
+    """
+    return P_CCH.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.cadre_reglementaire.contains_cch_L111" class="doc doc-heading">
+          <code class="highlight language-python">contains_cch_L111(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient une référence à l'article L111 du Code de la Construction et de l'Habitation.</p>
+<h4 id="src.domain_knowledge.cadre_reglementaire.contains_cch_L111--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>has_stamp: bool
+    True si le texte contient une référence à l'article L111 du Code de la Construction et de l'Habitation.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\cadre_reglementaire.py</code></summary>
+            <pre class="highlight"><code class="language-python">def contains_cch_L111(page_txt: str) -&gt; bool:
+    """Détecte si une page contient une référence à l'article L111 du Code de la Construction et de l'Habitation.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient une référence à l'article L111 du Code de la Construction et de l'Habitation.
+    """
+    return P_CCH_L111.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.cadre_reglementaire.contains_cch_L511" class="doc doc-heading">
+          <code class="highlight language-python">contains_cch_L511(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient une référence à l'article L511 du Code de la Construction et de l'Habitation.</p>
+<h4 id="src.domain_knowledge.cadre_reglementaire.contains_cch_L511--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>has_stamp: bool
+    True si le texte contient une référence à l'article L511 du Code de la Construction et de l'Habitation.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\cadre_reglementaire.py</code></summary>
+            <pre class="highlight"><code class="language-python">def contains_cch_L511(page_txt: str) -&gt; bool:
+    """Détecte si une page contient une référence à l'article L511 du Code de la Construction et de l'Habitation.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient une référence à l'article L511 du Code de la Construction et de l'Habitation.
+    """
+    return P_CCH_L511.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.cadre_reglementaire.contains_cch_L521" class="doc doc-heading">
+          <code class="highlight language-python">contains_cch_L521(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient une référence à l'article L521 du Code de la Construction et de l'Habitation.</p>
+<h4 id="src.domain_knowledge.cadre_reglementaire.contains_cch_L521--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>has_stamp: bool
+    True si le texte contient une référence à l'article L521 du Code de la Construction et de l'Habitation.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\cadre_reglementaire.py</code></summary>
+            <pre class="highlight"><code class="language-python">def contains_cch_L521(page_txt: str) -&gt; bool:
+    """Détecte si une page contient une référence à l'article L521 du Code de la Construction et de l'Habitation.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient une référence à l'article L521 du Code de la Construction et de l'Habitation.
+    """
+    return P_CCH_L521.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.cadre_reglementaire.contains_cch_L541" class="doc doc-heading">
+          <code class="highlight language-python">contains_cch_L541(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient une référence à l'article L541 du Code de la Construction et de l'Habitation.</p>
+<h4 id="src.domain_knowledge.cadre_reglementaire.contains_cch_L541--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>has_stamp: bool
+    True si le texte contient une référence à l'article L541 du Code de la Construction et de l'Habitation.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\cadre_reglementaire.py</code></summary>
+            <pre class="highlight"><code class="language-python">def contains_cch_L541(page_txt: str) -&gt; bool:
+    """Détecte si une page contient une référence à l'article L541 du Code de la Construction et de l'Habitation.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient une référence à l'article L541 du Code de la Construction et de l'Habitation.
+    """
+    return P_CCH_L541.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.cadre_reglementaire.contains_cch_R511" class="doc doc-heading">
+          <code class="highlight language-python">contains_cch_R511(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient une référence à l'article R511 du Code de la Construction et de l'Habitation.</p>
+<h4 id="src.domain_knowledge.cadre_reglementaire.contains_cch_R511--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>has_stamp: bool
+    True si le texte contient une référence à l'article R511 du Code de la Construction et de l'Habitation.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\cadre_reglementaire.py</code></summary>
+            <pre class="highlight"><code class="language-python">def contains_cch_R511(page_txt: str) -&gt; bool:
+    """Détecte si une page contient une référence à l'article R511 du Code de la Construction et de l'Habitation.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient une référence à l'article R511 du Code de la Construction et de l'Habitation.
+    """
+    return P_CCH_R511.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.cadre_reglementaire.contains_cgct" class="doc doc-heading">
+          <code class="highlight language-python">contains_cgct(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient une référence au Code Général des Collectivités Territoriales.</p>
+<h4 id="src.domain_knowledge.cadre_reglementaire.contains_cgct--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>has_stamp: bool
+    True si le texte contient une référence au Code Général des Collectivités Territoriales.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\cadre_reglementaire.py</code></summary>
+            <pre class="highlight"><code class="language-python">def contains_cgct(page_txt: str) -&gt; bool:
+    """Détecte si une page contient une référence au Code Général des Collectivités Territoriales.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient une référence au Code Général des Collectivités Territoriales.
+    """
+    return P_CGCT.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.cadre_reglementaire.contains_cgct_art" class="doc doc-heading">
+          <code class="highlight language-python">contains_cgct_art(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient une référence à des articles du Code Général des Collectivités Territoriales.</p>
+<h4 id="src.domain_knowledge.cadre_reglementaire.contains_cgct_art--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>has_stamp: bool
+    True si le texte contient une référence à des articles du Code Général des Collectivités Territoriales.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\cadre_reglementaire.py</code></summary>
+            <pre class="highlight"><code class="language-python">def contains_cgct_art(page_txt: str) -&gt; bool:
+    """Détecte si une page contient une référence à des articles du Code Général des Collectivités Territoriales.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    has_stamp: bool
+        True si le texte contient une référence à des articles du Code Général des Collectivités Territoriales.
+    """
+    return P_CGCT_ART.search(page_txt) is not None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.cadre_reglementaire.parse_refs_reglement" class="doc doc-heading">
+          <code class="highlight language-python">parse_refs_reglement(txt_body, span_beg, span_end)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Repère dans un texte des références au cadre réglementaire.</p>
+<h4 id="src.domain_knowledge.cadre_reglementaire.parse_refs_reglement--parameters">Parameters</h4>
+<p>txt_body: string
+    Corps de texte à analyser
+main_beg: int
+    Début de l'empan à analyser.
+main_end: int
+    Fin de l'empan à analyser.</p>
+<h4 id="src.domain_knowledge.cadre_reglementaire.parse_refs_reglement--returns">Returns</h4>
+<p>content: list
+    Liste d'empans de références</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\cadre_reglementaire.py</code></summary>
+            <pre class="highlight"><code class="language-python">def parse_refs_reglement(txt_body: str, span_beg: int, span_end: int) -&gt; list:
+    """Repère dans un texte des références au cadre réglementaire.
+
+    Parameters
+    ----------
+    txt_body: string
+        Corps de texte à analyser
+    main_beg: int
+        Début de l'empan à analyser.
+    main_end: int
+        Fin de l'empan à analyser.
+
+    Returns
+    -------
+    content: list
+        Liste d'empans de références
+    """
+    content = []
+    for p_reg, typ_reg in REG_TYP:
+        if matches := p_reg.finditer(txt_body, span_beg, span_end):
+            for match in matches:
+                content.append(
+                    {
+                        "span_beg": match.start(),
+                        "span_end": match.end(),
+                        "span_txt": match.group(0),
+                        "span_typ": typ_reg,
+                    }
+                )
+    return content</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.domain_knowledge.codes_geo"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.domain_knowledge.codes_geo--code-geographiques">Code géographiques</h2>
+<p>Accès aux codes géographiques (codes INSEE, codes postaux) des communes.</p>
+<p>TODO créer des modules similaires pour les autres bases de connaissances:
+* les variantes de graphies des communes (TODO),
+* une liste de syndics (TODO).</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.codes_geo.get_codeinsee" class="doc doc-heading">
+          <code class="highlight language-python">get_codeinsee(nom_commune, cpostal)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Récupérer le code INSEE d'une commune.</p>
+<p>Le code postal est utilisé pour les arrondissements de Marseille.</p>
+<h4 id="src.domain_knowledge.codes_geo.get_codeinsee--parameters">Parameters</h4>
+<p>nom_commune: string
+    Nom de la commune
+cpostal: string or None
+    Code postal, utile pour les arrondissements de Marseille</p>
+<h4 id="src.domain_knowledge.codes_geo.get_codeinsee--returns">Returns</h4>
+<p>codeinsee: string
+    Code INSEE de la commune.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\codes_geo.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_codeinsee(nom_commune: str, cpostal: str) -&gt; str:
+    """Récupérer le code INSEE d'une commune.
+
+    Le code postal est utilisé pour les arrondissements de Marseille.
+
+    Parameters
+    ----------
+    nom_commune: string
+        Nom de la commune
+    cpostal: string or None
+        Code postal, utile pour les arrondissements de Marseille
+
+    Returns
+    -------
+    codeinsee: string
+        Code INSEE de la commune.
+    """
+    if pd.isna(nom_commune):
+        return None
+
+    nom_commune = (
+        nom_commune.strip()
+    )  # TODO s'assurer que strip() est fait en amont, à l'extraction de la donnée ?
+    # vérifier que nom_commune est une graphie d'une commune de la métropole
+    try:
+        assert P_COMMUNES_AMP_ALLFORMS.match(nom_commune) or nom_commune in (
+            "la Gardanne",
+        )  # FIXME: arrêtés mal lus
+    except AssertionError:
+        # TODO détecter et exclure les communes hors Métropole en amont?
+        logging.warning(
+            f"Impossible de déterminer le code INSEE pour {nom_commune}, hors métropole?"
+        )
+        # raise
+        return None
+
+    if (
+        nom_commune.lower().startswith("marseille")
+        and pd.notna(cpostal)
+        and (cpostal in CP_MARSEILLE)
+    ):
+        # NB: c'est une approximation !
+        # TODO expectation: aucun codeinsee 13055 dans le dataset final (ou presque)
+        codeinsee = "132" + cpostal[-2:]
+    else:
+        # TODO éprouver et améliorer la robustesse
+        codeinsee = COM2INSEE.get(simplify_commune(nom_commune), None)
+        if not codeinsee:
+            logging.warning(
+                f"get_codeinsee: pas de code trouvé pour {(nom_commune, cpostal)} (simplify_commune={simplify_commune(nom_commune)})."
+            )
+
+    return codeinsee</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.codes_geo.get_codepostal" class="doc doc-heading">
+          <code class="highlight language-python">get_codepostal(nom_commune, codeinsee)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Récupérer le code postal d'une commune à partir de son code INSEE.</p>
+<p>Attention, risque d'erreurs car certaines communes étendues sont couvertes par plusieurs codes postaux:
+Marseille (1 par arrondissement, chaque arrondissement a aussi son COG)
+mais aussi Aix-en-Provence (1 COG mais 6 codes postaux: 13080, 13090, 13098, 13100, 13290, 13540),
+Martigues (codes postaux: 13117, 13500).</p>
+<p>TODO Le nom de la commune est-il utile?</p>
+<h4 id="src.domain_knowledge.codes_geo.get_codepostal--parameters">Parameters</h4>
+<p>nom_commune: string
+    Nom de la commune (inutile?)
+codeinsee: string or None
+    Code INSEE.</p>
+<h4 id="src.domain_knowledge.codes_geo.get_codepostal--returns">Returns</h4>
+<p>cpostal: string
+    Code postal de la commune.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\codes_geo.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_codepostal(nom_commune: str, codeinsee: str) -&gt; str:
+    """Récupérer le code postal d'une commune à partir de son code INSEE.
+
+    Attention, risque d'erreurs car certaines communes étendues sont couvertes par plusieurs codes postaux:
+    Marseille (1 par arrondissement, chaque arrondissement a aussi son COG)
+    mais aussi Aix-en-Provence (1 COG mais 6 codes postaux: 13080, 13090, 13098, 13100, 13290, 13540),
+    Martigues (codes postaux: 13117, 13500).
+
+    TODO Le nom de la commune est-il utile?
+
+    Parameters
+    ----------
+    nom_commune: string
+        Nom de la commune (inutile?)
+    codeinsee: string or None
+        Code INSEE.
+
+    Returns
+    -------
+    cpostal: string
+        Code postal de la commune.
+    """
+    if pd.isna(nom_commune):
+        return None
+
+    nom_commune = (
+        nom_commune.strip()
+    )  # TODO s'assurer que strip() est fait en amont, à l'extraction de la donnée ?
+    # vérifier que nom_commune est une graphie d'une commune de la métropole
+    try:
+        assert P_COMMUNES_AMP_ALLFORMS.match(nom_commune) or nom_commune in (
+            "la Gardanne",
+        )  # FIXME: arrêtés mal lus
+    except AssertionError:
+        # TODO détecter et exclure les communes hors Métropole en amont?
+        logging.warning(
+            f"Impossible de déterminer le code INSEE pour {nom_commune}, hors métropole?"
+        )
+        # raise
+        return None
+
+    if (
+        nom_commune.lower().startswith("marseille")
+        and pd.notna(codeinsee)
+        and (codeinsee.startswith("132"))  # FIXME généraliser/améliorer?
+    ):
+        # NB: c'est une approximation !
+        # TODO expectation: aucun codeinsee 13055 dans le dataset final (ou presque)
+        cpostal = "130" + codeinsee[-2:]
+        # 2023-03-18: a priori, cela ne devrait rien changer car le code INSEE est déterminé à partir du code postal pour les arrondissements de Marseille
+    elif pd.notna(codeinsee) and (simplify_commune(nom_commune), codeinsee) in (
+        ("aixenprovence", "13001"),
+        ("martigues", "13056"),
+    ):
+        cpostal = None  # pour que create_adresse_normalisee() n'ait à gérer des valeurs pd.&lt;NA&gt; dont la valeur booléenne est ambigue (alors que None est faux)
+        logging.warning(
+            f"get_codepostal: abstention, plusieurs codes postaux possibles pour {(nom_commune, codeinsee)}."
+        )
+    else:
+        # TODO éprouver et améliorer la robustesse
+        cpostal = INSEE2POST.get(codeinsee, None)
+        if pd.isna(cpostal):
+            cpostal = None  # pour que create_adresse_normalisee() n'ait à gérer des valeurs pd.&lt;NA&gt; dont la valeur booléenne est ambigue (alors que None est faux)
+            logging.warning(
+                f"get_codepostal: pas de code trouvé pour {(nom_commune, codeinsee)}."
+            )
+
+    return cpostal</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.codes_geo.load_codes_insee_amp" class="doc doc-heading">
+          <code class="highlight language-python">load_codes_insee_amp()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Charger les codes INSEE des communes</p>
+<p>Actuellement restreint à la Métropole Aix-Marseille Provence.</p>
+<h4 id="src.domain_knowledge.codes_geo.load_codes_insee_amp--returns">Returns</h4>
+<p>df_insee: pd.DataFrame
+    Liste des communes avec leur code INSEE.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\codes_geo.py</code></summary>
+            <pre class="highlight"><code class="language-python">def load_codes_insee_amp() -&gt; pd.DataFrame:
+    """Charger les codes INSEE des communes
+
+    Actuellement restreint à la Métropole Aix-Marseille Provence.
+
+    Returns
+    -------
+    df_insee: pd.DataFrame
+        Liste des communes avec leur code INSEE.
+    """
+    df_insee = pd.read_csv(FP_INSEE, dtype=DTYPE_INSEE)
+    return df_insee</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.codes_geo.load_codes_postaux_amp" class="doc doc-heading">
+          <code class="highlight language-python">load_codes_postaux_amp()</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Charger les codes postaux des communes, associés aux codes INSEE.</p>
+<p>Actuellement restreint à la Métropole Aix-Marseille Provence.
+Attention, le fichier actuel (2023-03-18) utilise un séparateur ";".</p>
+<h4 id="src.domain_knowledge.codes_geo.load_codes_postaux_amp--returns">Returns</h4>
+<p>df_cpostal: pd.DataFrame
+    Liste des codes postaux par (code INSEE de) commune.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\codes_geo.py</code></summary>
+            <pre class="highlight"><code class="language-python">def load_codes_postaux_amp() -&gt; pd.DataFrame:
+    """Charger les codes postaux des communes, associés aux codes INSEE.
+
+    Actuellement restreint à la Métropole Aix-Marseille Provence.
+    Attention, le fichier actuel (2023-03-18) utilise un séparateur ";".
+
+    Returns
+    -------
+    df_cpostal: pd.DataFrame
+        Liste des codes postaux par (code INSEE de) commune.
+    """
+    df_cpostal = pd.read_csv(FP_CPOSTAL, dtype=DTYPE_CPOSTAL, sep=";")
+    return df_cpostal</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.codes_geo.normalize_ville" class="doc doc-heading">
+          <code class="highlight language-python">normalize_ville(raw_ville)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Normalise un nom de ville.</p>
+<p>Les formes reconnues par <code>S_RE_COMMUNES_VARS</code> sont réécrites dans la forme canonique
+tirée de <code>DF_INSEE["commune"]</code>.
+Pour les villes absentes de cette ressource externe, le nom est renvoyé tel quel.</p>
+<h4 id="src.domain_knowledge.codes_geo.normalize_ville--parameters">Parameters</h4>
+<p>raw_ville: str
+    Nom brut de la ville, extrait du document.</p>
+<h4 id="src.domain_knowledge.codes_geo.normalize_ville--returns">Returns</h4>
+<p>nor_ville: str
+    Forme normale, canonique, du nom de ville.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\codes_geo.py</code></summary>
+            <pre class="highlight"><code class="language-python">def normalize_ville(raw_ville: str) -&gt; str:
+    """Normalise un nom de ville.
+
+    Les formes reconnues par `S_RE_COMMUNES_VARS` sont réécrites dans la forme canonique
+    tirée de `DF_INSEE["commune"]`.
+    Pour les villes absentes de cette ressource externe, le nom est renvoyé tel quel.
+
+    Parameters
+    ----------
+    raw_ville: str
+        Nom brut de la ville, extrait du document.
+
+    Returns
+    -------
+    nor_ville: str
+        Forme normale, canonique, du nom de ville.
+    """
+    for p_ville, norm_ville in VILLE_PAT_NORM:
+        if p_ville.match(raw_ville):
+            return norm_ville
+    else:
+        # si toutes les possibilités ont été épuisées,
+        # renvoyer la valeur en entrée
+        return raw_ville</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.codes_geo.simplify_commune" class="doc doc-heading">
+          <code class="highlight language-python">simplify_commune(com)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Simplifier le nom d'une commune pour faciliter le matching.</p>
+<h4 id="src.domain_knowledge.codes_geo.simplify_commune--parameters">Parameters</h4>
+<p>com: str
+    Nom de la commune</p>
+<h4 id="src.domain_knowledge.codes_geo.simplify_commune--returns">Returns</h4>
+<p>com_simple: str
+    Nom de la commune simplifié</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\codes_geo.py</code></summary>
+            <pre class="highlight"><code class="language-python">def simplify_commune(com: str) -&gt; str:
+    """Simplifier le nom d'une commune pour faciliter le matching.
+
+    Parameters
+    ----------
+    com: str
+        Nom de la commune
+
+    Returns
+    -------
+    com_simple: str
+        Nom de la commune simplifié
+    """
+    # FIXME utiliser unicodedata.normalize
+    return (
+        com.lower()
+        .replace("à", "a")
+        .replace("ç", "c")
+        .replace("é", "e")
+        .replace("è", "e")
+        .replace("ê", "e")
+        .replace("î", "i")
+        .replace("ï", "i")
+        .replace("ô", "o")
+        .replace("û", "u")
+        .replace("ÿ", "y")
+        .replace("-", "")
+        .replace(" ", "")
+    )</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.domain_knowledge.doc_relations"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.domain_knowledge.doc_relations--relations-entre-documents">Relations entre documents.</h2>
+<p>Les référence à des documents précédents sont énoncées dans les "Vu".</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.domain_knowledge.doc_template"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.domain_knowledge.doc_template--modeles-de-documents-des-arretes">Modèles de documents des arrêtés.</h2>
+<p>Motifs de reconnaissance des en-têtes, pieds-de-page et annexes.</p>
+<p>TODO
+- [ ] exploiter les éléments de template (discriminants) pour déterminer la ville (en complément des autres emplacements: autorité, signature)</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.domain_knowledge.logement"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.domain_knowledge.logement--logement">Logement</h2>
+<p>Repérage et extraction de données propres aux arrêtés sur le logement.</p>
+<p>Propriétaire, gestionnaire, syndic ou administrateur, adresse de l'immeuble concerné.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.logement.get_adr_doc" class="doc doc-heading">
+          <code class="highlight language-python">get_adr_doc(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extrait la ou les adresses visées par l'arrêté.</p>
+<h4 id="src.domain_knowledge.logement.get_adr_doc--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document</p>
+<h4 id="src.domain_knowledge.logement.get_adr_doc--returns">Returns</h4>
+<p>adresses: List[dict]
+    La ou les adresses visées par l'arrêté, si trouvées dans
+    la page de texte. Pour chaque zone d'adresse brute, la ou
+    les adresses extraites.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\logement.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_adr_doc(page_txt: str) -&gt; bool:
+    """Extrait la ou les adresses visées par l'arrêté.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+
+    Returns
+    -------
+    adresses: List[dict]
+        La ou les adresses visées par l'arrêté, si trouvées dans
+        la page de texte. Pour chaque zone d'adresse brute, la ou
+        les adresses extraites.
+    """
+    # NEW normalisation du texte
+    page_txt = normalize_string(page_txt, num=True, apos=True, hyph=True, spaces=True)
+    # WIP au préalable, neutraliser les adresses des services municipaux
+    if serv_mun := P_ADR_SERVICES_MUNI.search(page_txt):
+        logging.warning(f"service municipal remplacé: {serv_mun}")
+        page_txt = re.sub(P_ADR_SERVICES_MUNI, "SERVICE_MUNICIPAL", page_txt)
+
+    adresses = []
+    if matches_adr := list(P_ADR_DOC.finditer(page_txt)):
+        for m_adr in matches_adr:
+            logging.warning(
+                f"adr_doc: {m_adr.group(0)}\n{m_adr.groups()}\n{m_adr.groupdict()}"
+            )
+            adr_brute = m_adr.group("adresse")
+            logging.warning(f"adr_brute brute: {adr_brute}")
+            # nettoyer la valeur récupérée
+            # - couper sur certains contextes droits
+            if False:
+                adr_brute = re.sub(
+                    RE_ADR_CLEANUP, "", adr_brute, flags=(re.MULTILINE | re.IGNORECASE)
+                )  # RESUME HERE 2023-04-11 il faut réussir à se passer du cleanup
+            # - enlever l'éventuelle ponctuation finale
+            if adr_brute.endswith((".", ",")):
+                adr_brute = adr_brute[:-1]
+            # - normaliser les graphies, les espaces etc
+            adr_brute = normalize_string(
+                adr_brute, num=True, apos=True, hyph=True, spaces=True
+            )
+
+            # - extraire la ou les adresses précises, décomposée en champs
+            # (numéro, indicateur, voie...)
+            # WIP on prend le texte de la page, borné à gauche avec le début de l'adresse
+            # mais pas borné à droite pour avoir le contexte droit (nécessaire pour
+            # les adresses courtes, car le nom de voie est borné par un lookahead)
+            try:
+                adresses_proc = process_adresse_brute(adr_brute)
+            except AssertionError:
+                print(
+                    f"get_adr_doc: process_adresse_brute({adr_brute})\nmatch complet={m_adr.group(0)}\ngroups={m_adr.groups()}\ngroupdict={m_adr.groupdict()}"
+                )
+                raise
+
+            adresses.append(
+                {
+                    "adresse_brute": adr_brute,
+                    "adresses": adresses_proc,
+                }
+            )
+    return adresses</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.logement.get_gest" class="doc doc-heading">
+          <code class="highlight language-python">get_gest(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient un nom de gestionnaire immobilier.</p>
+<h4 id="src.domain_knowledge.logement.get_gest--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>syndic: str
+    Nom de gestionnaire si détecté, None sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\logement.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_gest(page_txt: str) -&gt; str:
+    """Détecte si une page contient un nom de gestionnaire immobilier.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    syndic: str
+        Nom de gestionnaire si détecté, None sinon.
+    """
+    # NEW normalisation du texte
+    page_txt = normalize_string(page_txt, num=True, apos=True, hyph=True, spaces=True)
+    # end NEW
+    match = P_GEST.search(page_txt)
+    return match.group("gestio") if match is not None else None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.logement.get_proprio" class="doc doc-heading">
+          <code class="highlight language-python">get_proprio(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extrait le nom et l'adresse du propriétaire.</p>
+<h4 id="src.domain_knowledge.logement.get_proprio--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>syndic: str
+    Nom et adresse du propriétaire si détecté, None sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\logement.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_proprio(page_txt: str) -&gt; bool:
+    """Extrait le nom et l'adresse du propriétaire.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    syndic: str
+        Nom et adresse du propriétaire si détecté, None sinon.
+    """
+    # NEW normalisation du texte
+    page_txt = normalize_string(page_txt, num=True, apos=True, hyph=True, spaces=True)
+    # end NEW
+    # on essaie d'abord de détecter un mono-propriétaire (WIP)
+    if match := P_PROPRIO_MONO.search(page_txt):
+        logging.warning(f"mono-propriétaire: {match}\n{match.group(0)}")
+        return match.group("proprio")
+    # puis sinon les multi-propriétaires (TODO proprement)
+    elif match := P_PROPRIO.search(page_txt):
+        logging.warning(f"mono- ou multi-propriétaire: {match}\n{match.group(0)}")
+        return match.group("proprio")
+    else:
+        return None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.logement.get_syndic" class="doc doc-heading">
+          <code class="highlight language-python">get_syndic(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si une page contient un nom de syndic.</p>
+<h4 id="src.domain_knowledge.logement.get_syndic--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>syndic: str
+    Nom de syndic si détecté, None sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\logement.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_syndic(page_txt: str) -&gt; bool:
+    """Détecte si une page contient un nom de syndic.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    syndic: str
+        Nom de syndic si détecté, None sinon.
+    """
+    # NEW normalisation du texte
+    page_txt = normalize_string(page_txt, num=True, apos=True, hyph=True, spaces=True)
+    # end NEW
+    if m_synd := P_NOTIFIE_AU_SYNDIC_LI.search(page_txt):
+        logging.warning(
+            f"Syndic: {m_synd.group(0)}\n{m_synd.group('syndic')} / {m_synd.group('syndic_post')}"
+        )
+        return m_synd.group("syndic")
+    elif m_synd := P_SYNDIC.search(page_txt):
+        logging.warning(
+            f"Syndic: {m_synd.group(0)}\n{m_synd.group('syndic_pre')} / {m_synd.group('syndic')} / {m_synd.group('syndic_post')}"
+        )
+        return m_synd.group("syndic")
+    else:
+        return None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.domain_knowledge.typologie_securite"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.domain_knowledge.typologie_securite--typologie">Typologie</h2>
+<p>Typologie des arrêtés de mise en sécurité.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.typologie_securite.get_classe" class="doc doc-heading">
+          <code class="highlight language-python">get_classe(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Récupère la classification de l'arrêté.</p>
+<h4 id="src.domain_knowledge.typologie_securite.get_classe--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document</p>
+<h4 id="src.domain_knowledge.typologie_securite.get_classe--returns">Returns</h4>
+<p>doc_class: str
+    Classification de l'arrêté si trouvé, None sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\typologie_securite.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_classe(page_txt: str) -&gt; bool:
+    """Récupère la classification de l'arrêté.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+
+    Returns
+    -------
+    doc_class: str
+        Classification de l'arrêté si trouvé, None sinon.
+    """
+    # NEW normalisation du texte
+    page_txt = normalize_string(page_txt, num=True, apos=True, hyph=True, spaces=True)
+    # end NEW
+    # on commence par reconnaître et effacer les faux positifs de mainlevée:
+    # mentions de notification ou d'affichage, dans les extraits des textes
+    # réglementaires
+    # TODO remplacer ce traitement par une détection des extraits dans leur
+    # totalité (annexes, éventuellement paragraphes intégrés au corps de l'arrêté)
+    ml_fps = list(P_ML_FP.finditer(page_txt))
+    for ml_fp in ml_fps:
+        page_txt = (
+            page_txt[: ml_fp.start()]
+            + " " * (ml_fp.end() - ml_fp.start())
+            + page_txt[ml_fp.end() :]
+        )
+    #
+    # NB: l'ordre d'application des règles de matching est important:
+    # les mainlevées incluent généralement l'intitulé de l'arrêté (ou du type d'arrêté) précédent
+    if (
+        M_CLASS_ML.search(page_txt)
+        or M_CLASS_ABRO_DE.search(page_txt)
+        or M_CLASS_ABRO_INT.search(page_txt)
+    ):
+        return "Arrêté de mainlevée"
+    elif (
+        M_CLASS_PS_PO_MOD.search(page_txt)
+        or M_CLASS_MS_MOD.search(page_txt)
+        or M_CLASS_PGI_MOD.search(page_txt)
+        or M_CLASS_MSU_MOD.search(page_txt)
+        or M_CLASS_ML_PA.search(page_txt)
+        or P_CLASS_INT_MOD.search(page_txt)
+    ):
+        return "Arrêté de mise en sécurité modificatif"
+    elif (
+        M_CLASS_PS_PO.search(page_txt)
+        or M_CLASS_MS.search(page_txt)
+        or M_CLASS_PGI.search(page_txt)
+        or M_CLASS_MSU.search(page_txt)
+        or M_CLASS_DE.search(page_txt)
+        or M_CLASS_INS.search(page_txt)
+        or P_CLASS_INT.search(page_txt)
+    ):
+        return "Arrêté de mise en sécurité"
+    else:
+        return None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.typologie_securite.get_demo" class="doc doc-heading">
+          <code class="highlight language-python">get_demo(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détermine si l'arrêté porte une démolition ou déconstruction.</p>
+<h4 id="src.domain_knowledge.typologie_securite.get_demo--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>doc_demol_deconst: str
+    Démolition ou déconstruction si trouvé, None sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\typologie_securite.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_demo(page_txt: str) -&gt; bool:
+    """Détermine si l'arrêté porte une démolition ou déconstruction.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    doc_demol_deconst: str
+        Démolition ou déconstruction si trouvé, None sinon.
+    """
+    # NEW normalisation du texte
+    page_txt = normalize_string(page_txt, num=True, apos=True, hyph=True, spaces=True)
+    # end NEW
+    if page_txt is None:
+        return None
+    elif P_DEMO.search(page_txt):
+        return "oui"
+    else:
+        return "non"</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.typologie_securite.get_equ_com" class="doc doc-heading">
+          <code class="highlight language-python">get_equ_com(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détermine si l'arrêté porte sur la sécurité des équipements communs.</p>
+<h4 id="src.domain_knowledge.typologie_securite.get_equ_com--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>doc_equ_com: str
+    Sécurité des équipements communs si trouvé, None sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\typologie_securite.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_equ_com(page_txt: str) -&gt; bool:
+    """Détermine si l'arrêté porte sur la sécurité des équipements communs.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    doc_equ_com: str
+        Sécurité des équipements communs si trouvé, None sinon.
+    """
+    # NEW normalisation du texte
+    page_txt = normalize_string(page_txt, num=True, apos=True, hyph=True, spaces=True)
+    # end NEW
+    if page_txt is None:
+        return None
+    elif P_EQU_COM.search(page_txt):
+        return "oui"
+    else:
+        return "non"</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.typologie_securite.get_int_hab" class="doc doc-heading">
+          <code class="highlight language-python">get_int_hab(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détermine si l'arrêté porte interdiction d'habiter et d'occuper.</p>
+<h4 id="src.domain_knowledge.typologie_securite.get_int_hab--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document
+Returns</p>
+<hr />
+<p>doc_int_hab: str
+    Interdiction d'habiter si trouvé, None sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\typologie_securite.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_int_hab(page_txt: str) -&gt; bool:
+    """Détermine si l'arrêté porte interdiction d'habiter et d'occuper.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+    Returns
+    -------
+    doc_int_hab: str
+        Interdiction d'habiter si trouvé, None sinon.
+    """
+    # NEW normalisation du texte
+    page_txt = normalize_string(page_txt, num=True, apos=True, hyph=True, spaces=True)
+    # end NEW
+    if page_txt is None:
+        return None
+    elif P_INT_HAB.search(page_txt):
+        return "oui"
+    else:
+        return "non"</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.domain_knowledge.typologie_securite.get_urgence" class="doc doc-heading">
+          <code class="highlight language-python">get_urgence(page_txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Récupère le caractère d'urgence de l'arrêté.</p>
+<h4 id="src.domain_knowledge.typologie_securite.get_urgence--parameters">Parameters</h4>
+<p>page_txt: str
+    Texte d'une page de document</p>
+<h4 id="src.domain_knowledge.typologie_securite.get_urgence--returns">Returns</h4>
+<p>doc_class: str
+    Caractère d'urgence de l'arrêté si trouvé, None sinon.</p>
+
+          <details class="quote">
+            <summary> <code>src\domain_knowledge\typologie_securite.py</code></summary>
+            <pre class="highlight"><code class="language-python">def get_urgence(page_txt: str) -&gt; bool:
+    """Récupère le caractère d'urgence de l'arrêté.
+
+    Parameters
+    ----------
+    page_txt: str
+        Texte d'une page de document
+
+    Returns
+    -------
+    doc_class: str
+        Caractère d'urgence de l'arrêté si trouvé, None sinon.
+    """
+    # NEW normalisation du texte
+    page_txt = normalize_string(page_txt, num=True, apos=True, hyph=True, spaces=True)
+    # end NEW
+    if (
+        M_CLASS_PS_PO.search(page_txt)
+        or M_CLASS_PS_PO_MOD.search(page_txt)
+        or M_CLASS_MS.search(page_txt)
+        or M_CLASS_MS_MOD.search(page_txt)
+    ):
+        return "non"
+    elif (
+        M_CLASS_PGI.search(page_txt)
+        or M_CLASS_PGI_MOD.search(page_txt)
+        or M_CLASS_MSU.search(page_txt)
+        or M_CLASS_MSU_MOD.search(page_txt)
+    ):
+        return "oui"
+    elif (
+        M_CLASS_ML_PA.search(page_txt)
+        or M_CLASS_DE.search(page_txt)
+        or M_CLASS_ABRO_DE.search(page_txt)
+        or M_CLASS_INS.search(page_txt)
+        or P_CLASS_INT.search(page_txt)
+    ):
+        # FIXME ajouter la prise en compte des articles cités pour déterminer l'urgence
+        # (pas pour le moment car l'info n'est pas fiable, les articles peuvent être cités
+        # en paquet)
+        return None
+    elif M_CLASS_ML.search(page_txt) or M_CLASS_ABRO_INT.search(page_txt):
+        return None
+    else:
+        return None</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../.." class="btn btn-neutral float-left" title="Index"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../preprocess/" class="btn btn-neutral float-right" title="Preprocess">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../.." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../preprocess/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

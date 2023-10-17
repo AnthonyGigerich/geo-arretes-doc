@@ -1,0 +1,3825 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Process - Geo Arrêtés</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Process";
+        var mkdocs_page_input_path = "Code Source\\process.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Geo Arrêtés
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Index</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Code Source</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../domain_knowledge/">Domain Knowledge</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../preprocess/">Preprocess</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Process</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.aggregate_pages">aggregate_pages</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.aggregate_pages--agrege-les-pages-et-leurs-donnees-extraites-en-documents">Agrège les pages, et leurs données extraites, en documents.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.aggregate_pages.aggregate_pages">aggregate_pages()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.aggregate_pages.aggregate_pages--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.aggregate_pages.aggregate_pages--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.aggregate_pages.create_docs_dataframe">create_docs_dataframe()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.aggregate_pages.create_docs_dataframe--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.aggregate_pages.create_docs_dataframe--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.aggregate_pages.first">first()</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.aggregate_pages.pagenums">pagenums()</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.enrich_data">enrich_data</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.enrich_data--enrichit-les-donnees-avec-des-donnees-supplementaires">Enrichit les données avec des données supplémentaires.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.enrich_data.create_docs_dataframe">create_docs_dataframe()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.enrich_data.create_docs_dataframe--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.enrich_data.create_docs_dataframe--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.export_data">export_data</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.export_data--exporte-les-donnees-en-fichiers-csv">Exporte les données en fichiers CSV.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.extract_data">extract_data</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.extract_data--extraire-les-donnees-des-documents">Extraire les données des documents.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.extract_data.create_docs_dataframe">create_docs_dataframe()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.extract_data.create_docs_dataframe--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.extract_data.create_docs_dataframe--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.extract_data.determine_commune">determine_commune()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.extract_data.determine_commune--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.extract_data.determine_commune--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc_direct">parse_doc_direct</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc_direct--analyse-un-arrete-et-en-extrait-les-donnees">Analyse un arrêté et en extrait les données.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc_direct.create_file_name_url">create_file_name_url()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc_direct.create_file_name_url--parameters">Parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc_direct.enrich_adresse">enrich_adresse()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc_direct.enrich_adresse--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc_direct.enrich_adresse--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc_direct.extract_adresses_commune">extract_adresses_commune()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc_direct.extract_adresses_commune--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc_direct.extract_adresses_commune--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc_direct.parse_arrete">parse_arrete()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc_direct.parse_arrete--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc_direct.parse_arrete--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc_direct.process_files">process_files()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc_direct.process_files--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc_direct.process_files--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc">parse_doc</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc--analyse-le-document-dans-son-ensemble">Analyse le document dans son ensemble.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc.has_one">has_one()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.has_one--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.has_one--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc.parse_arrete_pages">parse_arrete_pages()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.parse_arrete_pages--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.parse_arrete_pages--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc.parse_doc_postamble">parse_doc_postamble()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.parse_doc_postamble--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.parse_doc_postamble--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc.parse_doc_preamble">parse_doc_preamble()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.parse_doc_preamble--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.parse_doc_preamble--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc.parse_page_content">parse_page_content()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.parse_page_content--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.parse_page_content--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc.parse_page_template">parse_page_template()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.parse_page_template--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.parse_page_template--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc.process_files">process_files()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.process_files--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.process_files--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_doc.unique_txt">unique_txt()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.unique_txt--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_doc.unique_txt--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_native_pages">parse_native_pages</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_native_pages--extrait-la-structure-des-documents">Extrait la structure des documents.</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_native_pages.process_files">process_files()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_native_pages.process_files--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_native_pages.process_files--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.process.parse_native_pages.spot_text_structure">spot_text_structure()</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_native_pages.spot_text_structure--parameters">Parameters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#src.process.parse_native_pages.spot_text_structure--returns">Returns</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../quality/">Quality</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utils/">Utils</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Notebooks</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Notebooks/notebooks/">Notebooks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Scripts</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../Scripts/scripts/">Scripts</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Geo Arrêtés</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Code Source</li>
+      <li class="breadcrumb-item active">Process</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="process">Process</h1>
+<p>Fonctions d'extractions des données des fichiers prétraités.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.process.aggregate_pages"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.process.aggregate_pages--agrege-les-pages-et-leurs-donnees-extraites-en-documents">Agrège les pages, et leurs données extraites, en documents.</h2>
+<p>Chaque ligne correspond à un document.
+Les éventuelles incohérences entre valeurs extraites pour différentes pages
+d'un même document sont signalées.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.aggregate_pages.aggregate_pages" class="doc doc-heading">
+          <code class="highlight language-python">aggregate_pages(df_grp, include_actes_page_ar=False)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Fusionne les champs extraits des différentes pages d'un document.</p>
+<h4 id="src.process.aggregate_pages.aggregate_pages--parameters">Parameters</h4>
+<p>df_grp: pd.core.groupby.DataFrame
+    Pages d'un document
+include_actes_page_ar: boolean, defaults to False
+    Inclut la page d'accusé de réception d'@ctes.</p>
+<h4 id="src.process.aggregate_pages.aggregate_pages--returns">Returns</h4>
+<p>rec_struct: dict
+    Dictionnaire de valeurs de différents types ou nulles, selon que les éléments ont été détectés.</p>
+
+          <details class="quote">
+            <summary> <code>src\process\aggregate_pages.py</code></summary>
+            <pre class="highlight"><code class="language-python">def aggregate_pages(df_grp: pd.DataFrame, include_actes_page_ar: bool = False) -&gt; Dict:
+    """Fusionne les champs extraits des différentes pages d'un document.
+
+    Parameters
+    ----------
+    df_grp: pd.core.groupby.DataFrame
+        Pages d'un document
+    include_actes_page_ar: boolean, defaults to False
+        Inclut la page d'accusé de réception d'@ctes.
+
+    Returns
+    -------
+    rec_struct: dict
+        Dictionnaire de valeurs de différents types ou nulles, selon que les éléments ont été détectés.
+    """
+    # conserver uniquement les pages avec du texte ;
+    # actuellement: "has_stamp is None" implique que la page ne contient pas de texte
+    # FIXME gérer les pages sans texte en amont?
+    grp = df_grp.dropna(subset=["has_stamp"])
+    # si demandé, exclure l'éventuelle page d'accusé de réception d'actes
+    if not include_actes_page_ar:
+        grp = grp.query("not is_accusedereception_page")
+
+    # si le groupe est vide, renvoyer une ligne (pour le document) vide ;
+    # utile lorsque le document ne contient pas de texte, notamment les PDF non-natifs non-océrisés (ou pas encore)
+    if grp.empty:
+        rec_struct = {x: None for x in DTYPE_PARSE_AGG}
+        return rec_struct
+
+    # t0 = time.time()
+    if False:
+        grp[grp.has_stamp]["pagenum"].to_list()
+        t0b = time.time()
+        grp[grp["has_stamp"]]["pagenum"].to_list()
+        t0c = time.time()
+        grp.query("has_stamp")["pagenum"].to_list()
+        t0d = time.time()
+        print(f"{t0b - t0:.3f}\t{t0c - t0b:.3f}\t{t0d - t0c:.3f}")
+    # agréger les numéros de pages ou les valeurs extraites
+    rec_actes = {
+        # - métadonnées
+        #   * @ctes
+        # table: contrôle ; expectation: liste de valeurs continue (ex: 1,2,3) ou vide (all NaN)
+        # grp.query("has_stamp")["pagenum"].to_list(),
+        "actes_pages_tampon": pagenums(grp, "has_stamp"),
+        # table: contrôle ; expectation: liste vide (all NaN) ou valeur unique
+        # grp.query("is_accusedereception_page")["pagenum"].to_list()
+        "actes_pages_ar": pagenums(grp, "is_accusedereception_page"),
+    }
+    # t1 = time.time()
+    rec_commu = {
+        # - tous arrêtés
+        #   * champ "commune"
+        # TODO table: ? ; TODO expectation: valeur unique (modulo normalisation: casse, accents etc?) ou vide/NaN
+        "commune_maire": first(grp, "commune_maire"),
+    }
+    # t2 = time.time()
+    rec_pars = {
+        #   * champs structure de l'arrêté
+        "pages_vu": pagenums(
+            grp, "has_vu"
+        ),  # table: contrôle ; expectation: liste de valeurs continue ou vide (all NaN)
+        "pages_considerant": pagenums(
+            grp, "has_considerant"
+        ),  # table: contrôle ; expectation: liste de valeurs continue ou vide (all NaN)
+        "pages_arrete": pagenums(
+            grp, "has_arrete"
+        ),  # table: contrôle ; expectation: valeur unique ou vide/NaN
+        "pages_article": pagenums(
+            grp, "has_article"
+        ),  # table: contrôle ; expectation: liste de valeurs continue ou vide (all NaN)
+    }
+    # t3 = time.time()
+    rec_regl = {
+        # arrêtés spécifiques
+        # - réglementaires
+        "pages_cgct": pagenums(
+            grp, "has_cgct"
+        ),  # TODO retraiter pour classer les arrêtés?  # table: contrôle ; expectation: liste de valeurs continue ou vide (all NaN)
+        "pages_cgct_art": pagenums(
+            grp, "has_cgct_art"
+        ),  # TODO retraiter pour classer les arrêtés?
+        "pages_cch": pagenums(
+            grp, "has_cch"
+        ),  # TODO retraiter pour classer les arrêtés?
+        "pages_cch_L111": pagenums(
+            grp, "has_cch_L111"
+        ),  # TODO retraiter pour classer les arrêtés?
+        "pages_cch_L511": pagenums(
+            grp, "has_cch_L511"
+        ),  # TODO retraiter pour classer les arrêtés?
+        "pages_cch_L521": pagenums(
+            grp, "has_cch_L521"
+        ),  # TODO retraiter pour classer les arrêtés?
+        "pages_cch_L541": pagenums(
+            grp, "has_cch_L541"
+        ),  # TODO retraiter pour classer les arrêtés?
+        "pages_cch_R511": pagenums(
+            grp, "has_cch_R511"
+        ),  # TODO retraiter pour classer les arrêtés?
+        "pages_cc": pagenums(grp, "has_cc"),  # TODO retraiter pour classer les arrêtés?
+        "pages_cc_art": pagenums(
+            grp, "has_cc_art"
+        ),  # TODO retraiter pour classer les arrêtés?
+    }
+    # t4 = time.time()
+    rec_adre = {
+        # - données
+        "adresse_brute": first(
+            grp, "adresse"
+        ),  # TODO expectation: valeur unique (modulo normalisation: casse, accents etc?) ou vide/NaN
+        "adr_num": first(grp, "adr_num"),
+        "adr_ind": first(grp, "adr_ind"),
+        "adr_voie": first(grp, "adr_voie"),
+        "adr_compl": first(grp, "adr_compl"),
+        "adr_cpostal": first(grp, "adr_cpostal"),
+        "adr_ville": first(grp, "adr_ville"),
+    }
+    # t5 = time.time()
+    rec_parce = {
+        "parcelle": first(
+            grp, "parcelle"
+        ),  # TODO expectation: valeur unique (modulo normalisation: casse, accents etc?) ou vide/NaN
+    }
+    # t6 = time.time()
+    rec_proprio = {
+        "proprio": first(
+            grp, "proprio"
+        ),  # TODO expectation: 1-n (TODO normalisation: casse, accents etc?) ; vide pour abrogation?
+    }
+    rec_syndi = {
+        "syndic": first(
+            grp, "syndic"
+        ),  # TODO expectation: valeur unique (modulo normalisation: casse, accents etc?) ou vide/NaN
+    }
+    rec_gest = {
+        "gest": first(
+            grp, "gest"
+        ),  # TODO expectation: valeur unique (modulo normalisation: casse, accents etc?) ou vide/NaN
+    }
+    # t7 = time.time()
+    rec_date = {
+        "arr_date": first(
+            grp, "date"
+        ),  # TODO expectation: valeur unique (modulo normalisation: casse, accents etc?) ou vide/NaN
+    }
+    # t8 = time.time()
+    rec_num = {
+        "num_arr": first(
+            grp, "num_arr"
+        ),  # TODO expectation: valeur unique (modulo normalisation: casse, accents etc?) ou vide/NaN
+    }
+    # t9 = time.time()
+    if False:
+        print(
+            f"actes: {t1 - t0:.3f}\tcommune: {t2 - t1:.3f}\tvu_etc: {t3 - t2:.3f}"
+            + f"\tregl: {t4 - t3:.3f}\tadr: {t5 - t4:.3f}\tparcelle: {t6 - t5:.3f}"
+            + f"\tsyndic: {t7 - t6:.3f}\tdate: {t8 - t7:.3f}\tnum: {t9 - t8:.3f}"
+        )
+    rec_nom = {
+        "nom_arr": first(
+            grp, "nom_arr"
+        ),  # TODO expectation: valeur unique (modulo normalisation: casse, accents etc?) ou vide/NaN
+    }
+    rec_classi = {
+        "classe": first(
+            grp, "classe"
+        ),  # TODO expectation: valeur unique (modulo normalisation: casse, accents etc?) ou vide/NaN
+        "urgence": first(
+            grp, "urgence"
+        ),  # TODO expectation: valeur unique (modulo normalisation: casse, accents etc?) ou vide/NaN
+        "demo": first(
+            grp, "demo"
+        ),  # TODO expectation: valeur unique (modulo normalisation: casse, accents etc?) ou vide/NaN
+        "int_hab": first(
+            grp, "int_hab"
+        ),  # TODO expectation: valeur unique (modulo normalisation: casse, accents etc?) ou vide/NaN
+        "equ_com": first(
+            grp, "equ_com"
+        ),  # TODO expectation: valeur unique (modulo normalisation: casse, accents etc?) ou vide/NaN
+    }
+    rec_struct = (
+        rec_actes
+        | rec_commu
+        | rec_pars
+        | rec_regl
+        | rec_adre
+        | rec_parce
+        | rec_proprio
+        | rec_syndi
+        | rec_gest
+        | rec_date
+        | rec_num
+        | rec_nom
+        | rec_classi
+    )
+    return rec_struct</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.aggregate_pages.create_docs_dataframe" class="doc doc-heading">
+          <code class="highlight language-python">create_docs_dataframe(df_pages)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Rassembler les informations des documents dans un DataFrame.</p>
+<p>Fusionner les entrées de chaque page en une entrée par document.</p>
+<h4 id="src.process.aggregate_pages.create_docs_dataframe--parameters">Parameters</h4>
+<p>df_pages: pd.DataFrame
+    Métadonnées et données extraites des pages.</p>
+<h4 id="src.process.aggregate_pages.create_docs_dataframe--returns">Returns</h4>
+<p>df_docs: pd.DataFrame
+    Tableau contenant les métadonnées et données extraites des documents.</p>
+
+          <details class="quote">
+            <summary> <code>src\process\aggregate_pages.py</code></summary>
+            <pre class="highlight"><code class="language-python">def create_docs_dataframe(
+    df_pages: pd.DataFrame,
+) -&gt; pd.DataFrame:
+    """Rassembler les informations des documents dans un DataFrame.
+
+    Fusionner les entrées de chaque page en une entrée par document.
+
+    Parameters
+    ----------
+    df_pages: pd.DataFrame
+        Métadonnées et données extraites des pages.
+
+    Returns
+    -------
+    df_docs: pd.DataFrame
+        Tableau contenant les métadonnées et données extraites des documents.
+    """
+    doc_rows = []
+    for _, df_grp in df_pages.groupby("fullpath_txt"):
+        # reporter les métadonnées du fichier PDF et du TXT, dans chaque entrée de document
+        meta_doc = {
+            x: df_grp[x].to_list()[0] for x in DTYPE_META_NTXT_FILT
+        }  # FIXME prendre les métadonnées du document dans le CSV 1 ligne par doc?
+        # retraiter spécifiquement le champ "exclude": si toutes les pages sont "exclude", alors le fichier aussi, sinon non
+        meta_doc["exclude"] = df_grp["exclude"].all()
+        # rassembler les données des pages ;
+        # exclure l'éventuelle page d'accusé de réception d'actes
+        data_doc = aggregate_pages(df_grp, include_actes_page_ar=False)
+        doc_rows.append(meta_doc | data_doc)  # python &gt;= 3.9 (dict union)
+    df_docs = pd.DataFrame.from_records(doc_rows)
+    df_docs = df_docs.astype(dtype=DTYPE_META_NTXT_DOC)
+    return df_docs</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.aggregate_pages.first" class="doc doc-heading">
+          <code class="highlight language-python">first(df_grp, col_on)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Renvoie la première valeur non-vide de la colonne</p>
+
+          <details class="quote">
+            <summary> <code>src\process\aggregate_pages.py</code></summary>
+            <pre class="highlight"><code class="language-python">def first(df_grp: pd.DataFrame, col_on: str):
+    """Renvoie la première valeur non-vide de la colonne"""
+    s_ok = df_grp[col_on].dropna()
+    if s_ok.empty:
+        return None
+    else:
+        return s_ok.to_list()[0]</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.aggregate_pages.pagenums" class="doc doc-heading">
+          <code class="highlight language-python">pagenums(df_grp, col_on)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Renvoie la liste des numéros de pages où une colonne est vraie</p>
+
+          <details class="quote">
+            <summary> <code>src\process\aggregate_pages.py</code></summary>
+            <pre class="highlight"><code class="language-python">def pagenums(df_grp: pd.DataFrame, col_on: str):
+    """Renvoie la liste des numéros de pages où une colonne est vraie"""
+    return df_grp[df_grp[col_on]]["pagenum"].to_list()</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.process.enrich_data"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.process.enrich_data--enrichit-les-donnees-avec-des-donnees-supplementaires">Enrichit les données avec des données supplémentaires.</h2>
+<p>Ajoute le code INSEE de la commune.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.enrich_data.create_docs_dataframe" class="doc doc-heading">
+          <code class="highlight language-python">create_docs_dataframe(df_agg)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extraire les informations des documents dans un DataFrame.</p>
+<p>Normaliser et extraire les données de chaque document en une entrée par document.</p>
+<h4 id="src.process.enrich_data.create_docs_dataframe--parameters">Parameters</h4>
+<p>df_pages: pd.DataFrame
+    Métadonnées et données extraites des pages.</p>
+<h4 id="src.process.enrich_data.create_docs_dataframe--returns">Returns</h4>
+<p>df_docs: pd.DataFrame
+    Tableau contenant les données normalisées extraites des documents.</p>
+
+          <details class="quote">
+            <summary> <code>src\process\enrich_data.py</code></summary>
+            <pre class="highlight"><code class="language-python">def create_docs_dataframe(
+    df_agg: pd.DataFrame,
+) -&gt; pd.DataFrame:
+    """Extraire les informations des documents dans un DataFrame.
+
+    Normaliser et extraire les données de chaque document en une entrée par document.
+
+    Parameters
+    ----------
+    df_pages: pd.DataFrame
+        Métadonnées et données extraites des pages.
+
+    Returns
+    -------
+    df_docs: pd.DataFrame
+        Tableau contenant les données normalisées extraites des documents.
+    """
+    # ajoute le code INSEE, à partir de la commune et du code postal (pour Marseille)
+    # df_agg["adr_codeinsee"] = df_agg.apply(
+    #     lambda row: get_codeinsee(row["adr_ville"], row["adr_cpostal"]), axis=1
+    # )
+    # remplace la référence cadastrale par sa version normalisée
+    df_agg["par_ref_cad"] = df_agg.apply(
+        lambda row: generate_refcadastrale_norm(
+            row["adr_codeinsee"],
+            row["par_ref_cad"],
+            row["arr_pdf"],
+            row["adr_cpostal"],
+        ),
+        axis=1,
+    )
+    df_docs = df_agg.astype(dtype=DTYPE_DATA)
+    return df_docs</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.process.export_data"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.process.export_data--exporte-les-donnees-en-fichiers-csv">Exporte les données en fichiers CSV.</h2>
+<p>4 tables:
+* arrêté,
+* adresse,
+* parcelle,
+* notifié</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.process.extract_data"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.process.extract_data--extraire-les-donnees-des-documents">Extraire les données des documents.</h2>
+<p>Les données sont extraites des empans de texte repérés au préalable,
+et normalisées.
+Lorsque plusieurs empans de texte sont susceptibles de renseigner sur
+la même donnée, les différentes valeurs extraites sont accumulées pour
+certains champs (ex: propriétaires) ou comparées et sélectionnées pour
+d'autres champs (ex: commune).</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.extract_data.create_docs_dataframe" class="doc doc-heading">
+          <code class="highlight language-python">create_docs_dataframe(df_agg)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extraire les informations des documents dans un DataFrame.</p>
+<p>Normaliser et extraire les données de chaque document en une entrée par document.</p>
+<h4 id="src.process.extract_data.create_docs_dataframe--parameters">Parameters</h4>
+<p>df_pages: pd.DataFrame
+    Métadonnées et données extraites des pages.</p>
+<h4 id="src.process.extract_data.create_docs_dataframe--returns">Returns</h4>
+<p>df_docs: pd.DataFrame
+    Tableau contenant les données normalisées extraites des documents.</p>
+
+          <details class="quote">
+            <summary> <code>src\process\extract_data.py</code></summary>
+            <pre class="highlight"><code class="language-python">def create_docs_dataframe(
+    df_agg: pd.DataFrame,
+) -&gt; pd.DataFrame:
+    """Extraire les informations des documents dans un DataFrame.
+
+    Normaliser et extraire les données de chaque document en une entrée par document.
+
+    Parameters
+    ----------
+    df_pages: pd.DataFrame
+        Métadonnées et données extraites des pages.
+
+    Returns
+    -------
+    df_docs: pd.DataFrame
+        Tableau contenant les données normalisées extraites des documents.
+    """
+    doc_rows = []
+    # filtrer les documents à exclure complètement: documents hors périmètre strict du jeu de données cible
+    df_filt = df_agg[~df_agg["exclude"]]
+    # itérer sur tous les documents non-exclus
+    for i, df_row in enumerate(df_filt.itertuples()):
+        doc_idu = {
+            "idu": f"id_{i:04}",  # FIXME identifiant unique
+        }
+        doc_arr = {
+            # arrêté
+            "arr_date": (
+                process_date_brute(getattr(df_row, "arr_date"))
+                if pd.notna(getattr(df_row, "arr_date"))
+                else None
+            ),
+            "arr_num_arr": (
+                normalize_string(
+                    getattr(df_row, "num_arr"),
+                    num=True,
+                    apos=True,
+                    hyph=True,
+                    spaces=True,
+                )
+                if pd.notna(getattr(df_row, "num_arr"))
+                else None
+            ),
+            "arr_nom_arr": (
+                normalize_string(
+                    getattr(df_row, "nom_arr"),
+                    num=True,
+                    apos=True,
+                    hyph=True,
+                    spaces=True,
+                )
+                if pd.notna(getattr(df_row, "nom_arr"))
+                else None
+            ),
+            "arr_classe": (
+                normalize_string(
+                    getattr(df_row, "classe"),
+                    num=True,
+                    apos=True,
+                    hyph=True,
+                    spaces=True,
+                )
+                if pd.notna(getattr(df_row, "classe"))
+                else None
+            ),
+            "arr_urgence": (
+                normalize_string(
+                    getattr(df_row, "urgence"),
+                    num=True,
+                    apos=True,
+                    hyph=True,
+                    spaces=True,
+                )
+                if pd.notna(getattr(df_row, "urgence"))
+                else None
+            ),
+            "arr_demo": (
+                normalize_string(
+                    getattr(df_row, "demo"), num=True, apos=True, hyph=True, spaces=True
+                )
+                if pd.notna(getattr(df_row, "demo"))
+                else None
+            ),  # TODO affiner
+            "arr_int_hab": (
+                normalize_string(
+                    getattr(df_row, "int_hab"),
+                    num=True,
+                    apos=True,
+                    hyph=True,
+                    spaces=True,
+                )
+                if pd.notna(getattr(df_row, "int_hab"))
+                else None
+            ),  # TODO affiner
+            "arr_equ_com": (
+                normalize_string(
+                    getattr(df_row, "equ_com"),
+                    num=True,
+                    apos=True,
+                    hyph=True,
+                    spaces=True,
+                )
+                if pd.notna(getattr(df_row, "equ_com"))
+                else None
+            ),  # TODO affiner
+            # (métadonnées du doc)
+            "arr_pdf": getattr(df_row, "pdf"),
+            "arr_url": getattr(
+                df_row, "fullpath"
+            ),  # l'URL sera réécrite avec une URL locale (réseau) ou publique, au moment de l'export
+        }
+        # adresse
+        # - nettoyer a minima de l'adresse brute
+        adr_ad_brute = (
+            normalize_string(
+                getattr(df_row, "adresse_brute"),
+                num=True,
+                apos=True,
+                hyph=True,
+                spaces=True,
+            )
+            if pd.notna(getattr(df_row, "adresse_brute"))
+            else None
+        )
+        # WIP 2023-03-30: supprimer car sera fait dans parse_native_pages, parse_doc, parse_doc_direct
+        # - extraire les éléments d'adresse en traitant l'adresse brute
+        adr_num = getattr(df_row, "adr_num")  # numéro de la voie
+        adr_ind = getattr(df_row, "adr_ind")  # indice de répétition
+        adr_voie = getattr(df_row, "adr_voie")  # nom de la voie
+        adr_compl = getattr(df_row, "adr_compl")  # complément d'adresse
+        adr_cpostal = getattr(df_row, "adr_cpostal")  # code postal
+        adr_ville = getattr(df_row, "adr_ville")  # ville
+        # end WIP 2023-03-30
+
+        # - nettoyer a minima la commune extraite des en-tête ou pied-de-page ou de la mention du maire signataire
+        adr_commune_maire = (
+            normalize_string(
+                getattr(df_row, "commune_maire"),
+                num=True,
+                apos=True,
+                hyph=True,
+                spaces=True,
+            )
+            if pd.notna(getattr(df_row, "commune_maire"))
+            else None
+        )
+        # - déterminer la commune de l'adresse visée par l'arrêté en reconciliant la commune de l'adresse et
+        # celle de l'autorité
+        adr_commune = determine_commune(adr_ville, adr_commune_maire)
+        if pd.isna(adr_commune) or not adr_commune:
+            logging.warning(f"Pas de commune pour {doc_arr['arr_pdf']}")
+
+        # - déterminer le code INSEE de la commune
+        adr_codeinsee = get_codeinsee(adr_commune, adr_cpostal)
+        # - si l'adresse ne contenait pas de code postal, essayer de déterminer le code postal
+        # à partir du code INSEE de la commune (ne fonctionne pas pour Aix-en-Provence)
+        if pd.isna(adr_cpostal) or not adr_cpostal:
+            adr_cpostal = get_codepostal(adr_commune, adr_codeinsee)
+            if not adr_cpostal:
+                logging.warning(
+                    f"{doc_arr['arr_pdf']}: Pas de code postal: cpostal(adr_brute)={adr_cpostal}, commune={adr_commune}, code_insee={adr_codeinsee}, get_codepostal={adr_cpostal}"
+                )
+
+        # - créer une adresse normalisée ; la cohérence des champs est vérifiée
+        adr_interm = {
+            "num": adr_num,  # numéro de la voie
+            "ind": adr_ind,  # indice de répétition
+            "voie": adr_voie,  # nom de la voie
+            "compl": adr_compl,  # complément d'adresse
+            "cpostal": adr_cpostal,  # code postal
+            "ville": adr_commune,  # ville
+        }
+        adr_norm = normalize_adresse(adr_interm)
+        adr_adresse = create_adresse_normalisee(
+            adr_norm["num"],
+            adr_norm["ind"],
+            adr_norm["voie"],
+            adr_norm["compl"],
+            adr_norm["cpostal"],
+            adr_norm["commune"],
+        )
+        # - rassembler les champs
+        doc_adr = {
+            # adresse
+            "adr_ad_brute": adr_ad_brute,  # adresse brute
+            "adr_num": adr_norm["num"],  # numéro de la voie
+            "adr_ind": adr_norm["ind"],  # indice de répétition
+            "adr_voie": adr_norm["voie"],  # nom de la voie
+            "adr_compl": adr_norm["compl"],  # complément d'adresse
+            "adr_cpostal": adr_norm["cpostal"],  # code postal
+            "adr_ville": adr_norm["commune"],  # ville
+            "adr_adresse": adr_adresse,  # adresse normalisée
+            "adr_codeinsee": adr_codeinsee,  # code insee (5 chars)  # complété en aval par "enrichi"
+        }
+        # parcelle cadastrale
+        ref_cad = (
+            normalize_string(
+                getattr(df_row, "parcelle"), num=True, apos=True, hyph=True, spaces=True
+            )
+            if pd.notna(getattr(df_row, "parcelle"))
+            else None
+        )
+        doc_par = {
+            "par_ref_cad": ref_cad,  # référence cadastrale
+        }
+        # notifiés
+        doc_not = {
+            "not_id_proprio": (
+                normalize_string(
+                    getattr(df_row, "proprio"),
+                    num=True,
+                    apos=True,
+                    hyph=True,
+                    spaces=True,
+                )
+                if pd.notna(getattr(df_row, "proprio"))
+                else None
+            ),  # identification des propriétaires
+            "not_proprio": "",  # TODO liste des noms des propriétaires
+            "not_id_syndic": (
+                normalize_string(
+                    getattr(df_row, "syndic"),
+                    num=True,
+                    apos=True,
+                    hyph=True,
+                    spaces=True,
+                )
+                if pd.notna(getattr(df_row, "syndic"))
+                else None
+            ),  # identification du syndic
+            "not_syndic": "",  # TODO nom du syndic
+            "not_id_gest": (
+                normalize_string(
+                    getattr(df_row, "gest"), num=True, apos=True, hyph=True, spaces=True
+                )
+                if pd.notna(getattr(df_row, "gest"))
+                else None
+            ),  # identification du gestionnaire
+            "not_gest": "",  # TODO nom du gestionnaire
+        }
+        doc_data = doc_idu | doc_arr | doc_adr | doc_par | doc_not
+        doc_rows.append(doc_data)
+    df_docs = pd.DataFrame.from_records(doc_rows)
+    df_docs = df_docs.astype(dtype=DTYPE_DATA)
+    return df_docs</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.extract_data.determine_commune" class="doc doc-heading">
+          <code class="highlight language-python">determine_commune(adr_commune_brute, adr_commune_maire)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Déterminer la commune de l'adresse visée par l'arrêté.</p>
+<p>Réconcilie la commune éventuellement contenue dans l'adresse du ou des bâtiments visés
+avec le nom de commune extrait du document (template, autorité ou lieu de signature).</p>
+<h4 id="src.process.extract_data.determine_commune--parameters">Parameters</h4>
+<p>adr_commune_brute: str
+    Commune extraite de l'adresse du bâtiment visé par l'arrêté.
+adr_commune_maire: str
+    Commune extraite de l'autorité prenant l'arrêté, ou du template du document.</p>
+<h4 id="src.process.extract_data.determine_commune--returns">Returns</h4>
+<p>adr_commune: str
+    Commune de l'adresse visée.</p>
+
+          <details class="quote">
+            <summary> <code>src\process\extract_data.py</code></summary>
+            <pre class="highlight"><code class="language-python">def determine_commune(adr_commune_brute: str, adr_commune_maire: str) -&gt; str:
+    """Déterminer la commune de l'adresse visée par l'arrêté.
+
+    Réconcilie la commune éventuellement contenue dans l'adresse du ou des bâtiments visés
+    avec le nom de commune extrait du document (template, autorité ou lieu de signature).
+
+    Parameters
+    ----------
+    adr_commune_brute: str
+        Commune extraite de l'adresse du bâtiment visé par l'arrêté.
+    adr_commune_maire: str
+        Commune extraite de l'autorité prenant l'arrêté, ou du template du document.
+
+    Returns
+    -------
+    adr_commune: str
+        Commune de l'adresse visée.
+    """
+    # TODO normaliser vers la graphie de la table des codes INSEE? Quid des arrondissements de Marseille?
+    # TODO comparer les graphies?
+    if (pd.isna(adr_commune_brute)) and (pd.isna(adr_commune_maire)):
+        # pas de commune
+        adr_commune = None
+    elif (pd.isna(adr_commune_maire)) or (
+        not P_COMMUNES_AMP_ALLFORMS.match(adr_commune_maire)
+    ):
+        adr_commune = adr_commune_brute  # TODO normaliser?
+    elif (pd.isna(adr_commune_brute)) or (
+        not P_COMMUNES_AMP_ALLFORMS.match(adr_commune_brute)
+    ):
+        adr_commune = adr_commune_maire
+    else:
+        # was: adr_commune = adr_commune_maire
+        adr_commune = adr_commune_brute  # .title() si on veut minimiser les différences avec adr_commune_maire pour comparer
+    return adr_commune</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.process.parse_doc_direct"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.process.parse_doc_direct--analyse-un-arrete-et-en-extrait-les-donnees">Analyse un arrêté et en extrait les données.</h2>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.parse_doc_direct.create_file_name_url" class="doc doc-heading">
+          <code class="highlight language-python">create_file_name_url(file_name, allowance=155)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Creates a url-compliant filename by removing all bad characters
+and maintaining the windows path length limit (which by default is 255)
+155 to take into account the path length</p>
+<h4 id="src.process.parse_doc_direct.create_file_name_url--parameters">Parameters</h4>
+<p>file_name: str
+    Nom du fichier
+allowance: int
+    Longueur maximale du chemin complet (chemin + nom de fichier)</p>
+
+          <details class="quote">
+            <summary> <code>src\process\parse_doc_direct.py</code></summary>
+            <pre class="highlight"><code class="language-python">def create_file_name_url(file_name: str, allowance: int = 155):
+    """
+    Creates a url-compliant filename by removing all bad characters
+    and maintaining the windows path length limit (which by default is 255)
+    155 to take into account the path length
+
+    Parameters
+    ----------
+    file_name: str
+        Nom du fichier
+    allowance: int
+        Longueur maximale du chemin complet (chemin + nom de fichier)
+    """
+
+    bad_characters = re.compile(r"[\\/&lt;&gt;,:\"|?*^$&amp;{}\[\]`\x00-\x1F\x7F]+")
+
+    if allowance &gt; 255:
+        allowance = 255  # on most common filesystems, including NTFS a file_name can not exceed 255 characters
+    # assign allowance for things that must be in the file name
+
+    # make sure that user input doesn't contain bad characters
+    file_name = bad_characters.sub("", file_name)
+    file_name = file_name.replace("'", "_").replace(" ", "_")
+
+    ret = ""
+    for string in [file_name]:
+        length = len(string)
+        if allowance - length &lt; 0:
+            string = string[:allowance]
+            length = len(string)
+        ret += string
+        allowance -= length
+
+    if allowance &lt; 0:
+        raise ValueError(
+            """It is not possible to give a reasonable file name, due to length limitations.
+        Consider changing location to somewhere with a shorter path."""
+        )
+
+    return ret</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.parse_doc_direct.enrich_adresse" class="doc doc-heading">
+          <code class="highlight language-python">enrich_adresse(fn_pdf, adresse, commune_maire)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Consolide et enrichit une adresse, avec ville et codes (INSEE et code postal).</p>
+<p>Harmonise et complète les informations extraites de l'adresse visée à partir
+des informations extraites du template ou de l'autorité prenant l'arrêté.
+Ajoute une adresse normalisée.</p>
+<h4 id="src.process.parse_doc_direct.enrich_adresse--parameters">Parameters</h4>
+<p>fn_pdf: str
+    Nom du fichier PDF (pour debug).
+adresse: dict
+    Adresse visée par le document.
+commune_maire: str
+    Ville extraite du template ou de l'autorité prenant l'arrêté.</p>
+<h4 id="src.process.parse_doc_direct.enrich_adresse--returns">Returns</h4>
+<p>adresse_enr: dict
+    Adresse enrichie et augmentée.</p>
+
+          <details class="quote">
+            <summary> <code>src\process\parse_doc_direct.py</code></summary>
+            <pre class="highlight"><code class="language-python">def enrich_adresse(fn_pdf: str, adresse: dict, commune_maire: str) -&gt; Dict:
+    """Consolide et enrichit une adresse, avec ville et codes (INSEE et code postal).
+
+    Harmonise et complète les informations extraites de l'adresse visée à partir
+    des informations extraites du template ou de l'autorité prenant l'arrêté.
+    Ajoute une adresse normalisée.
+
+    Parameters
+    ----------
+    fn_pdf: str
+        Nom du fichier PDF (pour debug).
+    adresse: dict
+        Adresse visée par le document.
+    commune_maire: str
+        Ville extraite du template ou de l'autorité prenant l'arrêté.
+
+    Returns
+    -------
+    adresse_enr: dict
+        Adresse enrichie et augmentée.
+    """
+    adresse_enr = adresse.copy()
+    # - déterminer la commune de l'adresse visée par l'arrêté en reconciliant la commune mentionnée
+    # dans cette adresse avec celle extraite des mentions de l'autorité ou du template
+    adresse_enr["ville"] = determine_commune(adresse_enr["ville"], commune_maire)
+    if not adresse_enr["ville"]:
+        logging.warning(
+            f"{fn_pdf}: impossible de déterminer la commune: {adresse_enr['ville'], commune_maire}"
+        )
+    # - déterminer le code INSEE de la commune
+    # FIXME communes hors Métropole: le filtrage sera-t-il fait en amont, lors de l'extraction depuis actes? sinon AssertionError ici
+    try:
+        codeinsee = get_codeinsee(adresse_enr["ville"], adresse_enr["cpostal"])
+    except AssertionError:
+        print(
+            f"{fn_pdf}: get_codeinsee(): adr_ville={adresse_enr['ville']}, adr_cpostal={adresse_enr['cpostal']}"
+        )
+        print(f"{adresse}")
+        raise
+    else:
+        if not codeinsee:
+            logging.warning(
+                f"{fn_pdf}: impossible de déterminer le code INSEE: {adresse_enr['ville'], adresse_enr['cpostal']}"
+            )
+    # - si l'adresse ne contenait pas de code postal, essayer de déterminer le code postal
+    # à partir du code INSEE de la commune (ne fonctionne pas pour Aix-en-Provence)
+    if not adresse_enr["cpostal"]:
+        adresse_enr["cpostal"] = get_codepostal(adresse_enr["ville"], codeinsee)
+        if not adresse_enr["cpostal"]:
+            logging.warning(
+                f"{fn_pdf}: Pas de code postal: adr_brute={adresse_enr['ad_brute']}, commune={adresse_enr['ville']}, code_insee={codeinsee}, get_codepostal={adresse_enr['cpostal']}"
+            )
+    # - créer une adresse normalisée ; la cohérence des champs est vérifiée
+    adresse_enr = normalize_adresse(adresse_enr)
+    if adresse_enr["ad_brute"]:
+        adresse_enr["adresse"] = create_adresse_normalisee(
+            adresse_enr["num"],
+            adresse_enr["ind"],
+            adresse_enr["voie"],
+            adresse_enr["compl"],
+            adresse_enr["cpostal"],
+            adresse_enr["ville"],
+        )
+    else:
+        adresse_enr["adresse"] = None
+    # - positionner finalement le code INSEE
+    adresse_enr["codeinsee"] = codeinsee
+
+    return adresse_enr</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.parse_doc_direct.extract_adresses_commune" class="doc doc-heading">
+          <code class="highlight language-python">extract_adresses_commune(fn_pdf, pg_txt_body, commune_maire)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Extraire les adresses visées par l'arrêté, et la commune.</p>
+<h4 id="src.process.parse_doc_direct.extract_adresses_commune--parameters">Parameters</h4>
+<p>fn_pdf: string
+    Nom du fichier PDF de l'arrêté (pour les messages de logs: warnings et erreurs)
+pg_txt_body: string
+    Corps de texte de la page
+commune_maire: string
+    Mention de la commune extraite de l'autorité prenant l'arrêté,
+    ou des</p>
+<h4 id="src.process.parse_doc_direct.extract_adresses_commune--returns">Returns</h4>
+<p>adresses: list(dict)
+    Adresses visées par l'arrêté</p>
+
+          <details class="quote">
+            <summary> <code>src\process\parse_doc_direct.py</code></summary>
+            <pre class="highlight"><code class="language-python">def extract_adresses_commune(
+    fn_pdf: str, pg_txt_body: str, commune_maire: str
+) -&gt; List[Dict]:
+    """Extraire les adresses visées par l'arrêté, et la commune.
+
+    Parameters
+    ----------
+    fn_pdf: string
+        Nom du fichier PDF de l'arrêté (pour les messages de logs: warnings et erreurs)
+    pg_txt_body: string
+        Corps de texte de la page
+    commune_maire: string
+        Mention de la commune extraite de l'autorité prenant l'arrêté,
+        ou des
+
+    Returns
+    -------
+    adresses: list(dict)
+        Adresses visées par l'arrêté
+    """
+    try:
+        adresses_visees = get_adr_doc(pg_txt_body)
+    except AssertionError:
+        logging.error(f"{fn_pdf}: problème d'extraction d'adresse")
+        raise
+    # if fn_pdf == "périmètre de sécurité 82 Hoche 105 Kleber 13003.pdf":
+    #     print(f"{commune_maire}, {adresses_visees}")
+    #     # raise ValueError("don't stop me now (too soon)")
+
+    if not adresses_visees:
+        adr = {
+            # adresse brute
+            "ad_brute": None,
+            # champs
+            "num": None,
+            "ind": None,
+            "voie": None,
+            "compl": None,
+            "cpostal": None,
+            "ville": None,
+            # adresse propre
+            "adresse": None,
+        }
+        adr_enr = enrich_adresse(fn_pdf, adr, commune_maire)
+        return [adr_enr]
+
+    # renommer les champs
+    # TODO le faire dans get_adr_doc et adapter le code dans les autres modules
+    adresses_visees = [
+        {
+            "ad_brute": x["adresse_brute"],
+            "adresses": [
+                {k.replace("adr_", ""): v for k, v in y.items()} for y in x["adresses"]
+            ],
+        }
+        for x in adresses_visees
+    ]
+
+    # prendre la 1re zone d'adresses reconnue dans le texte (heuristique)
+    # TODO en repérer d'autres? incertain
+    adr0 = adresses_visees[0]
+    adresse_brute = adr0["ad_brute"]
+    # TODO améliorer les résultats par une collecte plus exhaustive (qui nécessiterait le dédoublonnage) ou une meilleure heuristique ?
+    # extraire la ou les adresses de cette zone
+    # (on supprime au passage les préfixes "adr_" des noms des champs, archaïsme à corriger plus tard éventuellement)
+    adresses = [({"ad_brute": adresse_brute} | x) for x in adr0["adresses"]]
+    if not adresses:
+        logging.error(
+            f"{fn_pdf}: aucune adresse extraite de la zone d'adresse(s): {adresse_brute}"
+        )
+
+    if len(adresses_visees) &gt; 1:
+        # si la 1re adresse n'a pas de code postal, tenter de récupérer le code postal des adresses suivantes
+        # on construit 2 mappings:
+        # - (num, voie) =&gt; cp
+        numvoie2cp = dict()
+        # - voie =&gt; cp  # fallback, quand la mention d'adresse extraite ne contient pas de numéro (mais une mention ultérieure, oui)
+        voie2cp = dict()
+        # on itère sur l'ensemble des adresses extraites du document pour créer une table d'association vers les codes postaux
+        for x in adresses_visees:
+            for y in x["adresses"]:
+                if y["cpostal"]:
+                    norm_voie = normalize_string(
+                        remove_accents(y["voie"]),
+                        num=True,
+                        apos=True,
+                        hyph=True,
+                        spaces=True,
+                    ).lower()
+                    # (numéro, voie) -&gt; cp
+                    numvoie2cp[(y["num"], norm_voie)] = y["cpostal"]
+                    # fallback: voie -&gt; cp
+                    voie2cp[norm_voie] = y["cpostal"]  # WIP 2023-05-09
+        # print(numvoie2cp)
+
+        for sel_adr in adresses:
+            # pour chaque adresse considérée comme étant visée par l'arrêté
+            if sel_adr["voie"] and not sel_adr["cpostal"]:
+                # si on a une voie mais pas de code postal, on essaie de renseigner
+                # le code postal par propagation à partir des autres adresses
+                norm_voie = normalize_string(
+                    remove_accents(sel_adr["voie"]),
+                    num=True,
+                    apos=True,
+                    hyph=True,
+                    spaces=True,
+                ).lower()
+                if sel_adr["num"]:
+                    # si on a un numéro de voie (c'est l'idéal, car le code postal est normalement unique)
+                    sel_short = (sel_adr["num"], norm_voie)
+                    # print(f"&gt;&gt;&gt;&gt;&gt;&gt; sel_short: {sel_short}")
+                    sel_adr["cpostal"] = numvoie2cp.get(sel_short, None)
+                else:
+                    # sans numéro de voie, on recourt au tableau associatif sans numéro
+                    sel_adr["cpostal"] = voie2cp.get(norm_voie, None)  # WIP 2023-05-09
+
+    # if fn_pdf == "90 cours Sextius - ML.pdf":
+    #     print(f"{adresses_visees}\n{numvoie2cp}\n{adresses}")
+    #     raise ValueError("don't stop me now")
+    #     pass
+
+    # si besoin d'une alternative: déterminer commune, code INSEE et code postal pour les adresses[0] et propager les valeurs aux autres adresses
+    adresses_enr = [enrich_adresse(fn_pdf, x, commune_maire) for x in adresses]
+    return adresses_enr</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.parse_doc_direct.parse_arrete" class="doc doc-heading">
+          <code class="highlight language-python">parse_arrete(fp_pdf_in, fp_txt_in)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Analyse un arrêté et extrait les données qu'il contient.</p>
+<p>L'arrêté est découpé en paragraphes puis les données sont
+extraites.</p>
+<h4 id="src.process.parse_doc_direct.parse_arrete--parameters">Parameters</h4>
+<p>fp_pdf_in : Path
+    Fichier PDF source (temporairement?)
+fp_txt_in : Path
+    Fichier texte à analyser.</p>
+<h4 id="src.process.parse_doc_direct.parse_arrete--returns">Returns</h4>
+<p>doc_data : dict
+    Données extraites du document.</p>
+
+          <details class="quote">
+            <summary> <code>src\process\parse_doc_direct.py</code></summary>
+            <pre class="highlight"><code class="language-python">def parse_arrete(fp_pdf_in: Path, fp_txt_in: Path) -&gt; dict:
+    """Analyse un arrêté et extrait les données qu'il contient.
+
+    L'arrêté est découpé en paragraphes puis les données sont
+    extraites.
+
+    Parameters
+    ----------
+    fp_pdf_in : Path
+        Fichier PDF source (temporairement?)
+    fp_txt_in : Path
+        Fichier texte à analyser.
+
+    Returns
+    -------
+    doc_data : dict
+        Données extraites du document.
+    """
+    fn_pdf = fp_pdf_in.name
+    fn_pdf_out = create_file_name_url(fn_pdf)
+
+    pages = load_pages_text(fp_txt_in)
+    if not any(pages):
+        logging.warning(f"{fp_txt_in}: aucune page de texte")
+        arr_url = FS_URL_FALLBACK.format(pdf=fn_pdf_out)
+        logging.warning(f"URL temporaire (sans code commune ni année): {arr_url}")
+        return {
+            "adresses": [],
+            "arretes": [
+                {
+                    "pdf": fn_pdf,
+                    "url": arr_url,
+                }
+            ],
+            "notifies": [],
+            "parcelles": [],
+        }
+
+    # filtrer les pages qui sont à sortir du traitement:
+    # - la ou les éventuelles pages d'accusé de réception d'actes
+    pages_ar = [i for i, x in enumerate(pages, start=1) if P_ACCUSE.match(x)]
+    if pages_ar:
+        logging.warning(
+            f"{fp_txt_in}: {len(pages_ar)} page(s) d'accusé de réception actes: {pages_ar} (sur {len(pages)})"
+        )
+    # - la ou les éventuelles pages d'annexes ? (TODO)
+    skip_pages = pages_ar
+    # remplacer les pages filtrées par une chaîne vide
+    filt_pages = [
+        (x if i not in skip_pages else "") for i, x in enumerate(pages, start=1)
+    ]
+
+    # analyser la structure des pages
+    doc_content = parse_arrete_pages(fn_pdf, filt_pages)
+
+    # extraire les données
+    adresses = []
+    arretes = {}  # un seul
+    notifies = {
+        "proprios": OrderedDict(),  # propriétaires
+        "syndics": OrderedDict(),  # syndic (normalement unique)
+        "gests": OrderedDict(),  # gestionnaire (normalement unique)
+    }
+    parcelles = OrderedDict()  # références de parcelles cadastrales
+
+    # - au préalable, rassembler toutes les données en ajoutant le numéro de page (FIXME)
+    pages_body = [pg_cont["body"] for pg_cont in doc_content]
+    # pages_cont = [pg_cont["content"] for pg_cont in doc_content]  # future
+    pages_cont = []
+    for pg_num, pg_cont in enumerate(doc_content, start=1):
+        # pg_template = page_cont["template"]
+        # pg_content = page_cont["content"]  # future
+        # FIXME ajouter "page_num" en amont, dans parse_arrete_pages()
+        pages_cont.extend([({"page_num": pg_num} | x) for x in pg_cont["content"]])
+
+    # extraire les champs un par un:
+    # - arrêté
+    arr_dates = [
+        process_date_brute(x["span_txt"])
+        for x in pages_cont
+        if x["span_typ"] == "arr_date"
+    ]
+    if arr_dates:
+        arretes["date"] = normalize_string(
+            arr_dates[0], num=True, apos=True, hyph=True, spaces=True
+        )
+    arr_nums = [x["span_txt"] for x in pages_cont if x["span_typ"] == "num_arr"]
+    if arr_nums:
+        arretes["num_arr"] = normalize_string(
+            arr_nums[0], num=True, apos=True, hyph=True, spaces=True
+        )
+    arr_noms = [x["span_txt"] for x in pages_cont if x["span_typ"] == "nom_arr"]
+    if arr_noms:
+        arretes["nom_arr"] = normalize_string(
+            arr_noms[0], num=True, apos=True, hyph=True, spaces=True
+        )
+
+    # - commune extraite des mentions de l'autorité prenant l'arrêté, ou du template du document
+    adrs_commune_maire = [x for x in pages_cont if x["span_typ"] == "adr_ville"]
+    # - prendre arbitrairement la 1re mention et la nettoyer a minima
+    # TODO regarder les erreurs et vérifier si un autre choix donnerait de meilleurs résultats
+    # TODO tester: si &gt; 1, tester de matcher avec la liste des communes de la métropole
+    # (et éventuellement calculer la distance de Levenshtein pour vérifier s'il est vraisemblable
+    # que ce soient des variantes de graphie ou erreurs)
+    if not adrs_commune_maire:
+        adr_commune_maire = None
+    else:
+        adr_commune_maire = normalize_string(
+            adrs_commune_maire[0]["span_txt"],
+            num=True,
+            apos=True,
+            hyph=True,
+            spaces=True,
+        )
+        # remplacer par la forme canonique (communes AMP)
+        adr_commune_maire = normalize_ville(adr_commune_maire)
+    logging.warning(f"adrs_commune_maire: {adrs_commune_maire}")  # DEBUG
+    logging.warning(f"adr_commune_maire: {adr_commune_maire}")  # DEBUG
+    #
+    # parcelles
+    codeinsee = None  # valeur par défaut
+    cpostal = None  # valeur par défaut
+    for pg_txt_body in pages_body:
+        if pg_txt_body:
+            # extraire les informations sur l'arrêté
+            if "classe" not in arretes and (classe := get_classe(pg_txt_body)):
+                arretes["classe"] = classe
+            if "urgence" not in arretes and (urgence := get_urgence(pg_txt_body)):
+                arretes["urgence"] = urgence
+            if "demo" not in arretes and (demo := get_demo(pg_txt_body)):
+                arretes["demo"] = demo
+            if "int_hab" not in arretes and (int_hab := get_int_hab(pg_txt_body)):
+                arretes["int_hab"] = int_hab
+            if "equ_com" not in arretes and (equ_com := get_equ_com(pg_txt_body)):
+                arretes["equ_com"] = equ_com
+            if "pdf" not in arretes:
+                arretes["pdf"] = fn_pdf
+
+            # extraire la ou les adresse(s) visée(s) par l'arrêté détectées sur cette page
+            if not adresses:
+                # pour le moment, on se contente de la première page contenant au moins une zone d'adresse,
+                # et sur cette page, de la première zone d'adresse trouvée ;
+                # une zone peut contenir une ou plusieurs adresses obtenues par "dépliage" (ex: 12 - 14 rue X)
+                # TODO examiner les erreurs et déterminer si une autre stratégie donnerait de meilleurs résultats
+                # si une adresse a déjà été ajoutée mais qu'elle n'a été remplie que grâce à commune_maire
+                pg_adresses = extract_adresses_commune(
+                    fn_pdf, pg_txt_body, adr_commune_maire
+                )
+                if pg_adresses:
+                    adresses.extend(pg_adresses)
+                    # WIP on prend le code INSEE et code postal de la 1re adresse
+                    # print(adrs_doc)
+                    cpostal = adresses[0]["cpostal"]
+                    codeinsee = adresses[0]["codeinsee"]
+                    if ("codeinsee" not in arretes) and codeinsee:
+                        arretes["codeinsee"] = codeinsee
+            elif len(adresses) == 1 and not adresses[0]["ad_brute"]:
+                # si une adresse a déjà été ajoutée mais qu'elle n'a été remplie que grâce à commune_maire
+                # (donc ne contient qu'une commune), on en cherche une plus précise sur la page suivante,
+                # à tout hasard
+                pg_adresses = extract_adresses_commune(
+                    fn_pdf, pg_txt_body, adr_commune_maire
+                )
+                if pg_adresses and pg_adresses[0]["ad_brute"]:
+                    # on a bien extrait au moins une adresse du texte, on remplace l'adresse contenant
+                    # seulement une commune
+                    adresses = pg_adresses
+                    # WIP on prend le code INSEE et code postal de la 1re adresse
+                    # print(adrs_doc)
+                    cpostal = adresses[0]["cpostal"]
+                    codeinsee = adresses[0]["codeinsee"]
+                    if codeinsee:
+                        # on remplace le code commune INSEE pour tout le document
+                        arretes["codeinsee"] = codeinsee
+
+            # extraire les notifiés
+            if proprios := get_proprio(pg_txt_body):
+                norm_proprios = normalize_string(
+                    proprios, num=True, apos=True, hyph=True, spaces=True
+                )
+                notifies["proprios"][
+                    norm_proprios
+                ] = proprios  # WIP: proprios = [] + extend()
+            if syndics := get_syndic(pg_txt_body):
+                norm_syndics = normalize_string(
+                    syndics, num=True, apos=True, hyph=True, spaces=True
+                )
+                notifies["syndics"][
+                    norm_syndics
+                ] = syndics  # WIP: syndics = [] + extend ?
+
+            if gests := get_gest(pg_txt_body):
+                norm_gests = normalize_string(
+                    gests, num=True, apos=True, hyph=True, spaces=True
+                )
+                notifies["gests"][norm_gests] = gests  # WIP: gests = [] + extend ?
+
+            # extraire la ou les parcelles visées par l'arrêté
+            if pg_parcelles_str_list := get_parcelles(pg_txt_body):
+                # TODO supprimer les références partielles (ex: Marseille mais sans code quartier) si la référence complète est aussi présente dans le doc
+                refcads_norm = [
+                    generate_refcadastrale_norm(
+                        codeinsee, pg_parcelles_str, fn_pdf, cpostal
+                    )
+                    for pg_parcelles_str in pg_parcelles_str_list
+                ]
+                parcelles = parcelles | OrderedDict(
+                    zip(refcads_norm, pg_parcelles_str_list)
+                )  # WIP get_parcelles:list()
+    if False:
+        # WIP hypothèses sur les notifiés
+        try:
+            assert len(notifies["proprios"]) &lt;= 1
+            assert len(notifies["syndics"]) &lt;= 1
+            assert len(notifies["gests"]) &lt;= 1
+        except AssertionError:
+            print(f"{notifies}")
+            raise
+    # déplacer le PDF et déterminer l'URL
+    if "codeinsee" in arretes:
+        if "date" in arretes:
+            # ré-extraire l'année de la date formatée
+            # TODO stocker l'année dans un champ dédié, au moment de l'extraction et normalisation
+            # de la date, et le récupérer ici?
+            # code correct:
+            # arr_year = datetime.strptime(arretes["date"], "%d/%m/%Y").date().year
+            # mais ne fonctionne pas sur des dates mal reconnues (OCR) ex: "00/02/2022"
+            # alors qu'on peut extraire l'année
+            arr_year = arretes["date"].rsplit("/", 1)[1]
+            arr_comm = arretes["codeinsee"]
+
+            arretes["url"] = FS_URL.format(
+                commune=arretes["codeinsee"], yyyy=arr_year, pdf=fn_pdf_out
+            )
+        else:
+            arretes["url"] = FS_URL_NO_YEAR.format(
+                commune=arretes["codeinsee"], pdf=fn_pdf_out
+            )
+            logging.warning(f"URL temporaire (sans année): {arretes['url']}")
+    else:
+        # ("codeinsee" not in arretes)
+        # dans le pire cas: (arretes == {})
+        arretes = {"pdf": fn_pdf, "url": FS_URL_FALLBACK.format(pdf=fn_pdf_out)}
+        logging.warning(
+            f"URL temporaire (sans code commune ni année): {arretes['url']}"
+        )
+
+    # notifies
+    # formes brutes puis normalisées
+    # * propriétaires
+    id_proprio = list(notifies["proprios"])[0] if notifies["proprios"] else None
+    proprio = id_proprio  # TODO appliquer une normalisation?
+    # * syndic
+    id_syndic = list(notifies["syndics"])[0] if notifies["syndics"] else None
+    if (
+        id_syndic is not None
+        and (P_NOMS_CABINETS.search(id_syndic) is None)
+        and (P_CABINET.search(id_syndic) is None)
+        and (P_MONSIEUR_MADAME.search(id_syndic) is not None)
+    ):
+        # si le champ "id_syndic" ne contient pas de mention de cabinet ou d'agence,
+        # et contient une référence à une personne physique,
+        # alors la valeur normalisée est "syndic bénévole"
+        # TODO si on observe trop de faux positifs, mettre en place une condition
+        # plus restrictive sur la chaîne "bénévole"
+        syndic = "Syndic bénévole"
+    else:
+        # sinon, valeur normalisée (fallback: id_syndic)
+        syndic = normalize_nom_cabinet(id_syndic)
+    # * gestionnaire
+    id_gest = list(notifies["gests"])[0] if notifies["gests"] else None
+    # valeur normalisée (fallback: id_syndic)
+    gest = normalize_nom_cabinet(id_gest)
+    #
+    doc_data = {
+        "adresses": adresses,
+        "arretes": [arretes],  # a priori un seul par fichier
+        "notifies": [
+            {
+                "id_proprio": id_proprio,
+                "proprio": proprio,  # forme normalisée
+                "id_syndic": id_syndic,
+                "syndic": syndic,  # forme normalisée
+                "id_gest": id_gest,
+                "gest": gest,  # forme normalisée
+                "codeinsee": codeinsee,
+            }
+        ],  # a priori un seul par fichier (pour le moment)
+        "parcelles": [{"ref_cad": x, "codeinsee": codeinsee} for x in parcelles],
+    }
+    return doc_data</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.parse_doc_direct.process_files" class="doc doc-heading">
+          <code class="highlight language-python">process_files(df_in, out_dir, date_exec)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Analyse le texte des fichiers PDF extrait dans des fichiers TXT.</p>
+<h4 id="src.process.parse_doc_direct.process_files--parameters">Parameters</h4>
+<p>df_in: pd.DataFrame
+    Fichier meta_$RUN_otxt.csv contenant les métadonnées enrichies et
+    les fichiers PDF et TXT (natif ou OCR) à traiter.
+out_dir : Path
+    Dossier de sortie
+date_exec : date
+    Date d'exécution du script, utilisée pour (a) le nom des copies de fichiers CSV
+    incluant la date de traitement, (b) l'identifiant unique des arrêtés dans les 4
+    tables, (c) le champ 'datemaj' initialement rempli avec la date d'exécution.</p>
+<h4 id="src.process.parse_doc_direct.process_files--returns">Returns</h4>
+<p>out_files : Dict[str, Path]
+    Fichiers CSV produits, contenant les données extraites.
+    Dictionnaire indexé par les clés {"adresse", "arrete", "notifie", "parcelle"}.</p>
+
+          <details class="quote">
+            <summary> <code>src\process\parse_doc_direct.py</code></summary>
+            <pre class="highlight"><code class="language-python">def process_files(
+    df_in: pd.DataFrame,
+    out_dir: Path,
+    date_exec: date,
+) -&gt; Dict[str, Path]:
+    """Analyse le texte des fichiers PDF extrait dans des fichiers TXT.
+
+    Parameters
+    ----------
+    df_in: pd.DataFrame
+        Fichier meta_$RUN_otxt.csv contenant les métadonnées enrichies et
+        les fichiers PDF et TXT (natif ou OCR) à traiter.
+    out_dir : Path
+        Dossier de sortie
+    date_exec : date
+        Date d'exécution du script, utilisée pour (a) le nom des copies de fichiers CSV
+        incluant la date de traitement, (b) l'identifiant unique des arrêtés dans les 4
+        tables, (c) le champ 'datemaj' initialement rempli avec la date d'exécution.
+
+    Returns
+    -------
+    out_files : Dict[str, Path]
+        Fichiers CSV produits, contenant les données extraites.
+        Dictionnaire indexé par les clés {"adresse", "arrete", "notifie", "parcelle"}.
+    """
+    # - les fichiers CSV datés sont stockés dans un sous-dossier "csv_historique"
+    out_dir_csv = out_dir / "csv_historique"
+    logging.info(
+        f"Sous-dossier de sortie: {out_dir_csv} {'existe déjà' if out_dir_csv.is_dir() else 'va être créé'}."
+    )
+    out_dir_csv.mkdir(parents=True, exist_ok=True)
+    # - les fichiers PDF à reclasser sont stockés dans un sous-dossier (temporaire) "pdf_a_reclasser"
+    out_dir_pdf_areclass = out_dir / "pdf_analyses/pdf_a_reclasser"
+    logging.info(
+        f"Sous-dossier de sortie: {out_dir_pdf_areclass} {'existe déjà' if out_dir_pdf_areclass.is_dir() else 'va être créé'}."
+    )
+    out_dir_pdf_areclass.mkdir(parents=True, exist_ok=True)
+    # - les fichiers TXT extraits nativement ou par OCR dans un sous-dossier "txt"
+    out_dir_txt = out_dir / "txt"
+    logging.info(
+        f"Sous-dossier de sortie: {out_dir_txt} {'existe déjà' if out_dir_txt.is_dir() else 'va être créé'}."
+    )
+    out_dir_txt.mkdir(parents=True, exist_ok=True)
+
+    # 0. charger la liste des PDF déjà traités, définis comme les PDF déjà
+    # présents dans un des fichiers "paquet_arrete_*.csv"
+    fps_paquet_arrete = sorted(
+        out_dir_csv.glob(
+            f"paquet_arrete_[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]_[0-9][0-9].csv"
+        )
+    )
+    pdfs_old = []
+    for fp_paquet_arrete in fps_paquet_arrete:
+        df_arr_old = pd.read_csv(fp_paquet_arrete, dtype=DTYPE_ARRETE, sep=";")
+        pdfs_old.extend(df_arr_old["pdf"])
+    pdfs_old = set(pdfs_old)
+
+    # 1. déterminer le nom des fichiers de sortie
+    # les noms des fichiers de sortie incluent:
+    # - la date de traitement (ex: "2023-05-30")
+    date_proc_dash = date_exec.strftime("%Y-%m-%d")
+    # - le numéro d'exécution ce jour (ex: "02"), calculé en recensant les
+    # éventuels fichiers existants
+    out_prevruns = sorted(
+        itertools.chain.from_iterable(
+            out_dir_csv.glob(f"paquet_{x}_{date_proc_dash}_[0-9][0-9].csv")
+            for x in OUT_BASENAMES
+        )
+    )
+    #    - numéro d'exécution du script ce jour
+    i_run = 0  # init
+    for fp_prevrun in out_prevruns:
+        # le numéro se trouve à la fin du stem, après le dernier séparateur "_"
+        fp_out_idx = int(fp_prevrun.stem.split("_")[-1])
+        i_run = max(i_run, fp_out_idx)
+    i_run += 1  # on prend le numéro d'exécution suivant
+    # résultat: fichiers générés par cette exécution
+    out_files = {
+        x: out_dir_csv / f"paquet_{x}_{date_proc_dash}_{i_run:&gt;02}.csv"
+        for x in OUT_BASENAMES
+    }
+
+    # 2. déterminer le premier identifiant unique (idu) des prochaines entrées:
+    # il suit le dernier idu généré par les exécutions précédentes le même jour
+    i_idu = 0  # init
+    for fp_prevrun in out_prevruns:
+        # ouvrir le fichier, lire les idus, prendre le dernier, extraire l'index
+        s_idus = pd.read_csv(
+            fp_prevrun, usecols=["idu"], dtype={"idu": "string"}, sep=";"
+        )["idu"]
+        max_idx = s_idus.str.rsplit("-", n=1, expand=True)[1].astype("int32").max()
+        i_idu = max(i_idu, max_idx)
+    i_idu += 1  # on prend le numéro d'arrêté suivant
+
+    # 3. filtrer les arrêtés
+    # - filtrer les documents hors périmètre thématique ou géographique ?
+    # TODO vérifier si ok sans liste d'exclusion ici ; sinon corriger avant déploiement?
+    # df_in["pdf"].str.split("-", 1)[0] not in set(EXCLUDE_FILES + EXCLUDE_FIXME_FILES)  # + EXCLUDE_HORS_AMP)
+    #
+    # - filtrer les fichiers déjà traités: ne garder que les PDF qui ne
+    # sont pas déjà présents dans un "paquet_arrete_*.csv"
+    pdfs_in_old = set(df_in["pdf"].tolist()).intersection(pdfs_old)
+    # vérifier que le fichier PDF existe bien dans les dossiers destination,
+    # pdf_a_reclasser ou un dossier de commune,
+    # sinon il faut le traiter comme s'il était complètement nouveau
+    already_proc = []
+    # sous-dossiers par code commune (INSEE), sur 5 chiffres
+    out_dir_pdf_communes = out_dir / "[0-9][0-9][0-9][0-9][0-9]"
+    for fn in pdfs_in_old:
+        areclass = sorted(out_dir_pdf_areclass.rglob(fn))
+        bienclas = sorted(out_dir_pdf_communes.rglob(fn))
+        if areclass or bienclas:
+            logging.warning(
+                f"Fichier à ignorer car déjà traité: {areclass[0] if areclass else bienclas[0]}"
+            )
+            already_proc.append(fn)
+    already_proc = set(already_proc)
+    #
+    s_dups = df_in["pdf"].isin(already_proc)
+    if any(s_dups):
+        logging.info(
+            f"{s_dups.sum()} fichiers seront déplacés dans 'doublons/'"
+            + " et ne seront pas retraités, car ils sont déjà présents"
+            + " dans un fichier 'paquet_arrete_*.csv' de 'csv_historique/'"
+            + " et dans un dossier de commune"
+            + " ou 'pdf_a_reclasser' ."
+        )
+        # déplacer les fichiers déjà traités dans doublons/
+        # (plus prudent que de les supprimer d'emblée)
+        out_dups = out_dir / "doublons"
+        out_dups.mkdir(exist_ok=True)
+        #
+        df_dups = df_in[s_dups]
+        for df_row in df_dups.itertuples():
+            fp = Path(df_row.fullpath)
+            fp_dst = out_dups / fp.name
+            shutil.move(fp, fp_dst)
+            # si le move a réussi, on peut supprimer le fichier dans le dossier d'entrée
+            if fp_dst.is_file():
+                fp_orig = Path(df_row.origpath)
+                fp_orig.unlink()
+
+    #
+    df_in = df_in[~s_dups]
+    # si après filtrage, df_in est vide, aucun fichier CSV ne sera produit
+    # et on peut sortir immédiatement
+    if df_in.empty:
+        return {}
+
+    # 4 tables de sortie
+    rows_adresse = []
+    rows_arrete = []
+    rows_notifie = []
+    rows_parcelle = []
+
+    # date de traitement, en 2 formats
+    date_proc = date_exec.strftime("%Y%m%d")  # pour "idu" (id uniques des arrêtés)
+    datemaj = date_exec.strftime("%d/%m/%Y")  # pour "datemaj" des 4 tables
+
+    # identifiant des entrées dans les fichiers de sortie: &lt;type arrêté&gt;-&lt;date du traitement&gt;-&lt;index&gt;
+    # itérer sur les fichiers PDF et TXT
+    for i, df_row in enumerate(df_in.itertuples(), start=i_idu):
+        # fichier PDF
+        fp_pdf = Path(df_row.fullpath)
+        if not fp_pdf.is_file():
+            raise ValueError(f"{fp_pdf}: fichier PDF introuvable ({fp_txt})")
+        # fichier TXT (OCR sinon natif)
+        fp_txt = Path(df_row.fullpath_txt)
+        if not fp_txt.is_file():
+            raise ValueError(f"{fp_pdf}: fichier TXT introuvable ({fp_txt})")
+
+        # type d'arrêté ; à date, seulement des arrêtés de péril "AP" ;
+        # à l'avenir, pourrait être prédit à partir du texte, avec un classifieur
+        type_arr = "AP"
+        # identifiant unique du document dans les tables de sortie (paquet_*.csv):
+        # TODO détecter le ou les éventuels fichiers déjà produits ce jour, écarter les doublons (blake2b?)
+        # et initialiser le compteur à la prochaine valeur
+        # format: {type d'arrêté}-{date}-{id relatif, sur 4 chiffres}
+        idu = f"{type_arr}-{date_proc}-{i:04}"
+        # analyser le texte
+        doc_data = parse_arrete(fp_pdf, fp_txt)
+
+        # ajouter des entrées dans les 4 tables
+        rows_adresse.extend(
+            ({"idu": idu} | x | {"datemaj": datemaj}) for x in doc_data["adresses"]
+        )
+        rows_arrete.extend(
+            ({"idu": idu} | x | {"datemaj": datemaj}) for x in doc_data["arretes"]
+        )
+        rows_notifie.extend(
+            ({"idu": idu} | x | {"datemaj": datemaj}) for x in doc_data["notifies"]
+        )
+        rows_parcelle.extend(
+            ({"idu": idu} | x | {"datemaj": datemaj}) for x in doc_data["parcelles"]
+        )
+
+    # créer les 4 DataFrames et les exporter en CSV
+    for key, rows, dtype in [
+        ("adresse", rows_adresse, DTYPE_ADRESSE),
+        ("arrete", rows_arrete, DTYPE_ARRETE),
+        ("notifie", rows_notifie, DTYPE_NOTIFIE),
+        ("parcelle", rows_parcelle, DTYPE_PARCELLE),
+    ]:
+        out_file = out_files[key]
+        df = pd.DataFrame.from_records(rows)
+
+        for dtype_key, _ in dtype.items():
+            if dtype_key not in df.columns:
+                df[dtype_key] = np.nan
+
+        df = df.astype(dtype=dtype)
+        df.to_csv(out_file, index=False, sep=";")
+
+    # déplacer les fichiers PDF traités ;
+    # le code est redondant avec celui utilisé pour remplir le champ d'URL
+    # mais on fait les déplacements de fichiers après l'écriture du dataframe
+    # pour éviter de déplacer le fichier si les CSV ne sont finalement pas
+    # produits (eg. à cause d'un échec sur un autre document)
+    df_arr = pd.read_csv(out_files["arrete"], dtype=DTYPE_ARRETE, sep=";")
+    for df_row in df_arr.itertuples():
+        # nom du PDF (incluant hash)
+        fn = df_row.pdf
+        # déterminer le dossier destination
+        if pd.notna(df_row.codeinsee):
+            commune = df_row.codeinsee
+            if pd.notna(df_row.date):
+                # code correct
+                # year = str(datetime.strptime(df_row.date, "%d/%m/%Y").date().year)
+                # mais ne fonctionne pas sur des dates mal reconnues (OCR) ex: "00/02/2022"
+                # alors qu'on peut extraire l'année
+                year = df_row.date.rsplit("/", 1)[1]
+                dest_dir = out_dir / "pdf_analyses" / commune / year
+            else:
+                dest_dir = out_dir / "pdf_analyses/pdf_a_reclasser" / commune
+        else:
+            dest_dir = out_dir / "pdf_analyses/pdf_a_reclasser"
+        # créer le dossier destination si besoin
+        dest_dir.mkdir(parents=True, exist_ok=True)
+        # retrouver l'entrée correspondance dans df_in, pour avoir le
+        # chemin complet de sa copie (à déplacer) et du fichier original
+        # (à supprimer)
+        # .head(1) car normalement il y a *exactement une* entrée correspondante
+        # et .itertuples() pour avoir facilement un namedtuple
+        for df_row_in in df_in.loc[df_in["pdf"] == fn].head(1).itertuples():
+            # chemin du fichier traité (copié depuis dir_in vers le dossier de travail)
+            fp = Path(df_row_in.fullpath)
+            # chemin du fichier d'origine (pour suppression après move)
+            fp_orig = Path(df_row_in.origpath)
+            # chemin destination du fichier traité
+            print(fp.name)
+            fp_dst = dest_dir / create_file_name_url(fp.name)
+            print(fp_dst)
+            print()
+
+            shutil.move(fp, fp_dst)
+            # si le move a réussi, on peut supprimer le fichier dans le dossier d'entrée
+            if fp_dst.is_file():
+                fp_orig.unlink()
+            # chemin du fichier TXT (OCR sinon natif)
+            fp_txt = Path(df_row_in.fullpath_txt)
+            shutil.copy2(fp_txt, out_dir_txt / fp_txt.name)
+
+    # faire une copie des 4 fichiers générés avec les noms de base (écraser chaque fichier
+    # pré-existant ayant le nom de base)
+    for fp_out in out_files.values():
+        # retirer la date et le numéro d'exécution pour retrouver le nom de base
+        fp_copy = (
+            out_dir / fp_out.with_stem(f"{fp_out.stem.rsplit('_', maxsplit=2)[0]}").name
+        )
+        shutil.copy2(fp_out, fp_copy)
+
+    return out_files</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.process.parse_doc"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.process.parse_doc--analyse-le-document-dans-son-ensemble">Analyse le document dans son ensemble.</h2>
+<p>Extrait des empans de texte correspondant aux en-têtes, pieds-de-page,
+autorité, vus, correspondants, articles, signature...</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.parse_doc.has_one" class="doc doc-heading">
+          <code class="highlight language-python">has_one(spans, span_typ)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte si la liste contient au moins un empan d'un type donné.</p>
+<p>Si la liste est vide, renvoie None.</p>
+<h4 id="src.process.parse_doc.has_one--parameters">Parameters</h4>
+<p>spans: list(dict)
+    Liste d'empans extraits
+span_typ: str
+    Type d'empan recherché</p>
+<h4 id="src.process.parse_doc.has_one--returns">Returns</h4>
+<p>has_span: boolean
+    True si au moins un empan de la liste est du type recherché.</p>
+
+          <details class="quote">
+            <summary> <code>src\process\parse_doc.py</code></summary>
+            <pre class="highlight"><code class="language-python">def has_one(spans: list[dict], span_typ: str) -&gt; str:
+    """Détecte si la liste contient au moins un empan d'un type donné.
+
+    Si la liste est vide, renvoie None.
+
+    Parameters
+    ----------
+    spans: list(dict)
+        Liste d'empans extraits
+    span_typ: str
+        Type d'empan recherché
+
+    Returns
+    -------
+    has_span: boolean
+        True si au moins un empan de la liste est du type recherché.
+    """
+    if not spans:
+        return None
+    return any(x for x in spans if x["span_typ"] == span_typ)</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.parse_doc.parse_arrete_pages" class="doc doc-heading">
+          <code class="highlight language-python">parse_arrete_pages(fn_pdf, pages)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Analyse les pages de texte d'un arrêté.</p>
+<h4 id="src.process.parse_doc.parse_arrete_pages--parameters">Parameters</h4>
+<p>fn_pdf: str
+    Nom du fichier PDF.
+pages: list[str]
+    Liste de pages de texte à analyser.</p>
+<h4 id="src.process.parse_doc.parse_arrete_pages--returns">Returns</h4>
+<p>doc_content: list[dict]
+    Contenu du document, par page découpée en zones de texte.</p>
+
+          <details class="quote">
+            <summary> <code>src\process\parse_doc.py</code></summary>
+            <pre class="highlight"><code class="language-python">def parse_arrete_pages(fn_pdf: str, pages: list[str]) -&gt; list:
+    """Analyse les pages de texte d'un arrêté.
+
+    Parameters
+    ----------
+    fn_pdf: str
+        Nom du fichier PDF.
+    pages: list[str]
+        Liste de pages de texte à analyser.
+
+    Returns
+    -------
+    doc_content: list[dict]
+        Contenu du document, par page découpée en zones de texte.
+    """
+    doc_content = []  # valeur de retour
+
+    # FIXME on ne traite pas une poignée de documents qui posent différents problèmes
+    if fn_pdf in EXCLUDE_SET:
+        return doc_content
+    # end FIXME
+
+    # métadonnées du document
+    mdata_doc = {
+        "pdf": fn_pdf,
+    }
+    # print(fn_pdf)  # DEBUG
+    # traiter les pages
+    # TODO états alternatifs? ["preambule", "vu", "considerant", "arrete", "article", "postambule" ou "signature", "apres_signature" ou "annexes"] ?
+    cur_state = "avant_vucons"  # init ; "avant_vucons" &lt; "avant_articles" &lt; "avant_signature"  # TODO ajouter "avant_considerant" ?
+    latest_span = None  # init
+    for i, page in enumerate(pages, start=1):
+        # métadonnées de la page
+        mdata_page = mdata_doc | {"page_num": i}
+
+        if pd.isna(page):
+            # * la page n'a pas de texte
+            page_content = mdata_page | {
+                "template": None,  # empans de template
+                "body": None,  # texte (sans le texte du template)
+                "content": None,  # empans de contenu (paragraphes et données): vide
+            }
+            doc_content.append(page_content)
+            continue
+
+        # NEW normalisation du texte
+        # spaces=False sinon on perd les retours à la ligne !
+        page = normalize_string(page, num=True, apos=True, hyph=True, spaces=False)
+        # end NEW
+
+        # repérer et effacer les éléments de template, pour ne garder que le contenu de chaque page
+        pg_template, pg_txt_body = parse_page_template(page)
+        pg_content = []  # initialisation de la liste des éléments de contenu
+
+        # détecter et traiter spécifiquement les pages vides, de bordereau ou d'annexes
+        if pg_txt_body.strip() == "":
+            # * la page est vide de texte (hors template), donc aucun empan de contenu ne pourra être reconnu
+            page_content = mdata_page | {
+                "template": pg_template,  # empans de template
+                "body": pg_txt_body,  # texte (sans le texte du template)
+                "content": pg_content,  # empans de contenu (paragraphes et données): vide
+            }
+            doc_content.append(page_content)
+            continue
+        elif P_BORDEREAU.search(pg_txt_body):
+            # * page de bordereau de formalités (Aix-en-Provence)
+            # TODO extraire le contenu (date de l'acte, numéro, titre) pour vérifier la correction des données extraites ailleurs?
+            page_content = mdata_page | {
+                "template": pg_template,  # empans de template
+                "body": pg_txt_body,  # texte (sans le texte du template)
+                "content": pg_content,  # empans de contenu (paragraphes et données): vide
+            }
+            doc_content.append(page_content)
+            continue
+
+        # TODO pages d'annexe
+
+        # TODO si la signature est déjà passée, on peut considérer que le document est terminé et stopper tout le traitement? =&gt; ajouter un état cur_state == "apres_signature" ?
+        # NB: certains fichiers PDF contiennent un arrêté modificatif puis l'arrêté d'origine (ex: "modif 39 rue Tapis Vert 13001.pdf"), on ignore le 2e ?
+
+        # la page n'est pas vide de texte
+        main_end = len(pg_txt_body)
+        # 1. préambule du document: avant le 1er "Vu", contient la commune, l'autorité prenant l'arrêté, parfois le numéro de l'arrêté
+        if cur_state == "avant_vucons":
+            fst_vucons = []
+            if fst_vu := P_VU.search(pg_txt_body):
+                fst_vucons.append(fst_vu)
+            if fst_cons := P_CONSIDERANT.search(pg_txt_body):
+                fst_vucons.append(fst_cons)
+            if fst_vucons:
+                fst_vu_or_cons = sorted(fst_vucons, key=lambda x: x.start())[0]
+                pream_beg = 0
+                pream_end = fst_vu_or_cons.start()
+                pream_content = parse_doc_preamble(
+                    fn_pdf, pg_txt_body, pream_beg, pream_end
+                )
+                pg_content.extend(pream_content)
+                if pream_content:
+                    latest_span = None  # le dernier empan de la page précédente n'est plus disponible
+                cur_state = "avant_articles"
+            else:
+                # la 1re page ne contient ni "vu" ni "considérant", ce doit être une page de courrier
+                # ex: "21, rue Martinot Aubagne.pdf"
+                logging.warning(
+                    f"{fn_pdf}: page {i}: ni 'vu' ni 'considérant' donc page ignorée"
+                )
+                continue
+            main_beg = pream_end
+        else:
+            # p. 2 et suivantes: la zone à analyser commence en haut de la page (les éléments de
+            # template ayant été effacés au préalable)
+            main_beg = 0
+        # TODO si tout le texte a déjà été reconnu, ajouter le contenu de la page au doc et passer à la page suivante
+
+        # 2. les "vu" et "considérant"
+        if cur_state == "avant_articles":
+            vucons_beg = main_beg
+            # la page contient-elle un "Article" ? (le 1er)
+            if m_article := P_ARTICLE.search(pg_txt_body, main_beg):
+                # si oui, les "Vu" et "Considérant" de cette page, puis "Arrête",
+                # sont à chercher avant le 1er "Article"
+                # print(f"m_article={m_article}")  # DEBUG
+                vucons_end = m_article.start()
+            else:
+                # si non, les "Vu" et "Considérant" sont sur toute la page
+                vucons_end = main_end
+            # repérer les "Vu" et "Considérant", et "Arrête" si présent
+            # print(f"avant parse_page_content/Vucons: pg_content={pg_content}")  # DEBUG
+            vucons_content = parse_page_content(
+                pg_txt_body, vucons_beg, vucons_end, cur_state, latest_span
+            )  # FIXME spécialiser la fonction pour restreindre aux "Vu" et "Considérant" et/ou passer cur_state? ; NB: ces deux types de paragraphes admettent des continuations
+            pg_content.extend(vucons_content)
+            # print(f"après parse_page_content/Vucons: pg_content={pg_content}")  # DEBUG
+            if vucons_content:
+                latest_span = (
+                    None  # le dernier empan de la page précédente n'est plus disponible
+                )
+
+            # si "Arrête" était bien sur la page, il faut ajouter l'empan reconnu, déplacer le curseur et changer d'état
+            if pg_content:
+                spans_arrete = [x for x in pg_content if x["span_typ"] == "par_arrete"]
+                if spans_arrete:
+                    assert len(spans_arrete) == 1
+                    span_arrete = spans_arrete[0]
+                    #
+                    main_beg = span_arrete["span_end"]
+                    latest_span = None  # le dernier empan de la page précédente n'est plus disponible
+                    cur_state = "avant_signature"
+                # WIP 2023-05-09
+                else:
+                    logging.warning(f"{fn_pdf} / {i}: parse_doc: pas de 'par_arrete'")
+                # end WIP 2023-05-09
+        # TODO si tout le texte a déjà été reconnu, ajouter le contenu de la page au doc et passer à la page suivante
+
+        # TODO détecter la signature même si "Arrête" n'a pas été détecté (simplification code + amélioration robustesse?)
+        # 3. les "article" et le postambule
+        if cur_state == "avant_signature":
+            # le corps du document s'arrête à la signature ou la date de prise de l'arrêté
+            # FIXME attraper le 1er qui apparaît: date de signature ou signataire
+            artic_beg = main_beg
+            if m_sign := P_DATE_SIGNAT.search(pg_txt_body, main_beg):
+                # si la page contient la signature de fin de l'acte, l'analyse du contenu
+                # principal doit s'arrêter à la signature (ici avec date)
+                artic_end = m_sign.start()
+            elif m_sign := P_LIEU_SIGNAT.search(pg_txt_body, main_beg):
+                # si la page contient la signature de fin de l'acte, l'analyse du contenu
+                # principal doit s'arrêter à la signature (ici avec lieu seul, date absente
+                # ou non-reconnue)
+                artic_end = m_sign.start()
+            else:
+                artic_end = main_end
+
+            # repérer les articles
+            # print(f"avant parse_page_content/Articles: pg_content={pg_content}")  # DEBUG
+            try:
+                artic_content = parse_page_content(
+                    pg_txt_body, artic_beg, artic_end, cur_state, latest_span
+                )  # FIXME spécialiser la fonction pour restreindre aux "Vu" et "Considérant" et/ou passer cur_state? ; NB: ces deux types de paragraphes admettent des continuations
+            except TypeError:
+                print(f"Fichier fautif: {fn_pdf}, p. {i}")
+                raise
+            pg_content.extend(artic_content)
+            if artic_content:
+                latest_span = (
+                    None  # le dernier empan de la page précédente n'est plus disponible
+                )
+
+            if m_sign:
+                # analyser le postambule et changer l'état
+                posta_beg = m_sign.start()
+                posta_end = main_end
+                posta_content = parse_doc_postamble(pg_txt_body, posta_beg, posta_end)
+                pg_content.extend(posta_content)
+                if posta_content:
+                    latest_span = None  # le dernier empan de la page précédente n'est plus disponible
+                cur_state = "apres_signature"
+            logging.warning(f"{fn_pdf}: parse_doc: après m_sign")  # DEBUG
+        # TODO si tout le texte a déjà été reconnu, ajouter le contenu de la page au doc et passer à la page suivante
+
+        if cur_state == "apres_signature":
+            pass  # FIXME faire quelque chose? vérifier s'il reste du texte?
+
+        # récupérer le dernier paragraphe de la page, car il peut être continué
+        # en début de page suivante
+        if pg_content:
+            try:
+                latest_span = [
+                    x for x in pg_content if x["span_typ"].startswith("par_")
+                ][-1]
+            except IndexError:
+                print(
+                    f"{fn_pdf} / p.{i} : pas de paragraphe sur l'empan {main_beg}:{main_end}\ncontenu:{pg_content}\ntexte:\n{pg_txt_body}"
+                )
+                raise
+        # accumulation au niveau du document
+        page_content = mdata_page | {
+            "template": pg_template,  # empans de template
+            "body": pg_txt_body,  # texte (sans le texte du template)
+            "content": pg_content,  # empans de contenu (paragraphes et données)
+        }
+        doc_content.append(page_content)
+        if False:  # DEBUG
+            print("&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;")
+            print(pg_content)  # DEBUG
+            print("----------------")
+            print(pg_txt_body)  # DEBUG
+            print("~~~~~~~~~~~~~~~~")
+            print(pg_txt_body[main_beg:main_end])  # DEBUG
+            print("================")
+        # TODO arrêter le traitement à la fin du postambule et tronquer le texte / le PDF si possible? (utile pour l'OCR)
+
+    # vérifier que le résultat est bien formé
+    examine_doc_content(fn_pdf, doc_content)
+    #
+    return doc_content</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.parse_doc.parse_doc_postamble" class="doc doc-heading">
+          <code class="highlight language-python">parse_doc_postamble(txt_body, pream_beg, pream_end)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Analyse le postambule d'un document, sur la dernière page (hors annexes).</p>
+<p>Le postambule correspond à la zone de signature: date, lieu éventuel et signataire.</p>
+<h4 id="src.process.parse_doc.parse_doc_postamble--parameters">Parameters</h4>
+<p>txt_body: string
+    Corps de texte de la page à analyser
+pream_beg: int
+    Début de l'empan à analyser.
+pream_end: int
+    Fin de l'empan à analyser, correspondant au début du 1er "Vu".</p>
+<h4 id="src.process.parse_doc.parse_doc_postamble--returns">Returns</h4>
+<p>content: list
+    Liste d'empans de contenu</p>
+
+          <details class="quote">
+            <summary> <code>src\process\parse_doc.py</code></summary>
+            <pre class="highlight"><code class="language-python">def parse_doc_postamble(txt_body: str, pream_beg: int, pream_end: int) -&gt; list[dict]:
+    """Analyse le postambule d'un document, sur la dernière page (hors annexes).
+
+    Le postambule correspond à la zone de signature: date, lieu éventuel et signataire.
+
+    Parameters
+    ----------
+    txt_body: string
+        Corps de texte de la page à analyser
+    pream_beg: int
+        Début de l'empan à analyser.
+    pream_end: int
+        Fin de l'empan à analyser, correspondant au début du 1er "Vu".
+
+    Returns
+    -------
+    content: list
+        Liste d'empans de contenu
+    """
+    content = []
+    # a. extraire la date de signature
+    if m_signature := P_DATE_SIGNAT.search(txt_body, pream_beg, pream_end):
+        logging.warning(f"parse_doc_postamble: signature: {m_signature}")
+        # stocker la zone reconnue
+        content.append(
+            {
+                "span_beg": m_signature.start(),
+                "span_end": m_signature.end(),
+                "span_txt": m_signature.group(0),
+                "span_typ": "par_sign_date",
+            }
+        )
+        # stocker la donnée
+        content.append(
+            {
+                "span_beg": m_signature.start("arr_date"),
+                "span_end": m_signature.end("arr_date"),
+                "span_txt": m_signature.group("arr_date"),
+                "span_typ": "arr_date",
+            }
+        )
+        # b. extraire la ville de signature
+        if m_signature.group("arr_ville_signat"):
+            # stocker la donnée
+            content.append(
+                {
+                    "span_beg": m_signature.start("arr_ville_signat"),
+                    "span_end": m_signature.end("arr_ville_signat"),
+                    "span_txt": m_signature.group("arr_ville_signat"),
+                    "span_typ": "adr_ville",  # TODO utiliser un autre nom pour éviter le conflit?
+                }
+            )
+    elif m_signature := P_LIEU_SIGNAT.search(txt_body, pream_beg, pream_end):
+        logging.warning(f"parse_doc_postamble: signature (lieu): {m_signature}")
+        # stocker la zone reconnue
+        content.append(
+            {
+                "span_beg": m_signature.start(),
+                "span_end": m_signature.end(),
+                "span_txt": m_signature.group(0),
+                "span_typ": "par_sign_lieu",
+            }
+        )
+        # b. extraire la ville de signature
+        # TODO ne capture pas toutes les villes (problème de named group avec contexte trop différent)
+        if m_signature.group("arr_ville_signat"):
+            # stocker la donnée
+            content.append(
+                {
+                    "span_beg": m_signature.start("arr_ville_signat"),
+                    "span_end": m_signature.end("arr_ville_signat"),
+                    "span_txt": m_signature.group("arr_ville_signat"),
+                    "span_typ": "adr_ville",  # TODO utiliser un autre nom pour éviter le conflit?
+                }
+            )
+    # TODO c. extraire l'identité et la qualité du signataire? (eg. délégation de signature)
+    #
+    else:
+        logging.warning(
+            f"parse_doc_postamble: aucune signature ? {txt_body[pream_beg:pream_end]}"
+        )
+    return content</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.parse_doc.parse_doc_preamble" class="doc doc-heading">
+          <code class="highlight language-python">parse_doc_preamble(fn_pdf, txt_body, pream_beg, pream_end)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Analyse le préambule d'un document, sur la 1re page, avant le 1er "Vu".</p>
+<h4 id="src.process.parse_doc.parse_doc_preamble--parameters">Parameters</h4>
+<p>fn_pdf: string
+    Nom du fichier PDF
+txt_body: string
+    Corps de texte de la page à analyser
+pream_beg: int
+    Début de l'empan à analyser.
+pream_end: int
+    Fin de l'empan à analyser, correspondant au début du 1er "Vu".</p>
+<h4 id="src.process.parse_doc.parse_doc_preamble--returns">Returns</h4>
+<p>content: list
+    Liste d'empans de contenu</p>
+
+          <details class="quote">
+            <summary> <code>src\process\parse_doc.py</code></summary>
+            <pre class="highlight"><code class="language-python">def parse_doc_preamble(
+    fn_pdf: str, txt_body: str, pream_beg: int, pream_end: int
+) -&gt; list[dict]:
+    """Analyse le préambule d'un document, sur la 1re page, avant le 1er "Vu".
+
+    Parameters
+    ----------
+    fn_pdf: string
+        Nom du fichier PDF
+    txt_body: string
+        Corps de texte de la page à analyser
+    pream_beg: int
+        Début de l'empan à analyser.
+    pream_end: int
+        Fin de l'empan à analyser, correspondant au début du 1er "Vu".
+
+    Returns
+    -------
+    content: list
+        Liste d'empans de contenu
+    """
+    content = []
+    rem_txt = ""  # s'il reste du texte après l'autorité (WIP)
+
+    # créer une copie du texte du préambule, de même longueur que le texte complet pour que les empans soient bien positionnés
+    # le texte sera effacé au fur et à mesure qu'il sera "consommé"
+    txt_copy = txt_body[:]
+    txt_copy = (
+        " " * (pream_beg - 0)
+        + txt_copy[pream_beg:pream_end]
+        + " " * (len(txt_copy) - pream_end)
+    )
+    assert len(txt_copy) == len(txt_body)
+
+    # a. ce préambule contient (vers la fin) l'intitulé de l'autorité prenant l'arrêté
+    # TODO est-ce obligatoire? exceptions: La Ciotat
+    if matches := list(P_MAIRE_COMMUNE.finditer(txt_copy, pream_beg, pream_end)):
+        # on garde la première occurrence, normalement la seule
+        match = matches[0]
+        # * toute la zone reconnue
+        span_beg, span_end = match.span()
+        content.append(
+            {
+                "span_beg": span_beg,
+                "span_end": span_end,
+                "span_txt": match.group(0),
+                "span_typ": "par_autorite",
+            }
+        )
+        if match.group("commune"):
+            # * stocker la donnée de la commune
+            content.append(
+                {
+                    "span_beg": match.start("commune"),
+                    "span_end": match.end("commune"),
+                    "span_txt": match.group("commune"),
+                    "span_typ": "adr_ville",  # TODO utiliser un autre nom pour éviter le conflit?
+                }
+            )
+        # * effacer l'empan reconnu
+        txt_copy = (
+            txt_copy[:span_beg] + " " * (span_end - span_beg) + txt_copy[span_end:]
+        )
+
+        # la ou les éventuelles autres occurrences sont des doublons
+        if len(matches) &gt; 1:
+            logging.warning(
+                f"{fn_pdf}: &gt; 1 mention d'autorité trouvée dans le préambule: {matches}"
+            )
+            for match_dup in matches[1:]:
+                # toute la zone reconnue
+                span_dup_beg, span_dup_end = match_dup.span()
+                content.append(
+                    {
+                        "span_beg": span_dup_beg,
+                        "span_end": span_dup_end,
+                        "span_txt": match_dup.group(0),
+                        "span_typ": "par_autorite_dup",
+                    }
+                )
+                if match.group("commune"):
+                    # stocker la donnée de la commune
+                    content.append(
+                        {
+                            "span_beg": match_dup.start("commune"),
+                            "span_end": match_dup.end("commune"),
+                            "span_txt": match_dup.group("commune"),
+                            "span_typ": "adr_ville_dup",  # TODO utiliser un autre nom pour éviter le conflit?
+                        }
+                    )
+                # effacer l'empan reconnu
+                txt_copy = (
+                    txt_copy[:span_dup_beg]
+                    + " " * (span_dup_end - span_dup_beg)
+                    + txt_copy[span_dup_end:]
+                )
+
+        # vérifier que la zone de l'autorité est bien en fin de préambule
+        try:
+            rem_txt = txt_copy[span_end:pream_end].strip()
+            assert rem_txt == ""
+        except AssertionError:
+            logging.warning(
+                f"{fn_pdf}: Texte après l'autorité, en fin de préambule: {rem_txt}"
+            )
+            if len(rem_txt) &lt; 2:
+                # s'il ne reste qu'un caractère, c'est probablement une typo =&gt; avertir et effacer
+                logging.warning(
+                    f"{fn_pdf}: Ignorer le fragment de texte en fin de préambule, probablement une typo: {rem_txt}"
+                )
+                txt_copy = (
+                    txt_copy[:span_end]
+                    + " " * (pream_end - span_end)
+                    + txt_copy[pream_end:]
+                )
+    else:
+        # pas d'autorité détectée: anormal
+        logging.warning(f"{fn_pdf}: pas d'autorité détectée dans le préambule")
+
+    # b. ce préambule peut contenir le numéro de l'arrêté (si présent, absent dans certaines communes)
+    # NB: ce numéro d'arrêté peut se trouver avant ou après l'autorité (ex: Gardanne)
+    match = P_NUM_ARR.search(txt_copy, pream_beg, pream_end)
+    if match is None:
+        # si la capture précise échoue, utiliser une capture plus permissive (mais risque d'attrape-tout)
+        match = P_NUM_ARR_FALLBACK.search(txt_copy, pream_beg, pream_end)
+
+    if match is not None:
+        # marquer toute la zone reconnue (contexte + numéro de l'arrêté)
+        span_beg, span_end = match.span()
+        content.append(
+            {
+                "span_beg": span_beg,
+                "span_end": span_end,
+                "span_txt": match.group(0),
+                "span_typ": "par_num_arr",  # paragraphe contenant le numéro de l'arrêté
+            }
+        )
+        # stocker le numéro de l'arrêté
+        content.append(
+            {
+                "span_beg": match.start("num_arr"),
+                "span_end": match.end("num_arr"),
+                "span_txt": match.group("num_arr"),
+                "span_typ": "num_arr",
+            }
+        )
+        # effacer le texte reconnu
+        txt_copy = (
+            txt_copy[:span_beg] + " " * (span_end - span_beg) + txt_copy[span_end:]
+        )
+        # print(f"num arr: {content[-1]['span_txt']}")  # DEBUG
+    else:
+        # pas de numéro d'arrêté (ex: Aubagne)
+        logging.warning(
+            f"{fn_pdf}: Pas de numéro d'arrêté trouvé: "
+            + '"'
+            + txt_copy[pream_beg:pream_end].replace("\n", " ").strip()
+            + '"'
+        )
+        pass
+
+    # c. entre les deux doit se trouver le titre ou objet de l'arrêté (obligatoire)
+    if match := P_NOM_ARR.search(txt_copy, pream_beg, pream_end):
+        span_beg, span_end = match.span()
+        # stocker la zone reconnue
+        content.append(
+            {
+                "span_beg": span_beg,
+                "span_end": span_end,
+                "span_txt": match.group(0),
+                "span_typ": "par_nom_arr",
+            }
+        )
+        # stocker la donnée
+        content.append(
+            {
+                "span_beg": match.start("nom_arr"),
+                "span_end": match.end("nom_arr"),
+                "span_txt": match.group("nom_arr"),
+                "span_typ": "nom_arr",
+            }
+        )
+        # effacer l'empan reconnu
+        txt_copy = (
+            txt_copy[:span_beg] + " " * (span_end - span_beg) + txt_copy[span_end:]
+        )
+    else:
+        # hypothèse: sans marquage explicite comme "Objet:", le titre est tout le texte restant
+        # dans cette zone (entre le numéro et l'autorité)
+        if (not P_LINE.fullmatch(txt_copy, pream_beg, pream_end)) and (
+            match := P_STRIP.fullmatch(txt_copy, pream_beg, pream_end)
+        ):
+            # stocker la zone reconnue
+            content.append(
+                {
+                    "span_beg": match.start(),
+                    "span_end": match.end(),
+                    "span_txt": match.group("outstrip"),
+                    "span_typ": "par_nom_arr",
+                }
+            )
+            # stocker la donnée
+            content.append(
+                {
+                    "span_beg": match.start("outstrip"),
+                    "span_end": match.end("outstrip"),
+                    "span_txt": match.group("outstrip"),
+                    "span_typ": "nom_arr",
+                }
+            )
+        else:
+            logging.warning(
+                f"{fn_pdf}: Pas de texte restant pour le nom de l'arrêté: "
+                + '"'
+                + txt_copy[pream_beg:pream_end].replace("\n", " ").strip()
+                + '"'
+            )
+
+        # WIP
+        if rem_txt and content[-1]["span_typ"] == "nom_arr":
+            arr_nom = content[-1]["span_txt"].replace("\n", " ")
+            logging.warning(f"{fn_pdf}: texte restant et nom: {arr_nom}")
+        # end WIP
+
+    # print(content)  # WIP
+    # TODO remplacer les zones reconnues par des espaces, et afficher le texte non-capturé?
+    return content</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.parse_doc.parse_page_content" class="doc doc-heading">
+          <code class="highlight language-python">parse_page_content(txt_body, main_beg, main_end, cur_state, latest_span)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Analyse une page pour repérer les zones de contenus.</p>
+<h4 id="src.process.parse_doc.parse_page_content--parameters">Parameters</h4>
+<p>txt_body: string
+    Corps de texte de la page à analyser
+main_beg: int
+    Début de l'empan à analyser.
+main_end: int
+    Fin de l'empan à analyser.
+cur_state: str
+    État actuel: "avant_articles", "avant_signature", "apres_signature"
+latest_span: dict, optional
+    Dernier empan de contenu repéré sur la page précédente.
+    Vaut <code>None</code> pour la première page.</p>
+<h4 id="src.process.parse_doc.parse_page_content--returns">Returns</h4>
+<p>content: list
+    Liste d'empans de contenu</p>
+
+          <details class="quote">
+            <summary> <code>src\process\parse_doc.py</code></summary>
+            <pre class="highlight"><code class="language-python">def parse_page_content(
+    txt_body: str,
+    main_beg: int,
+    main_end: int,
+    cur_state: str,
+    latest_span: Optional[dict],
+) -&gt; list:
+    """Analyse une page pour repérer les zones de contenus.
+
+    Parameters
+    ----------
+    txt_body: string
+        Corps de texte de la page à analyser
+    main_beg: int
+        Début de l'empan à analyser.
+    main_end: int
+        Fin de l'empan à analyser.
+    cur_state: str
+        État actuel: "avant_articles", "avant_signature", "apres_signature"
+    latest_span: dict, optional
+        Dernier empan de contenu repéré sur la page précédente.
+        Vaut `None` pour la première page.
+
+    Returns
+    -------
+    content: list
+        Liste d'empans de contenu
+    """
+    # print(f"parse_page_content: {(main_beg, main_end, cur_state, latest_span)}")  # DEBUG
+    if cur_state not in ("avant_articles", "avant_signature"):
+        raise ValueError(
+            f"État inattendu {cur_state}\n{main_beg}:{main_end}\n{txt_body[main_beg:main_end]}"
+        )
+
+    if txt_body[main_beg:main_end].strip() == "":
+        # la zone de texte à analyser est vide
+        return []
+
+    content = []
+
+    # repérer les débuts de paragraphes: "Vu", "Considérant", "Arrête", "Article"
+    if cur_state == "avant_articles":
+        # "Vu" et "Considérant"
+        par_begs = sorted(
+            [(m.start(), "par_vu") for m in P_VU.finditer(txt_body, main_beg, main_end)]
+            + [
+                (m.start(), "par_considerant")
+                for m in P_CONSIDERANT.finditer(txt_body, main_beg, main_end)
+            ]
+        )
+
+        # éventuellement, "Arrêtons|Arrête|Arrêté" entre les "Vu" "Considérant" d'une part,
+        # les "Article" d'autre part
+        # si la page en cours contient le dernier "Vu" ou "Considérant" du document, ou
+        # la fin de ce dernier "Vu" ou "Considérant", "Arrêtons" doit être là
+        if par_begs:
+            # il y a au moins un "Vu" ou "Considérant" sur la page:
+            # le dernier de la page est-il aussi le dernier du document?
+            searchzone_beg = par_begs[-1][0]
+        else:
+            # le dernier "Vu" ou "Considérant" peut avoir commencé sur la page précédente,
+            # auquel cas on cherche "Arrêtons|Arrête|Arrêté" sur toute la zone en cours
+            # d'analyse
+            searchzone_beg = main_beg
+        # print(f"Cherche ARRETE dans:\n{txt_body[searchzone_beg:main_end]}")  # DEBUG
+        if m_arretons := P_ARRETONS.search(txt_body, searchzone_beg, main_end):
+            par_begs.append((m_arretons.start(), "par_arrete"))
+
+    elif cur_state == "avant_signature":
+        par_begs = [
+            (m.start(), "par_article")
+            for m in P_ARTICLE.finditer(txt_body, main_beg, main_end)
+        ]
+    else:
+        raise ValueError(f"cur_state: {cur_state}?")
+
+    # 1. traiter le texte avant le 1er début de paragraphe
+    if not par_begs:
+        # aucun début de paragraphe détecté sur la page ; cela peut arriver lorsqu'un empan
+        # court sur plusieurs pages, eg. un "Considérant" très long incluant la liste des
+        # copropriétaires
+        #
+        # ce n'est possible que s'il y a bien un latest_span, et d'un type admettant une continuation
+        if (latest_span is None) or (
+            latest_span["span_typ"]
+            not in (
+                "par_vu",
+                "par_considerant",
+                "par_article",
+                # une continuation peut être elle-même continuée
+                "par_vu_suite",
+                "par_considerant_suite",
+                "par_article_suite",
+            )
+        ):
+            raise ValueError(
+                f"Aucun paragraphe continuable sur cette page sans nouveau paragraphe?\ncur_state={cur_state}, latest_span={latest_span}, (main_beg, main_end)=({main_beg}, {main_end})\n{txt_body[main_beg:main_end]}"
+            )
+        # analyser jusqu'en bas de la page, sans visibilité sur le type du prochain empan (absent de la page)
+        nxt_beg = main_end
+        nxt_typ = None
+    else:
+        # s'il y a du texte avant le 1er début de paragraphe, c'est la continuation du
+        # dernier paragraphe de la page précédente ;
+        # le mettre dans un empan de type span_typ + "_suite"
+        nxt_beg, nxt_typ = par_begs[0]
+
+    # récupérer ce texte et le mettre dans un empan spécial _suite
+    if (not P_LINE.fullmatch(txt_body, main_beg, nxt_beg)) and (
+        match := P_STRIP.fullmatch(txt_body, main_beg, nxt_beg)
+    ):
+        txt_dang = match.group("outstrip")
+        if txt_dang:
+            # print(f"txt_dang: {txt_dang}")  # DEBUG
+            try:
+                lst_typ = latest_span["span_typ"]
+            except TypeError:
+                print(
+                    f"cur_state={cur_state}\npar_begs={par_begs}\n(main_beg, nxt_beg)=({main_beg}, {nxt_beg})\n{txt_body[main_beg:nxt_beg]}"
+                )
+                raise
+            # un empan peut courir sur plus d'une page complète (ex: "Considérant" très long, incluant la liste des copropriétaires)
+            cur_typ = lst_typ if lst_typ.endswith("_suite") else lst_typ + "_suite"
+            # stocker la zone reconnue
+            content.append(
+                {
+                    "span_beg": match.start("outstrip"),
+                    "span_end": match.end("outstrip"),
+                    "span_txt": match.group("outstrip"),
+                    "span_typ": cur_typ,
+                }
+            )
+            if nxt_typ is not None:
+                # vérifier que la transition autorisée est correcte
+                # TODO déplacer cette vérification en amont ou en aval?
+                try:
+                    assert (cur_typ, nxt_typ) in (
+                        # les "Vu" sont généralement avant les "Considérant" mais certains arrêtés mêlent les deux types de paragraphes
+                        ("par_vu_suite", "par_vu"),
+                        ("par_vu_suite", "par_considerant"),
+                        ("par_vu_suite", "par_arrete"),  # NEW 2023-03-23
+                        ("par_considerant_suite", "par_vu"),  # NEW 2023-03-23
+                        ("par_considerant_suite", "par_considerant"),
+                        ("par_considerant_suite", "par_arrete"),
+                        # ("par_arrete_suite", "par_article"),  # "Arrête" ne peut pas être coupé par un saut de page car il est toujours sur une seule ligne
+                        # les articles forment un bloc homogène, sans retour vers des "Vu" ou "Considérant" (s'il y en a, ce sont des citations de passage dans un article...)
+                        ("par_article_suite", "par_article"),
+                    )
+                except AssertionError:
+                    print(
+                        f"Transition inattendue: ({cur_typ}, {nxt_typ})\n{latest_span}\n{txt_body}"
+                    )
+                    raise
+
+    # 2. pour chaque début de paragraphe, créer un empan allant jusqu'au prochain début
+    for (cur_beg, cur_typ), (nxt_beg, nxt_typ) in zip(par_begs[:-1], par_begs[1:]):
+        # extraire le texte hors espaces de début et fin
+        if (not P_LINE.fullmatch(txt_body, cur_beg, nxt_beg)) and (
+            match := P_STRIP.fullmatch(txt_body, cur_beg, nxt_beg)
+        ):
+            # stocker la zone reconnue
+            content.append(
+                {
+                    "span_beg": match.start(),
+                    "span_end": match.end(),
+                    "span_txt": match.group("outstrip"),
+                    "span_typ": cur_typ,
+                }
+            )
+        # vérifier que la transition autorisée est correcte
+        # TODO déplacer cette vérification en amont ou en aval?
+        try:
+            assert (cur_typ, nxt_typ) in (
+                ("par_vu", "par_vu"),
+                ("par_vu", "par_considerant"),
+                # (considérant, vu): transition rare mais qui arrive
+                ("par_considerant", "par_vu"),
+                # (vu, arrête): transition rare mais qui arrive (ex: abrogation d'arrêté dont la raison est donnée dans un autre arrêté...)
+                ("par_vu", "par_arrete"),
+                ("par_considerant", "par_considerant"),
+                ("par_considerant", "par_arrete"),
+                ("par_arrete", "par_article"),
+                ("par_article", "par_article"),
+            )
+        except AssertionError:
+            print(f"Transition imprévue: ({cur_typ, nxt_typ})\n{content}")
+            raise
+
+    # 3. pour le dernier début de paragraphe, créer un empan allant jusqu'à la fin du texte
+    if par_begs:
+        cur_beg, cur_typ = par_begs[-1]
+        nxt_beg = main_end
+        nxt_typ = None
+        # extraire le texte hors espaces de début et fin
+        if (not P_LINE.fullmatch(txt_body, cur_beg, nxt_beg)) and (
+            match := P_STRIP.fullmatch(txt_body, cur_beg, nxt_beg)
+        ):
+            # stocker la zone reconnue
+            content.append(
+                {
+                    "span_beg": match.start(),
+                    "span_end": match.end(),
+                    "span_txt": match.group("outstrip"),
+                    "span_typ": cur_typ,
+                }
+            )
+        # on ne peut pas vérifier si la transition autorisée est correcte puisque
+        # le prochain empan n'est pas connu (page suivante) ; cette vérification
+        # sera faite de toute façon lors du traitement du haut de la prochaine page
+
+    # repérer, dans chaque paragraphe, les références au cadre réglementaire
+    # TODO seulement pour les "vu"? ou utile pour les autres?
+    # TODO certaines références peuvent-elles être coupées par des sauts de page ? =&gt; concaténer latest_span["span_txt"] et content[0]["span_txt"] ?
+    content_reg = []
+    for par in content:
+        par_reg = parse_refs_reglement(txt_body, par["span_beg"], par["span_end"])
+        content_reg.extend(par_reg)
+    content.extend(content_reg)
+
+    return content</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.parse_doc.parse_page_template" class="doc doc-heading">
+          <code class="highlight language-python">parse_page_template(txt)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Analyse une page pour repérer le template.</p>
+<p>Repère les en-têtes, pieds-de-page, tampons, et renvoie
+les empans correspondants, ainsi que le texte débarrassé
+de ces éléments de template.</p>
+<h4 id="src.process.parse_doc.parse_page_template--parameters">Parameters</h4>
+<p>txt: str
+    Texte d'origine de la page.</p>
+<h4 id="src.process.parse_doc.parse_page_template--returns">Returns</h4>
+<p>content: list
+    Liste d'empans repérés sur la page.
+txt_body: string
+    Corps de texte, défini comme le texte en entrée
+    dans lequel les empans d'en-têtes, pieds-de-page et tampons
+    de <code>content</code> ont été effacés (remplacés par des espaces de
+    même longueur).</p>
+
+          <details class="quote">
+            <summary> <code>src\process\parse_doc.py</code></summary>
+            <pre class="highlight"><code class="language-python">def parse_page_template(txt: str) -&gt; tuple[list, str]:
+    """Analyse une page pour repérer le template.
+
+    Repère les en-têtes, pieds-de-page, tampons, et renvoie
+    les empans correspondants, ainsi que le texte débarrassé
+    de ces éléments de template.
+
+    Parameters
+    ----------
+    txt: str
+        Texte d'origine de la page.
+
+    Returns
+    -------
+    content: list
+        Liste d'empans repérés sur la page.
+    txt_body: string
+        Corps de texte, défini comme le texte en entrée
+        dans lequel les empans d'en-têtes, pieds-de-page et tampons
+        de `content` ont été effacés (remplacés par des espaces de
+        même longueur).
+    """
+    content = []
+
+    # en-tête
+    # TODO expectation: n=0..2 par page
+    if m_headers := P_HEADER.finditer(txt):
+        for match in m_headers:
+            content.append(
+                {
+                    "span_beg": match.span()[0],
+                    "span_end": match.span()[1],
+                    "span_txt": match.group(0),
+                    "span_typ": "header",
+                }
+            )
+    # print(f"&lt;&lt;&lt;&lt;&lt; template:headers={content}")  # DEBUG
+    # pied-de-page
+    # TODO expectation: n=0..2 par page
+    if m_footers := P_FOOTER.finditer(txt):
+        for match in m_footers:
+            content.append(
+                {
+                    "span_beg": match.span()[0],
+                    "span_end": match.span()[1],
+                    "span_txt": match.group(0),
+                    "span_typ": "footer",
+                }
+            )
+
+    # tampon de transmission à actes
+    if m_stamps := P_STAMP.finditer(txt):
+        for match in m_stamps:
+            m_beg, m_end = match.span()
+            content.append(
+                {
+                    "span_beg": m_beg,
+                    "span_end": m_end,
+                    "span_txt": match.group(0),
+                    "span_typ": "stamp",
+                }
+            )
+
+    # corps du texte
+    # défini comme le texte d'origine, dans lequel on a effacé les empans repérés
+    # (en-têtes, pieds-de-page, tampons) ;
+    # remplacer les empans par des espaces permet de conserver les indices d'origine
+    # et éviter les décalages
+    spans = list((x["span_beg"], x["span_end"]) for x in content)
+    txt_body = txt[:]
+    for sp_beg, sp_end in spans:
+        txt_body = txt_body[:sp_beg] + " " * (sp_end - sp_beg) + txt_body[sp_end:]
+
+    return content, txt_body</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.parse_doc.process_files" class="doc doc-heading">
+          <code class="highlight language-python">process_files(df_meta, df_txts)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Traiter un ensemble d'arrêtés: repérer des éléments de structure des textes.</p>
+<h4 id="src.process.parse_doc.process_files--parameters">Parameters</h4>
+<p>df_meta: pd.DataFrame
+    Liste de métadonnées des fichiers à traiter.
+df_txts: pd.DataFrame
+    Liste de pages de documents à traiter.</p>
+<h4 id="src.process.parse_doc.process_files--returns">Returns</h4>
+<p>df_proc: pd.DataFrame
+    Liste de métadonnées des pages traitées, avec indications des éléments de
+    structure détectés.</p>
+
+          <details class="quote">
+            <summary> <code>src\process\parse_doc.py</code></summary>
+            <pre class="highlight"><code class="language-python">def process_files(
+    df_meta: pd.DataFrame,
+    df_txts: pd.DataFrame,
+) -&gt; pd.DataFrame:
+    """Traiter un ensemble d'arrêtés: repérer des éléments de structure des textes.
+
+    Parameters
+    ----------
+    df_meta: pd.DataFrame
+        Liste de métadonnées des fichiers à traiter.
+    df_txts: pd.DataFrame
+        Liste de pages de documents à traiter.
+
+    Returns
+    -------
+    df_proc: pd.DataFrame
+        Liste de métadonnées des pages traitées, avec indications des éléments de
+        structure détectés.
+    """
+    indics_struct = []
+    for _, df_doc_pages in df_txts.groupby("fullpath"):  # RESUME HERE ~exclude
+        # méta à passer en fin
+        df_doc_meta = df_doc_pages[["pdf", "fullpath", "pagenum"]]
+        #
+        fn_pdf = df_doc_pages["pdf"].iat[0]
+        pages = df_doc_pages["pagetxt"].values
+        exclude = df_doc_pages["exclude"].values
+        # actes
+        try:
+            has_stamp_pages = [
+                (P_STAMP.search(x) is not None) if pd.notna(x) else None for x in pages
+            ]
+        except TypeError:
+            print(repr(pages))
+            raise
+        # repérer les pages d'accusé de réception d'actes, elles seront marquées et non passées au parser
+        # TODO vérifier si la page d'AR actes apparaît seulement en dernière page, sinon on peut couper le doc et passer moins de pages au parser
+        # TODO timer et réécrire les deux instructions en pandas[pyarrow] pour améliorer la vitesse?
+        is_ar_pages = [
+            (P_ACCUSE.match(x) is not None) if pd.notna(x) else None for x in pages
+        ]
+        # filtrer les pages
+        filt_pages = []
+        for x, excl, is_ar in zip(pages, exclude, is_ar_pages):
+            if excl:  # flag d'exclusion de la page
+                filt_p = None
+            elif is_ar:  # page d'accusé de réception de télétransmission actes
+                filt_p = ""
+            else:
+                filt_p = x
+            filt_pages.append(filt_p)
+        # analyser les pages
+        doc_content = parse_arrete_pages(fn_pdf, filt_pages)
+        # filtrer les empans de données, et laisser de côté les empans de structure
+        for page_cont, has_st, is_ar, page_meta in zip(
+            doc_content, has_stamp_pages, is_ar_pages, df_doc_meta.itertuples()
+        ):
+            pg_content = page_cont["content"]
+            pg_txt_body = page_cont["body"]
+            # données
+            if pg_txt_body:
+                # adresse(s) visée(s) par l'arrêté
+                if pg_adrs_doc := get_adr_doc(pg_txt_body):
+                    # on sélectionne arbitrairement la 1re zone d'adresse(s) (FIXME?)
+                    pg_adr_doc = pg_adrs_doc[0]["adresse_brute"]
+                    # temporairement: on prend la 1re adresse précise extraite de cette zone
+                    adr_fields = pg_adrs_doc[0]["adresses"][0]
+                    # end WIP
+                else:
+                    pg_adr_doc = None
+                    adr_fields = {
+                        "adr_num": None,  # numéro de la voie
+                        "adr_ind": None,  # indice de répétition
+                        "adr_voie": None,  # nom de la voie
+                        "adr_compl": None,  # complément d'adresse
+                        "adr_cpostal": None,  # code postal
+                        "adr_ville": None,  # ville
+                    }
+                # parcelle(s) visée(s) par l'arrêté
+                if pg_parcelle := get_parcelles(pg_txt_body):
+                    pg_parcelle = pg_parcelle[0]  # get_parcelles:list[str]
+                else:
+                    pg_parcelle = None
+            else:
+                pg_adr_doc = None
+                adr_fields = {
+                    "adr_num": None,  # numéro de la voie
+                    "adr_ind": None,  # indice de répétition
+                    "adr_voie": None,  # nom de la voie
+                    "adr_compl": None,  # complément d'adresse
+                    "adr_cpostal": None,  # code postal
+                    "adr_ville": None,  # ville
+                }
+                pg_parcelle = None
+
+            # rassembler les données dans un dict
+            rec_struct = {
+                # @ctes
+                "has_stamp": has_st,
+                "is_accusedereception_page": is_ar,
+                # tous arrêtés
+                "commune_maire": unique_txt(pg_content, "adr_ville"),
+                "has_vu": has_one(pg_content, "par_vu"),
+                "has_considerant": has_one(pg_content, "par_considerant"),
+                "has_arrete": has_one(pg_content, "par_arrete"),
+                "has_article": has_one(pg_content, "par_article"),
+                # arrêtés spécifiques
+                # - réglementaires
+                "has_cgct": contains_cgct(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO
+                "has_cgct_art": contains_cgct_art(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO
+                "has_cch": contains_cch(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO
+                "has_cch_L111": contains_cch_L111(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO
+                "has_cch_L511": contains_cch_L511(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO
+                "has_cch_L521": contains_cch_L521(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO
+                "has_cch_L541": contains_cch_L541(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO
+                "has_cch_R511": contains_cch_R511(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO
+                "has_cc": contains_cc(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO
+                "has_cc_art": contains_cc_art(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO
+                # - données
+                "adresse": pg_adr_doc,  # TODO urgent
+                # refactor 2023-03-31: remonter l'extraction de l'adresse précise
+                "adr_num": adr_fields["adr_num"],  # numéro de la voie
+                "adr_ind": adr_fields["adr_ind"],  # indice de répétition
+                "adr_voie": adr_fields["adr_voie"],  # nom de la voie
+                "adr_compl": adr_fields["adr_compl"],  # complément d'adresse
+                "adr_cpostal": adr_fields["adr_cpostal"],  # code postal
+                "adr_ville": adr_fields["adr_ville"],  # ville
+                # end refactor 2023-03-31
+                "parcelle": pg_parcelle,  # TODO urgent
+                "proprio": get_proprio(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # WIP
+                "syndic": get_syndic(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO urgent-
+                "gest": get_gest(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO urgent-
+                "date": unique_txt(pg_content, "arr_date"),
+                #   * arrêté
+                "num_arr": unique_txt(pg_content, "num_arr"),
+                "nom_arr": unique_txt(pg_content, "nom_arr"),
+                "classe": get_classe(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO improve
+                "urgence": get_urgence(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO improve
+                "demo": get_demo(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO improve
+                "int_hab": get_int_hab(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO improve
+                "equ_com": get_equ_com(pg_txt_body)
+                if pg_txt_body is not None
+                else None,  # TODO improve
+            }
+            indics_struct.append(
+                {
+                    "pdf": page_meta.pdf,
+                    "fullpath": page_meta.fullpath,
+                    "pagenum": page_meta.pagenum,
+                }
+                | rec_struct  # python &gt;= 3.9 (dict union)
+            )
+    df_indics = pd.DataFrame.from_records(indics_struct)
+    df_proc = pd.merge(df_meta, df_indics, on=["pdf", "fullpath"])
+    df_proc = df_proc.astype(dtype=DTYPE_META_NTXT_PROC)
+    return df_proc</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.parse_doc.unique_txt" class="doc doc-heading">
+          <code class="highlight language-python">unique_txt(spans, span_typ)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Cherche l'unique empan d'un type donné et renvoie son texte.</p>
+<p>Si plusieurs empans de la liste en entrée sont du type recherché,
+une exception est levée.
+Si aucun empan de la liste n'est du type recherché, renvoie None.</p>
+<h4 id="src.process.parse_doc.unique_txt--parameters">Parameters</h4>
+<p>spans: list(dict)
+    Liste d'empans extraits
+span_typ: str
+    Type d'empan recherché</p>
+<h4 id="src.process.parse_doc.unique_txt--returns">Returns</h4>
+<p>span_txt: str
+    Texte de l'unique empan du type recherché.</p>
+
+          <details class="quote">
+            <summary> <code>src\process\parse_doc.py</code></summary>
+            <pre class="highlight"><code class="language-python">def unique_txt(spans: list[dict], span_typ: str) -&gt; str:
+    """Cherche l'unique empan d'un type donné et renvoie son texte.
+
+    Si plusieurs empans de la liste en entrée sont du type recherché,
+    une exception est levée.
+    Si aucun empan de la liste n'est du type recherché, renvoie None.
+
+    Parameters
+    ----------
+    spans: list(dict)
+        Liste d'empans extraits
+    span_typ: str
+        Type d'empan recherché
+
+    Returns
+    -------
+    span_txt: str
+        Texte de l'unique empan du type recherché.
+    """
+    if not spans:
+        return None
+    cands = [x for x in spans if x["span_typ"] == span_typ]
+    if not cands:
+        return None
+    elif len(cands) &gt; 1:
+        raise ValueError(f"Plusieurs empans de type {span_typ}: {cands}")
+    else:
+        return cands[0]["span_txt"]</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.process.parse_native_pages"></a>
+  <div class="doc doc-contents first">
+  
+      <h2 id="src.process.parse_native_pages--extrait-la-structure-des-documents">Extrait la structure des documents.</h2>
+<p>Découpe chaque arrêté en zones:
+* préambule (?),
+* VUs,
+* CONSIDERANTs,
+* ARTICLES,
+* postambule (?)</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.parse_native_pages.process_files" class="doc doc-heading">
+          <code class="highlight language-python">process_files(df_meta, df_txts)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Traiter un ensemble d'arrêtés: repérer des éléments de structure des textes.</p>
+<h4 id="src.process.parse_native_pages.process_files--parameters">Parameters</h4>
+<p>df_meta: pd.DataFrame
+    Liste de métadonnées des fichiers à traiter.
+df_txts: pd.DataFrame
+    Liste de pages de documents à traiter.</p>
+<h4 id="src.process.parse_native_pages.process_files--returns">Returns</h4>
+<p>df_proc: pd.DataFrame
+    Liste de métadonnées des pages traitées, avec indications des éléments de
+    structure détectés.</p>
+
+          <details class="quote">
+            <summary> <code>src\process\parse_native_pages.py</code></summary>
+            <pre class="highlight"><code class="language-python">def process_files(
+    df_meta: pd.DataFrame,
+    df_txts: pd.DataFrame,
+) -&gt; pd.DataFrame:
+    """Traiter un ensemble d'arrêtés: repérer des éléments de structure des textes.
+
+    Parameters
+    ----------
+    df_meta: pd.DataFrame
+        Liste de métadonnées des fichiers à traiter.
+    df_txts: pd.DataFrame
+        Liste de pages de documents à traiter.
+
+    Returns
+    -------
+    df_proc: pd.DataFrame
+        Liste de métadonnées des pages traitées, avec indications des éléments de
+        structure détectés.
+    """
+    indics_struct = []
+    for df_row in df_txts.itertuples():
+        # pour chaque page de document, repérer des indications de structure
+        rec_struct = spot_text_structure(df_row)
+        indics_struct.append(
+            {
+                "pdf": df_row.pdf,
+                "fullpath": df_row.fullpath,
+                "pagenum": df_row.pagenum,
+            }
+            | rec_struct  # python &gt;= 3.9 (dict union)
+        )
+    df_indics = pd.DataFrame.from_records(indics_struct)
+    df_proc = pd.merge(df_meta, df_indics, on=["pdf", "fullpath"])
+    df_proc = df_proc.astype(dtype=DTYPE_META_NTXT_PROC)
+    return df_proc</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="src.process.parse_native_pages.spot_text_structure" class="doc doc-heading">
+          <code class="highlight language-python">spot_text_structure(df_row)</code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Détecte la présence d'éléments de structure dans une page d'arrêté.</p>
+<p>Détecte la présence de tampons, pages d'accusé de réception,
+VU, CONSIDERANT, ARTICLE.</p>
+<h4 id="src.process.parse_native_pages.spot_text_structure--parameters">Parameters</h4>
+<p>df_row: NamedTuple
+    Page de document</p>
+<h4 id="src.process.parse_native_pages.spot_text_structure--returns">Returns</h4>
+<p>rec_struct: dict
+    Dictionnaire de valeurs booléennes ou nulles, selon que les éléments de structure ont été détectés.
+    Les clés et les types de valeurs sont spécifiés dans <code>DTYPE_PARSE</code>.
+    Si df_row ne contient pas de texte, toutes les valeurs de sortie sont None.</p>
+
+          <details class="quote">
+            <summary> <code>src\process\parse_native_pages.py</code></summary>
+            <pre class="highlight"><code class="language-python">def spot_text_structure(
+    df_row: NamedTuple,
+) -&gt; pd.DataFrame:
+    """Détecte la présence d'éléments de structure dans une page d'arrêté.
+
+    Détecte la présence de tampons, pages d'accusé de réception,
+    VU, CONSIDERANT, ARTICLE.
+
+    Parameters
+    ----------
+    df_row: NamedTuple
+        Page de document
+
+    Returns
+    -------
+    rec_struct: dict
+        Dictionnaire de valeurs booléennes ou nulles, selon que les éléments de structure ont été détectés.
+        Les clés et les types de valeurs sont spécifiés dans `DTYPE_PARSE`.
+        Si df_row ne contient pas de texte, toutes les valeurs de sortie sont None.
+    """
+    if pd.notna(df_row.pagetxt) and (
+        not df_row.exclude
+    ):  # WIP " and (not df_row.exclude)"
+        logging.warning(f"{df_row.pdf} / {df_row.pagenum}")  # WIP
+        # adresse(s) visée(s) par l'arrêté
+        if pg_adrs_doc := get_adr_doc(df_row.pagetxt):
+            # on sélectionne arbitrairement la 1re zone d'adresse(s) (FIXME?)
+            pg_adr_doc = pg_adrs_doc[0]["adresse_brute"]
+            # temporairement: on prend la 1re adresse précise extraite de cette zone
+            adr_fields = pg_adrs_doc[0]["adresses"][0]
+            # end WIP
+        else:
+            pg_adr_doc = None
+            adr_fields = {
+                "adr_num": None,  # numéro de la voie
+                "adr_ind": None,  # indice de répétition
+                "adr_voie": None,  # nom de la voie
+                "adr_compl": None,  # complément d'adresse
+                "adr_cpostal": None,  # code postal
+                "adr_ville": None,  # ville
+            }
+        # parcelle(s) visées par l'arrêté
+        parcelles = get_parcelles(df_row.pagetxt)
+        #
+        rec_struct = {
+            # @ctes
+            "has_stamp": is_stamped_page(df_row.pagetxt),
+            "is_accusedereception_page": is_accusedereception_page(df_row.pagetxt),
+            # tous arrêtés
+            "commune_maire": get_commune_maire(df_row.pagetxt),
+            "has_vu": contains_vu(df_row.pagetxt),
+            "has_considerant": contains_considerant(df_row.pagetxt),
+            "has_arrete": contains_arrete(df_row.pagetxt),
+            "has_article": contains_article(df_row.pagetxt),
+            # arrêtés spécifiques
+            # - réglementaires
+            "has_cgct": contains_cgct(df_row.pagetxt),
+            "has_cgct_art": contains_cgct_art(df_row.pagetxt),
+            "has_cch": contains_cch(df_row.pagetxt),
+            "has_cch_L111": contains_cch_L111(df_row.pagetxt),
+            "has_cch_L511": contains_cch_L511(df_row.pagetxt),
+            "has_cch_L521": contains_cch_L521(df_row.pagetxt),
+            "has_cch_L541": contains_cch_L541(df_row.pagetxt),
+            "has_cch_R511": contains_cch_R511(df_row.pagetxt),
+            "has_cc": contains_cc(df_row.pagetxt),
+            "has_cc_art": contains_cc_art(df_row.pagetxt),
+            # - données
+            "adresse": pg_adr_doc,
+            # refactor 2023-03-31: remonter l'extraction de l'adresse précise
+            "adr_num": adr_fields["adr_num"],  # numéro de la voie
+            "adr_ind": adr_fields["adr_ind"],  # indice de répétition
+            "adr_voie": adr_fields["adr_voie"],  # nom de la voie
+            "adr_compl": adr_fields["adr_compl"],  # complément d'adresse
+            "adr_cpostal": adr_fields["adr_cpostal"],  # code postal
+            "adr_ville": adr_fields["adr_ville"],  # ville
+            # end refactor 2023-03-31
+            "parcelle": parcelles[0]
+            if parcelles
+            else None,  # TODO si la page contient plusieurs empans désignant une ou plusieurs parcelles
+            "proprio": get_proprio(df_row.pagetxt),  # WIP
+            "syndic": get_syndic(df_row.pagetxt),
+            "gest": get_gest(df_row.pagetxt),
+            "date": get_date(df_row.pagetxt),
+            #   * arrêté
+            "num_arr": get_num(df_row.pagetxt),
+            "nom_arr": get_nom(df_row.pagetxt),
+            "classe": get_classe(df_row.pagetxt),
+            "urgence": get_urgence(df_row.pagetxt),
+            "demo": get_demo(df_row.pagetxt),
+            "int_hab": get_int_hab(df_row.pagetxt),
+            "equ_com": get_equ_com(df_row.pagetxt),
+        }
+    else:
+        # tous les champs sont vides ("None")
+        rec_struct = {x: None for x in DTYPE_PARSE}
+    return rec_struct</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../preprocess/" class="btn btn-neutral float-left" title="Preprocess"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../quality/" class="btn btn-neutral float-right" title="Quality">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../preprocess/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../quality/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
